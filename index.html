@@ -42,14 +42,45 @@ https://fonts.googleapis.com
 https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap
 
 <style>
+<input
+type="file"
+id="fileInput"
+accept=".pdf,.doc,.docx,.txt"
+hidden
+>
 
+<button onclick="document.getElementById('fileInput').click()">
+📄 Subir Documento
+</button>
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
 font-family:'Inter',sans-serif;
 }
+const fileInput = document.getElementById("fileInput");
 
+fileInput.addEventListener("change",(e)=>{
+
+const file=e.target.files[0];
+
+if(!file) return;
+
+alert(`Documento cargado: ${file.name}`);
+
+});
+    let documentos=[];
+
+function guardarDocumento(nombre){
+
+documentos.push(nombre);
+
+localStorage.setItem(
+"hercules_docs",
+JSON.stringify(documentos)
+);
+
+}
 :root{
 --bg:#020617;
 --panel:#0f172a;
@@ -61,7 +92,29 @@ font-family:'Inter',sans-serif;
 --text:#f8fafc;
 --muted:#94a3b8;
 }
+<input
+id="searchInput"
+placeholder="Buscar..."
+>document
+.getElementById("searchInput")
+.addEventListener("input",(e)=>{
 
+const valor=e.target.value.toLowerCase();
+
+document
+.querySelectorAll(".doc")
+.forEach(card=>{
+
+card.style.display=
+card.textContent
+.toLowerCase()
+.includes(valor)
+? "block"
+: "none";
+
+});
+
+});
 body{
 background:linear-gradient(
 135deg,
@@ -80,7 +133,15 @@ background:linear-gradient(
       --accent-hover: #2563EB;
       --accent-soft: rgba(59, 130, 246, 0.14);
     }
+window.onload=()=>{
 
+const docs=JSON.parse(
+localStorage.getItem("hercules_docs")
+)||[];
+
+docs.forEach(crearTarjeta);
+
+};
     * {
       box-sizing: border-box;
       margin: 0;
@@ -112,7 +173,23 @@ background:linear-gradient(
       gap: 1rem;
       flex-wrap: wrap;
     }
+function crearTarjeta(nombre){
 
+const contenedor=
+document.querySelector(".documents");
+
+const card=document.createElement("div");
+
+card.className="doc";
+
+card.innerHTML=`
+<h3>📘 ${nombre}</h3>
+<p>Documento cargado</p>
+`;
+
+contenedor.appendChild(card);
+
+}
     .brand-group {
       display: flex;
       align-items: center;
