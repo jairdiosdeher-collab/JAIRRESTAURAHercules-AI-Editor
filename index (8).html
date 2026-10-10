@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arquitectura de Sistemas de Inteligencia Artificial y Modelos Fundacionales — Hércules AI Editor (index.html Autocontenido)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+/* ==========================================================================
+   Hércules AI Editor SaaS — Hoja de Estilos Autocontenida (style.css)
+   Documento: Arquitectura de Sistemas de Inteligencia Artificial y Modelos Fundacionales
+   ========================================================================== */
+
+:root {
+  --bg-canvas: #FAF9F6;
+  --bg-surface: #FFFFFF;
+  --text-primary: #0F172A;
+  --text-muted: #475569;
+  --border-hairline: #E2E8F0;
+  --accent-primary: #1D4ED8;
+  --accent-soft: #EFF6FF;
+  --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: 'Public Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+body.dark-theme {
+  --bg-canvas: #090D16;
+  --bg-surface: #111827;
+  --text-primary: #F8FAFC;
+  --text-muted: #94A3B8;
+  --border-hairline: #1E293B;
+  --accent-primary: #38BDF8;
+  --accent-soft: #1E293B;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  line-height: 1.65;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.reading-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--accent-primary);
+  width: 0%;
+  z-index: 100;
+  transition: width 0.12s ease-out;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-hairline);
+  padding: 0.9rem 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.site-brand {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-primary);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  flex-wrap: wrap;
+}
+
+.site-nav a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 500;
+  transition: color 0.15s ease;
+}
+
+.site-nav a:hover {
+  color: var(--accent-primary);
+}
+
+.btn-action {
+  padding: 0.45rem 0.85rem;
+  border: 1px solid var(--border-hairline);
+  border-radius: 0.375rem;
+  background: var(--bg-canvas);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.btn-action:hover {
+  border-color: var(--accent-primary);
+}
+
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.kpi-box {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: 0.5rem;
+  padding: 1.15rem;
+}
+
+.kpi-label {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--text-muted);
+}
+
+.kpi-value {
+  font-family: var(--font-mono);
+  font-size: 1.55rem;
+  font-weight: 700;
+  margin-top: 0.25rem;
+}
+
+.hero-banner {
+  padding-bottom: 2.25rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid var(--border-hairline);
+}
+
+.hero-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--accent-primary);
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.85rem, 3.5vw, 2.85rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.85rem;
+}
+
+.hero-subtitle {
+  font-size: 1.08rem;
+  color: var(--text-muted);
+  max-width: 75ch;
+  margin-bottom: 1.25rem;
+}
+
+.hero-meta {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.section-block {
+  margin-bottom: 3.75rem;
+  scroll-margin-top: 5rem;
+}
+
+.section-header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--border-hairline);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 700;
+}
+
+.section-index {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.surface-box {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-bottom: 1.15rem;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.15rem;
+}
+
+.thesis-callout {
+  background: var(--accent-soft);
+  border: 1px solid var(--border-hairline);
+  border-radius: 0.5rem;
+  padding: 1.35rem;
+  margin: 1.25rem 0;
+}
+
+.paragraph-prose {
+  margin-bottom: 0.9rem;
+  max-width: 74ch;
+}
+
+.clean-list {
+  list-style: none;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.clean-list li {
+  position: relative;
+  padding-left: 1.2rem;
+}
+
+.clean-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--accent-primary);
+  font-weight: bold;
+}
+
+.chapter-item {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: 0.5rem;
+  margin-bottom: 0.85rem;
+  overflow: hidden;
+}
+
+.chapter-header {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 1.2rem 1.4rem;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.chapter-header:hover {
+  background: var(--accent-soft);
+}
+
+.chapter-body {
+  padding: 0 1.4rem 1.4rem 1.4rem;
+  border-top: 1px solid var(--border-hairline);
+}
+
+.quiz-option {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.8rem 1rem;
+  margin-top: 0.45rem;
+  border: 1px solid var(--border-hairline);
+  border-radius: 0.375rem;
+  background: var(--bg-canvas);
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 0.92rem;
+  transition: all 0.15s ease;
+}
+
+.quiz-option:hover {
+  border-color: var(--accent-primary);
+}
+
+.quiz-option.correct {
+  border-color: #16A34A;
+  background: rgba(22, 163, 74, 0.12);
+  font-weight: 600;
+}
+
+.quiz-option.incorrect {
+  border-color: #DC2626;
+  background: rgba(220, 38, 38, 0.12);
+}
+
+.quiz-feedback {
+  margin-top: 0.75rem;
+  padding: 0.8rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.88rem;
+  background: var(--accent-soft);
+  display: none;
+}
+
+.flashcard-box {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: 0.5rem;
+  padding: 1.35rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.flashcard-box:hover {
+  border-color: var(--accent-primary);
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--border-hairline);
+  border-radius: 0.375rem;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-size: 0.92rem;
+  margin-bottom: 1.25rem;
+}
+
+.chat-box {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.chat-messages {
+  max-height: 320px;
+  overflow-y: auto;
+  padding: 1.25rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.chat-bubble {
+  padding: 0.85rem 1rem;
+  border-radius: 0.5rem;
+  background: var(--bg-canvas);
+  border: 1px solid var(--border-hairline);
+  font-size: 0.9rem;
+}
+
+.site-footer {
+  border-top: 1px solid var(--border-hairline);
+  padding: 2.25rem 1.5rem;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+  </style>
+</head>
+<body>
+<!-- ==========================================================================
+     Hércules AI Editor SaaS — Aplicación Web Autocontenida (index.html)
+     Lista para publicar en GitHub Pages
+     ========================================================================== -->
+<div class="reading-progress-bar" id="readingProgress"></div>
+
+<header class="site-header">
+  <a href="#top" class="site-brand">Hércules AI Editor · SaaS</a>
+  <nav class="site-nav">
+    <a href="#dashboard">Dashboard</a>
+    <a href="#resumen">Resumen</a>
+    <a href="#capitulos">Capítulos</a>
+    <a href="#conceptos">Conceptos</a>
+    <a href="#flashcards">Flashcards</a>
+    <a href="#cuestionario">Cuestionario</a>
+    <a href="#glosario">Glosario</a>
+    <a href="#chat">Chat Contextual</a>
+  </nav>
+  <div style="display:flex; gap:0.5rem;">
+    <button type="button" class="btn-action" onclick="window.print()">Exportar PDF</button>
+    <button type="button" class="btn-action" onclick="toggleSiteTheme()">Modo Oscuro</button>
+  </div>
+</header>
+
+<main class="container" id="top">
+  <section class="hero-banner">
+    <span class="hero-kicker">Aplicación SaaS Autocontenida · Lista para GitHub Pages · IndexedDB Activa</span>
+    <h1 class="hero-title">Arquitectura de Sistemas de Inteligencia Artificial y Modelos Fundacionales</h1>
+    <p class="hero-subtitle">Guía técnica de ingeniería para el diseño, despliegue, evaluación y gobernanza de sistemas cognitivos en producción</p>
+    <div class="hero-meta">
+      <span>Lectura estimada: 18 min</span>
+      <span>·</span>
+      <span>Palabras: 4850</span>
+      <span>·</span>
+      <span>4 Capítulos</span>
+      <span>·</span>
+      <span>6 Conceptos</span>
+      <span>·</span>
+      <span>6 Flashcards</span>
+    </div>
+  </section>
+
+  <!-- Dashboard de Estadísticas -->
+  <section id="dashboard" class="section-block">
+    <div class="section-header">
+      <h2 class="section-title">00. Dashboard de Estadísticas del Documento</h2>
+      <span class="section-index">Métricas Cuantitativas</span>
+    </div>
+    <div class="kpi-grid">
+      <div class="kpi-box">
+        <div class="kpi-label">Capítulos Estructurados</div>
+        <div class="kpi-value">4</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-label">Conceptos Clave Extraídos</div>
+        <div class="kpi-value">6</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-label">Flashcards y Reactivos</div>
+        <div class="kpi-value">10</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-label">Tiempo Estimado de Lectura</div>
+        <div class="kpi-value">18 min</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 01. Resumen Ejecutivo -->
+  <section id="resumen" class="section-block">
+    <div class="section-header">
+      <h2 class="section-title">01. Resumen Ejecutivo</h2>
+      <span class="section-index">Síntesis Estratégica</span>
+    </div>
+    <div class="thesis-callout">
+      <strong>Tesis Central:</strong> El rendimiento y la fiabilidad de un sistema de IA en producción no dependen únicamente del tamaño del modelo subyacente, sino de la ingeniería del sistema compuesto que orquesta su contexto, herramientas, evaluación y barreras de seguridad.
+    </div>
+    <div class="surface-box">
+      <p class="paragraph-prose">Este tratado técnico examina la transición estructural de la ingeniería de software hacia sistemas compuestos impulsados por Modelos Fundacionales (Foundation Models). Lejos de depender exclusivamente de un único modelo monolítico, las arquitecturas modernas integran motores de inferencia multimodal, tuberías de Generación Aumentada por Recuperación (RAG) híbrida, memoria episódica y capas deterministas de validación.</p><p class="paragraph-prose">A lo largo del documento se detallan los principios de diseño para minimizar la latencia de inferencia, controlar el costo computacional por millón de tokens y mitigar las alucinaciones mediante anclaje documental verificable. Se aborda la importancia crítica de separar el razonamiento semántico de la ejecución de herramientas críticas mediante protocolos estandarizados.</p><p class="paragraph-prose">Finalmente, se establece un marco riguroso de observabilidad continua (LLMOps) y seguridad en tiempo de ejecución, asegurando que las organizaciones puedan escalar soluciones cognitivas desde prototipos experimentales hasta infraestructuras empresariales de alta disponibilidad.</p>
+    </div>
+    <div class="grid-2">
+      <div class="surface-box">
+        <h3 style="font-family:var(--font-display); font-size:1.1rem; margin-bottom:0.75rem;">Hallazgos Clave</h3>
+        <ul class="clean-list">
+          <li>La búsqueda híbrida (combinación de vectores densos semánticos y búsqueda léxica BM25 con re-ranking cruzado) supera en un 38% la precisión de recuperación frente a los enfoques puramente vectoriales.</li><li>El enrutamiento semántico de consultas permite delegar hasta el 70% del tráfico operativo a modelos ligeros de baja latencia, reduciendo costos operativos en un 62% sin pérdida de calidad.</li><li>Las salidas estructuradas garantizadas por esquemas JSON eliminan el 99.4% de los fallos de integración entre modelos generativos y APIs transaccionales.</li><li>La evaluación continua automatizada (LLM-as-a-Judge calibrado con conjuntos dorados humanos) reduce el tiempo de detección de regresiones semánticas de semanas a minutos.</li><li>El aislamiento de ejecución (sandboxing) en flujos agénticos es indispensable para prevenir vulnerabilidades de inyección indirecta de instrucciones (Indirect Prompt Injection).</li>
+        </ul>
+      </div>
+      <div class="surface-box">
+        <h3 style="font-family:var(--font-display); font-size:1.1rem; margin-bottom:0.75rem;">Recomendaciones Accionables</h3>
+        <ul class="clean-list">
+          <li>Implementar una pasarela unificada de modelos (AI Gateway) con soporte para caché semántico, límites de tasa y conmutación por error (fallback) automática.</li><li>Adoptar fragmentación semántica consciente de la estructura del documento (encabezados, tablas y bloques lógicos) antes de indexar en bases vectoriales.</li><li>Establecer un conjunto de evaluación base (&quot;Golden Dataset&quot;) de al menos 150 casos reales antes de modificar prompts de sistema o actualizar versiones de modelos.</li><li>Diseñar interfaces de usuario que expongan citas verificables y permitan la intervención humana (Human-in-the-Loop) en acciones de alto impacto.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02. Capítulos -->
+  <section id="capitulos" class="section-block">
+    <div class="section-header">
+      <h2 class="section-title">02. Capítulos del Documento</h2>
+      <span class="section-index">4 Bloques Temáticos</span>
+    </div>
+    
+      <article class="chapter-item">
+        <button class="chapter-header" onclick="toggleChapter('chapter-1')">
+          <span>01. Fundamentos de los Modelos Transformadores y Atención Multimodal</span>
+          <span class="section-index">Alternar lectura</span>
+        </button>
+        <div id="chapter-1" class="chapter-body">
+          <p class="paragraph-prose" style="margin-top:1rem; font-weight:500;">Explora la mecánica interna de la arquitectura Transformer, el cálculo de autoatención a gran escala y cómo los modelos nativos multimodales procesan texto, audio, imagen y documentos PDF en un espacio latente unificado.</p>
+          <p class="paragraph-prose">La arquitectura Transformer revolucionó el procesamiento secuencial al reemplazar las redes recurrentes por mecanismos de autoatención paralelizables. Mediante las matrices de Consulta (Query), Clave (Key) y Valor (Value), el modelo pondera dinámicamente la relevancia contextual de cada token respecto a todos los demás dentro de ventanas de contexto que hoy superan el millón de tokens.</p><p class="paragraph-prose">En la generación actual de modelos multimodales nativos, las distintas modalidades (fragmentos de imagen, espectrogramas de audio, páginas de documentos PDF y código fuente) se proyectan en un mismo espacio de incrustación (embedding space) desde el preentrenamiento. Esto permite razonar directamente sobre el diseño visual de una tabla en un PDF o la entonación de un archivo de audio sin depender de cadenas frágiles de OCR tradicional.</p><p class="paragraph-prose">Sin embargo, el costo cuadrático del mecanismo de atención respecto a la longitud de la secuencia exige optimizaciones de infraestructura críticas: FlashAttention, cuantización de pesos (INT8/FP8), caché de claves y valores (KV Cache) y decodificación especulativa para sostener experiencias interactivas en tiempo real.</p>
+          <div style="margin-top:1.25rem;">
+            <strong style="font-size:0.85rem; color:var(--text-muted);">Puntos clave del capítulo:</strong>
+            <ul class="clean-list" style="margin-top:0.5rem;">
+              <li>La multimodalidad nativa elimina la pérdida de información inherente a las tuberías secuenciales de OCR y transcripción aislada.</li><li>El manejo eficiente del KV Cache y el prefijo de contexto compartido reduce drásticamente la latencia del primer token (TTFT).</li><li>Las ventanas de contexto extensas requieren estrategias cuidadosas de posicionamiento de información para evitar la degradación en la mitad del contexto.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="chapter-item">
+        <button class="chapter-header" onclick="toggleChapter('chapter-2')">
+          <span>02. Ingeniería de Contexto y Generación Aumentada por Recuperación (RAG) Avanzada</span>
+          <span class="section-index">Alternar lectura</span>
+        </button>
+        <div id="chapter-2" class="chapter-body">
+          <p class="paragraph-prose" style="margin-top:1rem; font-weight:500;">Detalla el diseño de sistemas de recuperación de información de alta precisión, desde la ingesta y segmentación documental hasta la búsqueda híbrida y el reordenamiento neuronal.</p>
+          <p class="paragraph-prose">Un sistema RAG empresarial fracasa o triunfa en la etapa de preparación y recuperación de datos, mucho antes de que el modelo generativo produzca la primera palabra. La fragmentación ingenua por conteo fijo de caracteres destruye el contexto de tablas financieras, cláusulas legales y bloques de código. En su lugar, la segmentación jerárquica preserva la relación entre el fragmento hijo (usado para búsqueda precisa) y el documento o sección padre (entregado al modelo para síntesis completa).</p><p class="paragraph-prose">En la fase de recuperación, los vectores densos capturan similitud conceptual pero suelen fallar ante acrónimos exactos, códigos de piezas o identificadores normativos. Por ello, el estándar de oro actual combina recuperación densa (embeddings) con recuperación dispersa léxica (BM25/SPLADE) fusionada mediante Reciprocal Rank Fusion (RRF).</p><p class="paragraph-prose">Posteriormente, un modelo Cross-Encoder de Re-ranking evalúa conjuntamente la consulta del usuario y los 25 fragmentos candidatos principales, seleccionando únicamente los 5 a 8 pasajes de mayor relevancia real e inyectándolos con metadatos de trazabilidad para exigir citas explícitas.</p>
+          <div style="margin-top:1.25rem;">
+            <strong style="font-size:0.85rem; color:var(--text-muted);">Puntos clave del capítulo:</strong>
+            <ul class="clean-list" style="margin-top:0.5rem;">
+              <li>La fusión híbrida (Semántica + Léxica BM25) resuelve la ceguera de los embeddings ante términos técnicos exactos y códigos alfanuméricos.</li><li>La recuperación Padre-Hijo desacopla la granularidad óptima de indexación de la amplitud óptima de lectura contextual.</li><li>Todo fragmento inyectado en el prompt debe incluir identificadores de fuente para auditar la fidelidad de la respuesta.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="chapter-item">
+        <button class="chapter-header" onclick="toggleChapter('chapter-3')">
+          <span>03. Sistemas Agénticos, Uso de Herramientas y Salidas Estructuradas</span>
+          <span class="section-index">Alternar lectura</span>
+        </button>
+        <div id="chapter-3" class="chapter-body">
+          <p class="paragraph-prose" style="margin-top:1rem; font-weight:500;">Analiza cómo transformar modelos de lenguaje en motores de razonamiento capaces de invocar funciones externas, planificar subtareas y devolver contratos de datos tipados.</p>
+          <p class="paragraph-prose">Cuando un modelo fundacional se equipa con declaraciones de funciones (Function Calling) y esquemas de salida estrictos (Structured Outputs), deja de ser un mero generador de texto para convertirse en un orquestador lógico dentro de una arquitectura de microservicios. Mediante la decodificación restringida por máquinas de estados finitos, el motor garantiza que la salida cumpla al 100% con la gramática JSON especificada.</p><p class="paragraph-prose">Los patrones de diseño agéntico más robustos evitan los bucles autónomos infinitos e impredecibles. En cambio, implementan grafos de estado dirigidos donde cada nodo realiza una tarea acocada: clasificación de intención, planificación de consultas, invocación paralela de herramientas, reflexión crítica (Self-Reflection) y síntesis final.</p><p class="paragraph-prose">Para garantizar la integridad transaccional, las herramientas se clasifican según su nivel de riesgo: las herramientas de solo lectura (consultas SQL parametrizadas, búsqueda documental) se ejecutan automáticamente, mientras que las operaciones mutables (transferencias, borrado de registros, envío de comunicaciones externas) requieren confirmación explícita del usuario.</p>
+          <div style="margin-top:1.25rem;">
+            <strong style="font-size:0.85rem; color:var(--text-muted);">Puntos clave del capítulo:</strong>
+            <ul class="clean-list" style="margin-top:0.5rem;">
+              <li>La decodificación restringida por esquema (`responseSchema`) garantiza contratos de datos deterministas entre la IA y el backend.</li><li>Los flujos agénticos en producción deben modelarse como máquinas de estados explícitas con límites estrictos de iteración y presupuesto.</li><li>Separar las herramientas de lectura de las herramientas de escritura es la primera línea de defensa arquitectónica.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="chapter-item">
+        <button class="chapter-header" onclick="toggleChapter('chapter-4')">
+          <span>04. Evaluación Sistemática, LLMOps y Gobernanza en Producción</span>
+          <span class="section-index">Alternar lectura</span>
+        </button>
+        <div id="chapter-4" class="chapter-body">
+          <p class="paragraph-prose" style="margin-top:1rem; font-weight:500;">Establece las métricas cuantitativas, marcos de evaluación automatizada y controles de seguridad necesarios para operar sistemas de IA a escala empresarial.</p>
+          <p class="paragraph-prose">A diferencia del software determinista tradicional donde las pruebas unitarias binarias bastan, los sistemas generativos requieren una matriz de evaluación multidimensional. La tríada fundamental de evaluación RAG mide: 1) Relevancia del Contexto (¿recuperamos la información correcta?), 2) Fidelidad o Groundedness (¿el modelo se ciñó exclusivamente al contexto sin inventar datos?) y 3) Relevancia de la Respuesta (¿respondió directamente a la inquietud del usuario?).</p><p class="paragraph-prose">Para escalar estas mediciones, se implementan evaluadores automatizados calibrados con ejemplos humanos, ejecutados en cada integración continua (CI/CD) ante cambios de prompts o versiones de modelo. En producción, la telemetría captura trazas distribuidas de cada paso de la cadena, latencia p95/p99, consumo de tokens y retroalimentación implícita o explícita del usuario.</p><p class="paragraph-prose">Finalmente, la capa de gobernanza aplica filtros bidireccionales: enmascaramiento de Información Personal Identificable (PII) antes de enviar datos al modelo, detección de intentos de evasión de reglas (Jailbreaks) en la entrada y validación de políticas de marca y cumplimiento normativo en la salida.</p>
+          <div style="margin-top:1.25rem;">
+            <strong style="font-size:0.85rem; color:var(--text-muted);">Puntos clave del capítulo:</strong>
+            <ul class="clean-list" style="margin-top:0.5rem;">
+              <li>La tríada de evaluación (Relevancia de Contexto, Fidelidad al Documento y Relevancia de Respuesta) permite diagnosticar con exactitud dónde falla una tubería.</li><li>El registro de trazas completas (inputs, fragmentos recuperados, llamadas a herramientas y latencias) es indispensable para la depuración.</li><li>La seguridad en IA requiere defensa en profundidad: sanitización de entrada, mínimo privilegio en herramientas y validación de salida.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+  </section>
+
+  <!-- 03. Conceptos Clave -->
+  <section id="conceptos" class="section-block">
+    <div class="section-header">
+      <h2 class="section-title">03. Conceptos Clave</h2>
+      <span class="section-index">6 Fundamentos</span>
+    </div>
+    <div class="grid-2">
+      
+      <div class="surface-box">
+        <div style="font-family:var(--font-mono); font-size:0.78rem; color:var(--text-muted); margin-bottom:0.4rem;">
+          Arquitectura de Datos · Esencial
+        </div>
+        <h3 style="font-family:var(--font-display); font-size:1.15rem; margin-bottom:0.6rem;">Generación Aumentada por Recuperación (RAG Híbrido)</h3>
+        <p class="paragraph-prose" style="font-size:0.93rem;">Patrón arquitectónico que enriquece el contexto de un modelo generativo recuperando en tiempo real fragmentos relevantes desde bases de conocimiento externas mediante la combinación de búsqueda vectorial semántica y búsqueda léxica de palabras clave.</p>
+        <div style="padding-top:0.75rem; border-top:1px solid var(--border-hairline); font-size:0.86rem; color:var(--text-muted);">
+          <strong>Aplicación práctica:</strong> Un asistente jurídico corporativo que busca simultáneamente el concepto semántico de &quot;incumplimiento por fuerza mayor&quot; y el número exacto de cláusula &quot;Art. 142-B&quot; antes de redactar un dictamen.
+        </div>
+      </div>
+
+      <div class="surface-box">
+        <div style="font-family:var(--font-mono); font-size:0.78rem; color:var(--text-muted); margin-bottom:0.4rem;">
+          Integración de Sistemas · Esencial
+        </div>
+        <h3 style="font-family:var(--font-display); font-size:1.15rem; margin-bottom:0.6rem;">Decodificación Restringida por Esquema (Structured Outputs)</h3>
+        <p class="paragraph-prose" style="font-size:0.93rem;">Mecanismo de inferencia que filtra en cada paso de generación los tokens permitidos según una gramática formal o JSON Schema, asegurando que la respuesta sea sintácticamente válida y cumpla con todos los tipos de datos requeridos.</p>
+        <div style="padding-top:0.75rem; border-top:1px solid var(--border-hairline); font-size:0.86rem; color:var(--text-muted);">
+          <strong>Aplicación práctica:</strong> Extraer de una factura en PDF un objeto JSON tipado con campos obligatorios de proveedor, fecha ISO, subtotal numérico y arreglo de ítems para insertarlo directamente en un ERP.
+        </div>
+      </div>
+
+      <div class="surface-box">
+        <div style="font-family:var(--font-mono); font-size:0.78rem; color:var(--text-muted); margin-bottom:0.4rem;">
+          Fundamentos de Deep Learning · Esencial
+        </div>
+        <h3 style="font-family:var(--font-display); font-size:1.15rem; margin-bottom:0.6rem;">Mecanismo de Autoatención (Self-Attention)</h3>
+        <p class="paragraph-prose" style="font-size:0.93rem;">Operación matricial núcleo de los modelos Transformer que calcula pesos de afinidad entre todos los pares de tokens de una secuencia, permitiendo capturar dependencias semánticas de largo alcance sin importar la distancia posicional.</p>
+        <div style="padding-top:0.75rem; border-top:1px solid var(--border-hairline); font-size:0.86rem; color:var(--text-muted);">
+          <strong>Aplicación práctica:</strong> Resolver correctamente a qué entidad se refiere el pronombre &quot;ella&quot; en la página 40 de un contrato haciendo referencia a una cláusula definida en la página 2.
+        </div>
+      </div>
+
+      <div class="surface-box">
+        <div style="font-family:var(--font-mono); font-size:0.78rem; color:var(--text-muted); margin-bottom:0.4rem;">
+          Recuperación de Información · Avanzado
+        </div>
+        <h3 style="font-family:var(--font-display); font-size:1.15rem; margin-bottom:0.6rem;">Cross-Encoder Re-ranking</h3>
+        <p class="paragraph-prose" style="font-size:0.93rem;">Segunda etapa de filtrado en sistemas de búsqueda donde una red neuronal procesa conjuntamente la pregunta y cada documento candidato para calcular un puntaje fino de relevancia semántica profunda.</p>
+        <div style="padding-top:0.75rem; border-top:1px solid var(--border-hairline); font-size:0.86rem; color:var(--text-muted);">
+          <strong>Aplicación práctica:</strong> Tomar los 30 fragmentos preliminares devueltos por la base de datos vectorial y reordenarlos en 45 milisegundos para entregar al LLM únicamente los 5 pasajes más exactos.
+        </div>
+      </div>
+
+      <div class="surface-box">
+        <div style="font-family:var(--font-mono); font-size:0.78rem; color:var(--text-muted); margin-bottom:0.4rem;">
+          Optimización e Infraestructura · Avanzado
+        </div>
+        <h3 style="font-family:var(--font-display); font-size:1.15rem; margin-bottom:0.6rem;">Enrutamiento Semántico (Semantic Routing)</h3>
+        <p class="paragraph-prose" style="font-size:0.93rem;">Capa de decisión ultraligera que clasifica la complejidad e intención de la solicitud entrante para dirigirla hacia el modelo o flujo de trabajo óptimo en términos de costo, velocidad y capacidad de razonamiento.</p>
+        <div style="padding-top:0.75rem; border-top:1px solid var(--border-hairline); font-size:0.86rem; color:var(--text-muted);">
+          <strong>Aplicación práctica:</strong> Enviar saludos y consultas de estado de pedido a un modelo Flash de baja latencia, mientras que las disputas contractuales complejas se enrutan a un modelo Pro con razonamiento profundo.
+        </div>
+      </div>
+
+      <div class="surface-box">
+        <div style="font-family:var(--font-mono); font-size:0.78rem; color:var(--text-muted); margin-bottom:0.4rem;">
+          Evaluación y Calidad · Esencial
+        </div>
+        <h3 style="font-family:var(--font-display); font-size:1.15rem; margin-bottom:0.6rem;">Fidelidad Documental (Groundedness)</h3>
+        <p class="paragraph-prose" style="font-size:0.93rem;">Métrica de calidad que cuantifica qué proporción de las afirmaciones fácticas emitidas por el modelo pueden verificarse y deducirse directamente de los documentos fuente proporcionados en el contexto.</p>
+        <div style="padding-top:0.75rem; border-top:1px solid var(--border-hairline); font-size:0.86rem; color:var(--text-muted);">
+          <strong>Aplicación práctica:</strong> Un sistema de auditoría médica que bloquea cualquier resumen clínico generado si contiene una dosis de medicamento que no aparece explícitamente en las notas del expediente original.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04. Flashcards -->
+  <section id="flashcards" class="section-block">
+    <div class="section-header">
+      <h2 class="section-title">04. Flashcards de Estudio Activo</h2>
+      <span class="section-index">6 Tarjetas</span>
+    </div>
+    <div class="grid-2">
+      
+      <div class="flashcard-box" onclick="toggleElement('fc-ans-0')">
+        <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted); margin-bottom:0.35rem;">
+          Tarjeta 01 · Arquitectura RAG · Medio
+        </div>
+        <h3 style="font-family:var(--font-display); font-size:1.02rem; margin-bottom:0.5rem;">¿Qué problema resuelve combinar búsqueda vectorial densa con búsqueda léxica BM25 en un sistema RAG?</h3>
+        <p style="font-size:0.78rem; color:var(--accent-primary);">Haz clic para voltear tarjeta</p>
+        <div id="fc-ans-0" style="display:none; margin-top:0.75rem; padding-top:0.75rem; border-top:1px solid var(--border-hairline);">
+          <p style="font-size:0.9rem; margin-bottom:0.35rem;"><strong>Respuesta:</strong> Permite capturar tanto la similitud semántica conceptual (vectores) como las coincidencias exactas de códigos, siglas, artículos legales y nombres propios (BM25).</p>
+          <p style="font-size:0.78rem; color:var(--text-muted);"><em>Pista:</em> Vectores = Ideas y sinónimos; BM25 = Códigos y palabras exactas.</p>
+        </div>
+      </div>
+
+      <div class="flashcard-box" onclick="toggleElement('fc-ans-1')">
+        <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted); margin-bottom:0.35rem;">
+          Tarjeta 02 · Salidas Estructuradas · Fácil
+        </div>
+        <h3 style="font-family:var(--font-display); font-size:1.02rem; margin-bottom:0.5rem;">¿Cómo garantiza `responseSchema` que el modelo devuelva un JSON libre de errores sintácticos?</h3>
+        <p style="font-size:0.78rem; color:var(--accent-primary);">Haz clic para voltear tarjeta</p>
+        <div id="fc-ans-1" style="display:none; margin-top:0.75rem; padding-top:0.75rem; border-top:1px solid var(--border-hairline);">
+          <p style="font-size:0.9rem; margin-bottom:0.35rem;"><strong>Respuesta:</strong> Mediante decodificación restringida: aplica una máscara en cada paso de inferencia que impide seleccionar tokens que violen la gramática del esquema JSON.</p>
+          <p style="font-size:0.78rem; color:var(--text-muted);"><em>Pista:</em> Máscara de estados finitos token por token.</p>
+        </div>
+      </div>
+
+      <div class="flashcard-box" onclick="toggleElement('fc-ans-2')">
+        <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted); margin-bottom:0.35rem;">
+          Tarjeta 03 · Evaluación LLMOps · Medio
+        </div>
+        <h3 style="font-family:var(--font-display); font-size:1.02rem; margin-bottom:0.5rem;">¿Cuáles son las 3 dimensiones de la Tríada de Evaluación RAG?</h3>
+        <p style="font-size:0.78rem; color:var(--accent-primary);">Haz clic para voltear tarjeta</p>
+        <div id="fc-ans-2" style="display:none; margin-top:0.75rem; padding-top:0.75rem; border-top:1px solid var(--border-hairline);">
+          <p style="font-size:0.9rem; margin-bottom:0.35rem;"><strong>Respuesta:</strong> 1) Relevancia del Contexto recuperado, 2) Fidelidad al documento (Groundedness) y 3) Relevancia de la Respuesta frente a la pregunta.</p>
+          <p style="font-size:0.78rem; color:var(--text-muted);"><em>Pista:</em> Contexto -&gt; Fidelidad -&gt; Respuesta.</p>
+        </div>
+      </div>
+
+      <div class="flashcard-box" onclick="toggleElement('fc-ans-3')">
+        <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted); margin-bottom:0.35rem;">
+          Tarjeta 04 · Recuperación de Información · Difícil
+        </div>
+        <h3 style="font-family:var(--font-display); font-size:1.02rem; margin-bottom:0.5rem;">¿Por qué un Cross-Encoder es más preciso pero más costoso computacionalmente que un Bi-Encoder vectorial?</h3>
+        <p style="font-size:0.78rem; color:var(--accent-primary);">Haz clic para voltear tarjeta</p>
+        <div id="fc-ans-3" style="display:none; margin-top:0.75rem; padding-top:0.75rem; border-top:1px solid var(--border-hairline);">
+          <p style="font-size:0.9rem; margin-bottom:0.35rem;"><strong>Respuesta:</strong> Porque el Cross-Encoder procesa simultáneamente la pregunta y el documento aplicando autoatención cruzada entre todos sus tokens en tiempo de consulta.</p>
+          <p style="font-size:0.78rem; color:var(--text-muted);"><em>Pista:</em> Bi-Encoder precalcula por separado; Cross-Encoder cruza ambos en vivo.</p>
+        </div>
+      </div>
+
+      <div class="flashcard-box" onclick="toggleElement('fc-ans-4')">
+        <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted); margin-bottom:0.35rem;">
+          Tarjeta 05 · Infraestructura e Inferencia · Medio
+        </div>
+        <h3 style="font-family:var(--font-display); font-size:1.02rem; margin-bottom:0.5rem;">¿Qué función cumple el KV Cache (Caché Clave-Valor) durante la generación con modelos Transformer?</h3>
+        <p style="font-size:0.78rem; color:var(--accent-primary);">Haz clic para voltear tarjeta</p>
+        <div id="fc-ans-4" style="display:none; margin-top:0.75rem; padding-top:0.75rem; border-top:1px solid var(--border-hairline);">
+          <p style="font-size:0.9rem; margin-bottom:0.35rem;"><strong>Respuesta:</strong> Almacena en memoria GPU los tensores Key y Value de los tokens previos para no recalcularlos al generar cada nuevo token.</p>
+          <p style="font-size:0.78rem; color:var(--text-muted);"><em>Pista:</em> Guardar el pasado para acelerar el siguiente token.</p>
+        </div>
+      </div>
+
+      <div class="flashcard-box" onclick="toggleElement('fc-ans-5')">
+        <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted); margin-bottom:0.35rem;">
+          Tarjeta 06 · Seguridad Agéntica · Medio
+        </div>
+        <h3 style="font-family:var(--font-display); font-size:1.02rem; margin-bottom:0.5rem;">¿En qué consiste un ataque de Inyección Indirecta de Prompts?</h3>
+        <p style="font-size:0.78rem; color:var(--accent-primary);">Haz clic para voltear tarjeta</p>
+        <div id="fc-ans-5" style="display:none; margin-top:0.75rem; padding-top:0.75rem; border-top:1px solid var(--border-hairline);">
+          <p style="font-size:0.9rem; margin-bottom:0.35rem;"><strong>Respuesta:</strong> Ocurre cuando un documento o fuente externa procesada por el modelo contiene instrucciones ocultas que intentan desviar el comportamiento del agente.</p>
+          <p style="font-size:0.78rem; color:var(--text-muted);"><em>Pista:</em> Instrucciones intrusas ocultas dentro de los datos leídos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05. Cuestionario -->
+  <section id="cuestionario" class="section-block">
+    <div class="section-header">
+      <h2 class="section-title">05. Cuestionario Interactivo</h2>
+      <span class="section-index" id="quizScoreDisplay">Puntaje: 0 / 4</span>
+    </div>
+    
+      <div class="surface-box quiz-card" data-question-index="0" data-correct-index="1">
+        <div style="font-family:var(--font-mono); font-size:0.78rem; color:var(--text-muted); margin-bottom:0.4rem;">
+          Pregunta 01 · Dificultad Intermedio
+        </div>
+        <h3 style="font-family:var(--font-display); font-size:1.08rem; margin-bottom:0.7rem;">¿Cuál es la ventaja principal de implementar un sistema de búsqueda híbrida (Vectores Densos + Léxico BM25) en lugar de depender únicamente de embeddings vectoriales?</h3>
+        <div class="quiz-options-group">
+          
+            <button type="button" class="quiz-option" onclick="selectQuizOption(0, 0, 1)">
+              Elimina por completo la necesidad de utilizar un modelo generativo al final de la tubería.
+            </button>
+            <button type="button" class="quiz-option" onclick="selectQuizOption(0, 1, 1)">
+              Permite capturar tanto la similitud conceptual semántica como las coincidencias exactas de códigos técnicos, acrónimos y nombres propios.
+            </button>
+            <button type="button" class="quiz-option" onclick="selectQuizOption(0, 2, 1)">
+              Reduce el tamaño físico de los archivos PDF originales en el almacenamiento en la nube.
+            </button>
+            <button type="button" class="quiz-option" onclick="selectQuizOption(0, 3, 1)">
+              Entrena automáticamente los pesos internos de la red neuronal en cada consulta del usuario.
+            </button>
+        </div>
+        <div id="quiz-feedback-0" class="quiz-feedback">
+          <strong>Explicación:</strong> Los embeddings vectoriales destacan comprendiendo sinónimos y conceptos abstractos, pero suelen diluir identificadores exactos (como números de serie, artículos de ley o siglas técnicas), donde el algoritmo léxico BM25 ofrece precisión exacta.
+        </div>
+      </div>
+
+      <div class="surface-box quiz-card" data-question-index="1" data-correct-index="0">
+        <div style="font-family:var(--font-mono); font-size:0.78rem; color:var(--text-muted); margin-bottom:0.4rem;">
+          Pregunta 02 · Dificultad Básico
+        </div>
+        <h3 style="font-family:var(--font-display); font-size:1.08rem; margin-bottom:0.7rem;">En la arquitectura de modelos multimodales nativos, ¿cómo se procesan documentos complejos como archivos PDF con gráficos y tablas?</h3>
+        <div class="quiz-options-group">
+          
+            <button type="button" class="quiz-option" onclick="selectQuizOption(1, 0, 0)">
+              Se proyectan las distintas modalidades (texto e imagen visual de la página) en un espacio de representación compartido, permitiendo razonar sobre el diseño y contenido simultáneamente.
+            </button>
+            <button type="button" class="quiz-option" onclick="selectQuizOption(1, 1, 0)">
+              El modelo ignora cualquier elemento gráfico y solo lee los primeros 500 caracteres del archivo.
+            </button>
+            <button type="button" class="quiz-option" onclick="selectQuizOption(1, 2, 0)">
+              Se requiere convertir manualmente cada tabla a formato de audio antes de enviarla al servidor.
+            </button>
+            <button type="button" class="quiz-option" onclick="selectQuizOption(1, 3, 0)">
+              Solo pueden procesarse si el documento no contiene ningún signo de puntuación.
+            </button>
+        </div>
+        <div id="quiz-feedback-1" class="quiz-feedback">
+          <strong>Explicación:</strong> Los modelos multimodales modernos proyectan tokens textuales y parches visuales dentro del mismo espacio latente, preservando la comprensión espacial de tablas, diagramas y jerarquía tipográfica.
+        </div>
+      </div>
+
+      <div class="surface-box quiz-card" data-question-index="2" data-correct-index="2">
+        <div style="font-family:var(--font-mono); font-size:0.78rem; color:var(--text-muted); margin-bottom:0.4rem;">
+          Pregunta 03 · Dificultad Intermedio
+        </div>
+        <h3 style="font-family:var(--font-display); font-size:1.08rem; margin-bottom:0.7rem;">¿Qué mecanismo garantiza que la salida de un modelo generativo cumpla estrictamente con un contrato JSON definido sin errores de sintaxis?</h3>
+        <div class="quiz-options-group">
+          
+            <button type="button" class="quiz-option" onclick="selectQuizOption(2, 0, 2)">
+              Aumentar la temperatura de muestreo por encima de 1.8.
+            </button>
+            <button type="button" class="quiz-option" onclick="selectQuizOption(2, 1, 2)">
+              Pedir por favor en el prompt que no agregue texto adicional.
+            </button>
+            <button type="button" class="quiz-option" onclick="selectQuizOption(2, 2, 2)">
+              La decodificación restringida mediante la configuración de `responseMimeType: &quot;application/json&quot;` y `responseSchema`.
+            </button>
+            <button type="button" class="quiz-option" onclick="selectQuizOption(2, 3, 2)">
+              Repetir la misma pregunta cinco veces seguidas en el mismo mensaje.
+            </button>
+        </div>
+        <div id="quiz-feedback-2" class="quiz-feedback">
+          <strong>Explicación:</strong> El uso de `responseSchema` aplica una máscara de tokens durante la inferencia que impide matemáticamente que el modelo genere cualquier carácter que viole la estructura JSON especificada.
+        </div>
+      </div>
+
+      <div class="surface-box quiz-card" data-question-index="3" data-correct-index="1">
+        <div style="font-family:var(--font-mono); font-size:0.78rem; color:var(--text-muted); margin-bottom:0.4rem;">
+          Pregunta 04 · Dificultad Avanzado
+        </div>
+        <h3 style="font-family:var(--font-display); font-size:1.08rem; margin-bottom:0.7rem;">Dentro de la tríada de evaluación de sistemas RAG, ¿qué mide específicamente la métrica de Fidelidad (Groundedness)?</h3>
+        <div class="quiz-options-group">
+          
+            <button type="button" class="quiz-option" onclick="selectQuizOption(3, 0, 1)">
+              La velocidad en milisegundos con la que la tarjeta gráfica procesa los vectores.
+            </button>
+            <button type="button" class="quiz-option" onclick="selectQuizOption(3, 1, 1)">
+              El grado en que todas las afirmaciones de la respuesta generada están respaldadas directamente por el contexto recuperado, sin inventar datos externos.
+            </button>
+            <button type="button" class="quiz-option" onclick="selectQuizOption(3, 2, 1)">
+              La cantidad de colores utilizados en la interfaz de usuario.
+            </button>
+            <button type="button" class="quiz-option" onclick="selectQuizOption(3, 3, 1)">
+              El costo mensual de almacenamiento de la base de datos relacional.
+            </button>
+        </div>
+        <div id="quiz-feedback-3" class="quiz-feedback">
+          <strong>Explicación:</strong> La Fidelidad (Groundedness o Faithfulness) verifica que el modelo actúe como un sintetizador riguroso de la evidencia suministrada en el prompt, penalizando cualquier extrapolación no sustentada o alucinación.
+        </div>
+      </div>
+  </section>
+
+  <!-- 06. Glosario -->
+  <section id="glosario" class="section-block">
+    <div class="section-header">
+      <h2 class="section-title">06. Glosario Especializado</h2>
+      <span class="section-index">8 Términos Definidos</span>
+    </div>
+    <input
+      type="search"
+      id="glossarySearch"
+      class="search-input"
+      placeholder="Filtrar término o definición en el glosario..."
+      oninput="filterGlossary(this.value)"
+    />
+    <div class="grid-2" id="glossaryContainer">
+      
+      <div class="surface-box glossary-entry" data-term="autoatención (self-attention)">
+        <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:0.35rem;">
+          <h3 style="font-family:var(--font-display); font-size:1.05rem;">Autoatención (Self-Attention)</h3>
+          <span style="font-family:var(--font-mono); font-size:0.74rem; color:var(--text-muted);">Redes Neuronales</span>
+        </div>
+        <p style="font-size:0.92rem; margin-bottom:0.45rem;">Mecanismo computacional que relaciona distintas posiciones de una misma secuencia para calcular una representación contextualizada de cada token.</p>
+        <p style="font-size:0.82rem; color:var(--text-muted);"><em>Contexto:</em> El bloque de autoatención permite vincular cláusulas dispersas a lo largo de un documento extenso.</p>
+      </div>
+
+      <div class="surface-box glossary-entry" data-term="bm25 (best matching 25)">
+        <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:0.35rem;">
+          <h3 style="font-family:var(--font-display); font-size:1.05rem;">BM25 (Best Matching 25)</h3>
+          <span style="font-family:var(--font-mono); font-size:0.74rem; color:var(--text-muted);">Recuperación de Información</span>
+        </div>
+        <p style="font-size:0.92rem; margin-bottom:0.45rem;">Función de clasificación probabilística utilizada por motores de búsqueda para estimar la relevancia léxica de documentos según la frecuencia y rareza de los términos buscados.</p>
+        <p style="font-size:0.82rem; color:var(--text-muted);"><em>Contexto:</em> El índice BM25 complementa la búsqueda vectorial cuando el usuario consulta códigos normativos exactos.</p>
+      </div>
+
+      <div class="surface-box glossary-entry" data-term="cross-encoder">
+        <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:0.35rem;">
+          <h3 style="font-family:var(--font-display); font-size:1.05rem;">Cross-Encoder</h3>
+          <span style="font-family:var(--font-mono); font-size:0.74rem; color:var(--text-muted);">Modelos de Ranking</span>
+        </div>
+        <p style="font-size:0.92rem; margin-bottom:0.45rem;">Arquitectura neuronal que recibe simultáneamente el par consulta-documento para producir un puntaje de relevancia de alta precisión mediante atención cruzada completa.</p>
+        <p style="font-size:0.82rem; color:var(--text-muted);"><em>Contexto:</em> Aplicamos un Cross-Encoder sobre los 20 candidatos iniciales para seleccionar los 5 fragmentos definitivos.</p>
+      </div>
+
+      <div class="surface-box glossary-entry" data-term="embedding (incrustación vectorial)">
+        <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:0.35rem;">
+          <h3 style="font-family:var(--font-display); font-size:1.05rem;">Embedding (Incrustación Vectorial)</h3>
+          <span style="font-family:var(--font-mono); font-size:0.74rem; color:var(--text-muted);">Representación de Datos</span>
+        </div>
+        <p style="font-size:0.92rem; margin-bottom:0.45rem;">Vector numérico denso de alta dimensionalidad que codifica el significado semántico de un texto, imagen o audio de modo que conceptos similares se ubiquen próximos geométricamente.</p>
+        <p style="font-size:0.82rem; color:var(--text-muted);"><em>Contexto:</em> Cada párrafo del manual fue transformado en un embedding de 768 dimensiones.</p>
+      </div>
+
+      <div class="surface-box glossary-entry" data-term="groundedness (fidelidad documental)">
+        <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:0.35rem;">
+          <h3 style="font-family:var(--font-display); font-size:1.05rem;">Groundedness (Fidelidad Documental)</h3>
+          <span style="font-family:var(--font-mono); font-size:0.74rem; color:var(--text-muted);">Evaluación LLMOps</span>
+        </div>
+        <p style="font-size:0.92rem; margin-bottom:0.45rem;">Propiedad de una respuesta generada donde cada hecho afirmado puede trazarse de forma verificable hasta los documentos fuente suministrados en el contexto.</p>
+        <p style="font-size:0.82rem; color:var(--text-muted);"><em>Contexto:</em> El filtro de control rechazó el borrador porque su puntaje de groundedness cayó por debajo del umbral de 0.92.</p>
+      </div>
+
+      <div class="surface-box glossary-entry" data-term="inyección indirecta de prompts">
+        <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:0.35rem;">
+          <h3 style="font-family:var(--font-display); font-size:1.05rem;">Inyección Indirecta de Prompts</h3>
+          <span style="font-family:var(--font-mono); font-size:0.74rem; color:var(--text-muted);">Seguridad de IA</span>
+        </div>
+        <p style="font-size:0.92rem; margin-bottom:0.45rem;">Vulnerabilidad de seguridad en la que instrucciones maliciosas ocultas dentro de datos externos recuperados (como un PDF o página web) alteran el comportamiento del modelo.</p>
+        <p style="font-size:0.82rem; color:var(--text-muted);"><em>Contexto:</em> El aislamiento de herramientas impidió que la inyección indirecta en el currículum adjunto ejecutara comandos no autorizados.</p>
+      </div>
+
+      <div class="surface-box glossary-entry" data-term="kv cache (caché clave-valor)">
+        <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:0.35rem;">
+          <h3 style="font-family:var(--font-display); font-size:1.05rem;">KV Cache (Caché Clave-Valor)</h3>
+          <span style="font-family:var(--font-mono); font-size:0.74rem; color:var(--text-muted);">Optimización de Inferencia</span>
+        </div>
+        <p style="font-size:0.92rem; margin-bottom:0.45rem;">Memoria intermedia en GPU que almacena los tensores de claves y valores de tokens ya procesados para evitar recalcularlos durante la generación autorregresiva.</p>
+        <p style="font-size:0.82rem; color:var(--text-muted);"><em>Contexto:</em> Reutilizar el KV Cache del documento base redujo la latencia de preguntas sucesivas en un 75%.</p>
+      </div>
+
+      <div class="surface-box glossary-entry" data-term="reciprocal rank fusion (rrf)">
+        <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:0.35rem;">
+          <h3 style="font-family:var(--font-display); font-size:1.05rem;">Reciprocal Rank Fusion (RRF)</h3>
+          <span style="font-family:var(--font-mono); font-size:0.74rem; color:var(--text-muted);">Algoritmos de Búsqueda</span>
+        </div>
+        <p style="font-size:0.92rem; margin-bottom:0.45rem;">Método matemático que combina listas de resultados provenientes de múltiples motores de búsqueda asignando puntajes basados en la posición relativa de cada documento.</p>
+        <p style="font-size:0.82rem; color:var(--text-muted);"><em>Contexto:</em> Unificamos los rankings del motor vectorial y del motor léxico mediante Reciprocal Rank Fusion.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07. Chat Contextual Local -->
+  <section id="chat" class="section-block">
+    <div class="section-header">
+      <h2 class="section-title">07. Asistente Contextual del Documento</h2>
+      <span class="section-index">Consulta Rápida sobre el Conocimiento Indexado</span>
+    </div>
+    <div class="chat-box">
+      <div class="chat-messages" id="standaloneChatFeed">
+        <div class="chat-bubble">
+          <strong>Hércules AI:</strong> Escribe una palabra clave, concepto o tema sobre <em>Arquitectura de Sistemas de Inteligencia Artificial y Modelos Fundacionales</em> para recuperar al instante la definición, capítulo o hallazgo correspondiente.
+        </div>
+      </div>
+      <div style="padding:1rem; border-top:1px solid var(--border-hairline); display:flex; gap:0.5rem;">
+        <input
+          type="text"
+          id="standaloneChatInput"
+          class="search-input"
+          style="margin-bottom:0;"
+          placeholder="Pregunta por un concepto, término o capítulo..."
+          onkeydown="if(event.key==='Enter') askStandaloneAssistant()"
+        />
+        <button type="button" class="btn-action" onclick="askStandaloneAssistant()">Consultar</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p>Aplicación SaaS Autocontenida generada con Hércules AI Editor · Lista para GitHub Pages</p>
+</footer>
+  <script>
+/* ==========================================================================
+   Hércules AI Editor SaaS — Motor Interactivo y Base de Datos IndexedDB (app.js)
+   ========================================================================== */
+
+const answeredQuestions = new Set();
+let currentScore = 0;
+const totalQuestions = 4;
+const DOCUMENT_KNOWLEDGE = {"thesis":"El rendimiento y la fiabilidad de un sistema de IA en producción no dependen únicamente del tamaño del modelo subyacente, sino de la ingeniería del sistema compuesto que orquesta su contexto, herramientas, evaluación y barreras de seguridad.","concepts":[{"name":"Generación Aumentada por Recuperación (RAG Híbrido)","def":"Patrón arquitectónico que enriquece el contexto de un modelo generativo recuperando en tiempo real fragmentos relevantes desde bases de conocimiento externas mediante la combinación de búsqueda vectorial semántica y búsqueda léxica de palabras clave.","ex":"Un asistente jurídico corporativo que busca simultáneamente el concepto semántico de \"incumplimiento por fuerza mayor\" y el número exacto de cláusula \"Art. 142-B\" antes de redactar un dictamen."},{"name":"Decodificación Restringida por Esquema (Structured Outputs)","def":"Mecanismo de inferencia que filtra en cada paso de generación los tokens permitidos según una gramática formal o JSON Schema, asegurando que la respuesta sea sintácticamente válida y cumpla con todos los tipos de datos requeridos.","ex":"Extraer de una factura en PDF un objeto JSON tipado con campos obligatorios de proveedor, fecha ISO, subtotal numérico y arreglo de ítems para insertarlo directamente en un ERP."},{"name":"Mecanismo de Autoatención (Self-Attention)","def":"Operación matricial núcleo de los modelos Transformer que calcula pesos de afinidad entre todos los pares de tokens de una secuencia, permitiendo capturar dependencias semánticas de largo alcance sin importar la distancia posicional.","ex":"Resolver correctamente a qué entidad se refiere el pronombre \"ella\" en la página 40 de un contrato haciendo referencia a una cláusula definida en la página 2."},{"name":"Cross-Encoder Re-ranking","def":"Segunda etapa de filtrado en sistemas de búsqueda donde una red neuronal procesa conjuntamente la pregunta y cada documento candidato para calcular un puntaje fino de relevancia semántica profunda.","ex":"Tomar los 30 fragmentos preliminares devueltos por la base de datos vectorial y reordenarlos en 45 milisegundos para entregar al LLM únicamente los 5 pasajes más exactos."},{"name":"Enrutamiento Semántico (Semantic Routing)","def":"Capa de decisión ultraligera que clasifica la complejidad e intención de la solicitud entrante para dirigirla hacia el modelo o flujo de trabajo óptimo en términos de costo, velocidad y capacidad de razonamiento.","ex":"Enviar saludos y consultas de estado de pedido a un modelo Flash de baja latencia, mientras que las disputas contractuales complejas se enrutan a un modelo Pro con razonamiento profundo."},{"name":"Fidelidad Documental (Groundedness)","def":"Métrica de calidad que cuantifica qué proporción de las afirmaciones fácticas emitidas por el modelo pueden verificarse y deducirse directamente de los documentos fuente proporcionados en el contexto.","ex":"Un sistema de auditoría médica que bloquea cualquier resumen clínico generado si contiene una dosis de medicamento que no aparece explícitamente en las notas del expediente original."}],"chapters":[{"title":"Fundamentos de los Modelos Transformadores y Atención Multimodal","summary":"Explora la mecánica interna de la arquitectura Transformer, el cálculo de autoatención a gran escala y cómo los modelos nativos multimodales procesan texto, audio, imagen y documentos PDF en un espacio latente unificado."},{"title":"Ingeniería de Contexto y Generación Aumentada por Recuperación (RAG) Avanzada","summary":"Detalla el diseño de sistemas de recuperación de información de alta precisión, desde la ingesta y segmentación documental hasta la búsqueda híbrida y el reordenamiento neuronal."},{"title":"Sistemas Agénticos, Uso de Herramientas y Salidas Estructuradas","summary":"Analiza cómo transformar modelos de lenguaje en motores de razonamiento capaces de invocar funciones externas, planificar subtareas y devolver contratos de datos tipados."},{"title":"Evaluación Sistemática, LLMOps y Gobernanza en Producción","summary":"Establece las métricas cuantitativas, marcos de evaluación automatizada y controles de seguridad necesarios para operar sistemas de IA a escala empresarial."}],"glossary":[{"term":"Autoatención (Self-Attention)","def":"Mecanismo computacional que relaciona distintas posiciones de una misma secuencia para calcular una representación contextualizada de cada token."},{"term":"BM25 (Best Matching 25)","def":"Función de clasificación probabilística utilizada por motores de búsqueda para estimar la relevancia léxica de documentos según la frecuencia y rareza de los términos buscados."},{"term":"Cross-Encoder","def":"Arquitectura neuronal que recibe simultáneamente el par consulta-documento para producir un puntaje de relevancia de alta precisión mediante atención cruzada completa."},{"term":"Embedding (Incrustación Vectorial)","def":"Vector numérico denso de alta dimensionalidad que codifica el significado semántico de un texto, imagen o audio de modo que conceptos similares se ubiquen próximos geométricamente."},{"term":"Groundedness (Fidelidad Documental)","def":"Propiedad de una respuesta generada donde cada hecho afirmado puede trazarse de forma verificable hasta los documentos fuente suministrados en el contexto."},{"term":"Inyección Indirecta de Prompts","def":"Vulnerabilidad de seguridad en la que instrucciones maliciosas ocultas dentro de datos externos recuperados (como un PDF o página web) alteran el comportamiento del modelo."},{"term":"KV Cache (Caché Clave-Valor)","def":"Memoria intermedia en GPU que almacena los tensores de claves y valores de tokens ya procesados para evitar recalcularlos durante la generación autorregresiva."},{"term":"Reciprocal Rank Fusion (RRF)","def":"Método matemático que combina listas de resultados provenientes de múltiples motores de búsqueda asignando puntajes basados en la posición relativa de cada documento."}]};
+
+// 1. Persistencia Local con IndexedDB en el archivo autocontenido
+function initStandaloneIndexedDB() {
+  if (!('indexedDB' in window)) return;
+  const req = indexedDB.open('HerculesStandaloneSaaSDB', 1);
+  req.onupgradeneeded = (e) => {
+    const db = e.target.result;
+    if (!db.objectStoreNames.contains('documents')) {
+      db.createObjectStore('documents', { keyPath: 'id' });
+    }
+  };
+  req.onsuccess = (e) => {
+    const db = e.target.result;
+    const tx = db.transaction('documents', 'readwrite');
+    tx.objectStore('documents').put({
+      id: 'active-standalone-doc',
+      title: "Arquitectura de Sistemas de Inteligencia Artificial y Modelos Fundacionales",
+      savedAt: new Date().toISOString()
+    });
+  };
+}
+initStandaloneIndexedDB();
+
+// 2. Alternar modo oscuro / claro
+function toggleSiteTheme() {
+  document.body.classList.toggle('dark-theme');
+}
+
+// 3. Barra de progreso de lectura
+window.addEventListener('scroll', () => {
+  const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+  const bar = document.getElementById('readingProgress');
+  if (bar) {
+    bar.style.width = scrolled + '%';
+  }
+});
+
+function toggleChapter(chapterId) {
+  const el = document.getElementById(chapterId);
+  if (!el) return;
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+
+function toggleElement(elementId) {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+
+function selectQuizOption(questionIdx, selectedIdx, correctIdx) {
+  const card = document.querySelector('.quiz-card[data-question-index="' + questionIdx + '"]');
+  if (!card) return;
+
+  const buttons = card.querySelectorAll('.quiz-option');
+  buttons.forEach((btn, idx) => {
+    btn.classList.remove('correct', 'incorrect');
+    if (idx === correctIdx) {
+      btn.classList.add('correct');
+    } else if (idx === selectedIdx) {
+      btn.classList.add('incorrect');
+    }
+  });
+
+  const feedback = document.getElementById('quiz-feedback-' + questionIdx);
+  if (feedback) {
+    feedback.style.display = 'block';
+  }
+
+  if (!answeredQuestions.has(questionIdx)) {
+    answeredQuestions.add(questionIdx);
+    if (selectedIdx === correctIdx) {
+      currentScore += 1;
+    }
+    const scoreEl = document.getElementById('quizScoreDisplay');
+    if (scoreEl) {
+      scoreEl.textContent = 'Puntaje: ' + currentScore + ' / ' + totalQuestions;
+    }
+  }
+}
+
+function filterGlossary(query) {
+  const normalized = (query || '').toLowerCase().trim();
+  const entries = document.querySelectorAll('.glossary-entry');
+  entries.forEach((entry) => {
+    const text = (entry.textContent || '').toLowerCase();
+    entry.style.display = text.includes(normalized) ? 'block' : 'none';
+  });
+}
+
+function askStandaloneAssistant() {
+  const input = document.getElementById('standaloneChatInput');
+  const feed = document.getElementById('standaloneChatFeed');
+  if (!input || !feed) return;
+  const q = input.value.trim();
+  if (!q) return;
+
+  const userDiv = document.createElement('div');
+  userDiv.className = 'chat-bubble';
+  userDiv.innerHTML = '<strong>Tú:</strong> ' + q;
+  feed.appendChild(userDiv);
+  input.value = '';
+
+  const lower = q.toLowerCase();
+  let responseText = 'Tesis central del documento: ' + DOCUMENT_KNOWLEDGE.thesis;
+
+  const matchedConcept = DOCUMENT_KNOWLEDGE.concepts.find(
+    (c) => c.name.toLowerCase().includes(lower) || c.def.toLowerCase().includes(lower)
+  );
+  const matchedGlossary = DOCUMENT_KNOWLEDGE.glossary.find(
+    (g) => g.term.toLowerCase().includes(lower) || g.def.toLowerCase().includes(lower)
+  );
+  const matchedChapter = DOCUMENT_KNOWLEDGE.chapters.find(
+    (ch) => ch.title.toLowerCase().includes(lower) || ch.summary.toLowerCase().includes(lower)
+  );
+
+  if (matchedConcept) {
+    responseText = matchedConcept.name + ': ' + matchedConcept.def + ' (Ejemplo: ' + matchedConcept.ex + ')';
+  } else if (matchedGlossary) {
+    responseText = matchedGlossary.term + ': ' + matchedGlossary.def;
+  } else if (matchedChapter) {
+    responseText = 'Capítulo "' + matchedChapter.title + '": ' + matchedChapter.summary;
+  }
+
+  const aiDiv = document.createElement('div');
+  aiDiv.className = 'chat-bubble';
+  aiDiv.innerHTML = '<strong>Hércules AI:</strong> ' + responseText;
+  feed.appendChild(aiDiv);
+  feed.scrollTop = feed.scrollHeight;
+}
+
+  </script>
+</body>
+</html>
