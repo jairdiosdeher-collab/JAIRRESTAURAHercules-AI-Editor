@@ -3,239 +3,128 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hércules AI Editor — Plataforma Educativa Inteligente</title>
-  <meta name="description" content="Convierte cualquier documento en una experiencia inteligente de aprendizaje." />
+  <title>Hércules AI Editor — Plataforma SaaS Educativa Inteligente</title>
+  <meta name="description" content="Convierte cualquier documento en una experiencia inteligente de aprendizaje. Compatible 100% con GitHub Pages." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <!-- Motores en navegador 100% compatibles con GitHub Pages -->
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Librerías en navegador 100% compatibles con GitHub Pages -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
   <style>
     :root {
-      --bg-canvas: #F8FAFC;
+      --bg-primary: #F8FAFC;
       --bg-surface: #FFFFFF;
       --bg-elevated: #F1F5F9;
       --text-primary: #0F172A;
       --text-secondary: #475569;
       --text-muted: #64748B;
-      --border-color: #E2E8F0;
       --accent: #1D4ED8;
       --accent-hover: #1E40AF;
-      --accent-soft: #EFF6FF;
-      --emerald: #059669;
+      --accent-soft: rgba(29, 78, 216, 0.1);
       --amber: #D97706;
-      --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
-      --font-sans: 'Public Sans', system-ui, sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
+      --emerald: #059669;
+      --rose: #E11D48;
+      --border: #E2E8F0;
+      --shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.08);
     }
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Hércules AI Editor</title>
-
-https://fonts.googleapis.com
-https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap
-
-<style>
-<input
-type="file"
-id="fileInput"
-accept=".pdf,.doc,.docx,.txt"
-hidden
->
-
-<button onclick="document.getElementById('fileInput').click()">
-📄 Subir Documento
-</button>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Inter',sans-serif;
-}
-const fileInput = document.getElementById("fileInput");
-
-fileInput.addEventListener("change",(e)=>{
-
-const file=e.target.files[0];
-
-if(!file) return;
-
-alert(`Documento cargado: ${file.name}`);
-
-});
-    let documentos=[];
-
-function guardarDocumento(nombre){
-
-documentos.push(nombre);
-
-localStorage.setItem(
-"hercules_docs",
-JSON.stringify(documentos)
-);
-
-}
-:root{
---bg:#020617;
---panel:#0f172a;
---card:#111827;
---primary:#3b82f6;
---secondary:#8b5cf6;
---accent:#06b6d4;
---success:#22c55e;
---text:#f8fafc;
---muted:#94a3b8;
-}
-<input
-id="searchInput"
-placeholder="Buscar..."
->document
-.getElementById("searchInput")
-.addEventListener("input",(e)=>{
-
-const valor=e.target.value.toLowerCase();
-
-document
-.querySelectorAll(".doc")
-.forEach(card=>{
-
-card.style.display=
-card.textContent
-.toLowerCase()
-.includes(valor)
-? "block"
-: "none";
-
-});
-
-});
-body{
-background:linear-gradient(
-135deg,
-#020617,
-#0f172a,
-#111827
     body.dark {
-      --bg-canvas: #090D16;
+      --bg-primary: #0B0F17;
       --bg-surface: #111827;
       --bg-elevated: #1E293B;
       --text-primary: #F8FAFC;
-      --text-secondary: #CBD5E1;
-      --text-muted: #94A3B8;
-      --border-color: #1E293B;
+      --text-secondary: #94A3B8;
+      --text-muted: #64748B;
       --accent: #3B82F6;
       --accent-hover: #2563EB;
       --accent-soft: rgba(59, 130, 246, 0.14);
+      --border: #1E293B;
+      --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.55);
     }
-window.onload=()=>{
 
-const docs=JSON.parse(
-localStorage.getItem("hercules_docs")
-)||[];
-
-docs.forEach(crearTarjeta);
-
-};
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: var(--font-sans);
-      background-color: var(--bg-canvas);
+      font-family: 'Public Sans', system-ui, -apple-system, sans-serif;
+      background: var(--bg-primary);
       color: var(--text-primary);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      line-height: 1.6;
-      transition: background-color 0.2s ease, color 0.2s ease;
+      line-height: 1.65;
+      transition: background 0.2s ease, color 0.2s ease;
     }
 
-    /* Top Header */
-    .app-header {
+    h1, h2, h3, h4, .font-display {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      letter-spacing: -0.02em;
+    }
+
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Barra superior */
+    .topbar {
       position: sticky;
       top: 0;
       z-index: 40;
+      min-height: 60px;
       background: var(--bg-surface);
-      border-bottom: 1px solid var(--border-color);
-      padding: 0.75rem 1.5rem;
+      border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: space-between;
+      padding: 0.6rem 1.25rem;
       gap: 1rem;
       flex-wrap: wrap;
     }
-function crearTarjeta(nombre){
 
-const contenedor=
-document.querySelector(".documents");
-
-const card=document.createElement("div");
-
-card.className="doc";
-
-card.innerHTML=`
-<h3>📘 ${nombre}</h3>
-<p>Documento cargado</p>
-`;
-
-contenedor.appendChild(card);
-
-}
-    .brand-group {
+    .brand {
       display: flex;
       align-items: center;
       gap: 0.75rem;
     }
 
-    .brand-title {
-      font-family: var(--font-display);
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #1D4ED8, #4338CA);
+      color: #fff;
       font-weight: 800;
-      font-size: 1.15rem;
-      letter-spacing: -0.02em;
-      color: var(--text-primary);
-      text-decoration: none;
-    }
-
-    .brand-slogan {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      border-left: 1px solid var(--border-color);
-      padding-left: 0.75rem;
-    }
-
-    @media (max-width: 900px) {
-      .brand-slogan { display: none; }
-    }
-
-    .header-actions {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      flex-wrap: wrap;
+      justify-content: center;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      box-shadow: 0 4px 12px rgba(29, 78, 216, 0.3);
     }
 
+    .brand-title {
+      font-weight: 700;
+      font-size: 0.96rem;
+    }
+
+    .brand-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    /* Botones */
     .btn {
-      font-family: var(--font-sans);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.5rem 0.9rem;
+      border-radius: 8px;
       font-size: 0.78rem;
       font-weight: 600;
-      padding: 0.48rem 0.9rem;
-      border-radius: 0.5rem;
-      border: 1px solid var(--border-color);
+      border: 1px solid var(--border);
       background: var(--bg-surface);
       color: var(--text-primary);
       cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
       transition: all 0.15s ease;
     }
 
@@ -245,7 +134,7 @@ contenedor.appendChild(card);
 
     .btn-primary {
       background: var(--accent);
-      color: #FFFFFF;
+      color: #ffffff;
       border-color: var(--accent);
     }
 
@@ -253,772 +142,1554 @@ contenedor.appendChild(card);
       background: var(--accent-hover);
     }
 
-    .btn-tour {
-      background: var(--accent-soft);
-      color: var(--accent);
-      border-color: rgba(59, 130, 246, 0.35);
+    .btn-amber {
+      background: rgba(217, 119, 6, 0.12);
+      color: var(--amber);
+      border-color: rgba(217, 119, 6, 0.35);
     }
 
-    /* Status & Export Bar */
-    .status-strip {
-      background: var(--bg-surface);
-      border-bottom: 1px solid var(--border-color);
-      padding: 0.55rem 1.5rem;
-      font-family: var(--font-mono);
-      font-size: 0.74rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
+    .btn-danger {
+      color: var(--rose);
+      border-color: rgba(225, 29, 72, 0.35);
     }
 
-    /* Workspace Layout */
+    /* Layout Principal */
     .workspace {
-      flex: 1;
-      max-width: 1440px;
-      width: 100%;
-      margin: 0 auto;
-      display: flex;
+      display: grid;
+      grid-template-columns: 270px 1fr;
+      min-height: calc(100vh - 60px);
+    }
+
+    @media (max-width: 960px) {
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        border-right: none !important;
+        border-bottom: 1px solid var(--border);
+      }
     }
 
     .sidebar {
-      width: 270px;
-      flex-shrink: 0;
-      border-right: 1px solid var(--border-color);
       background: var(--bg-surface);
-      padding: 1.25rem;
+      border-right: 1px solid var(--border);
+      padding: 1rem;
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 1.25rem;
     }
 
-    @media (max-width: 860px) {
-      .workspace { flex-direction: column; }
-      .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border-color); }
-    }
-
-    .sidebar-group-title {
-      font-family: var(--font-mono);
+    .sidebar-label {
       font-size: 0.68rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--text-muted);
-      margin-bottom: 0.5rem;
       font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+      font-family: 'JetBrains Mono', monospace;
     }
 
-    .nav-btn {
+    .nav-item {
       width: 100%;
       text-align: left;
-      padding: 0.52rem 0.75rem;
-      border-radius: 0.5rem;
+      padding: 0.55rem 0.75rem;
+      border-radius: 8px;
       border: none;
       background: transparent;
       color: var(--text-secondary);
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       font-weight: 500;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 0.2rem;
       transition: all 0.15s ease;
     }
 
-    .nav-btn:hover {
+    .nav-item:hover {
       background: var(--bg-elevated);
       color: var(--text-primary);
     }
 
-    .nav-btn.active {
+    .nav-item.active {
       background: var(--accent);
-      color: #FFFFFF;
+      color: #ffffff;
       font-weight: 600;
     }
 
-    .nav-count {
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      padding: 0.1rem 0.45rem;
-      border-radius: 0.35rem;
-      background: var(--bg-elevated);
-      color: var(--text-muted);
+    .main-area {
+      padding: 1.5rem 2rem;
+      max-width: 1180px;
+      width: 100%;
+      margin: 0 auto;
     }
 
-    .nav-btn.active .nav-count {
-      background: rgba(255, 255, 255, 0.2);
-      color: #FFFFFF;
-    }
-
-    .main-canvas {
-      flex: 1;
-      padding: 2rem;
-      min-width: 0;
-    }
-
-    /* Welcome Screen & Onboarding Cards */
-    .welcome-hero {
-      max-width: 920px;
-      margin: 1rem auto;
+    /* Tarjetas */
+    .card {
       background: var(--bg-surface);
-      border: 1px solid var(--border-color);
-      border-radius: 1rem;
-      padding: 2.25rem;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.35rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 1.15rem;
     }
 
-    .onboarding-steps-grid {
+    .kpi-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 0.9rem;
-      margin: 1.5rem 0;
+      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+      gap: 0.85rem;
+      margin-bottom: 1.25rem;
     }
 
-    .onboarding-step-card {
-      background: var(--bg-canvas);
-      border: 1px solid var(--border-color);
-      border-radius: 0.75rem;
+    .kpi-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
       padding: 1rem;
     }
 
-    .onboarding-step-num {
-      font-family: var(--font-mono);
+    .kpi-label {
       font-size: 0.7rem;
-      font-weight: 700;
-      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-muted);
+      text-transform: uppercase;
     }
 
-    .dropzone-box {
-      border: 2px dashed var(--border-color);
-      border-radius: 0.9rem;
+    .kpi-value {
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin-top: 0.25rem;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .dropzone {
+      border: 2px dashed var(--accent);
+      background: var(--accent-soft);
+      border-radius: 16px;
       padding: 2rem;
       text-align: center;
-      background: var(--bg-canvas);
       cursor: pointer;
-      transition: all 0.2s ease;
-      margin-top: 1rem;
+      transition: transform 0.15s ease;
     }
 
-    .dropzone-box:hover, .dropzone-box.dragover {
-      border-color: var(--accent);
-      background: var(--accent-soft);
+    .dropzone:hover {
+      transform: translateY(-2px);
     }
 
-    /* Document Header & Progress */
-    .doc-banner {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-color);
-      border-radius: 0.9rem;
-      padding: 1.5rem;
-      margin-bottom: 1.75rem;
-    }
-
-    .topic-badge {
+    .badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: var(--accent);
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
       background: var(--accent-soft);
-      padding: 0.25rem 0.65rem;
-      border-radius: 0.4rem;
+      color: var(--accent);
     }
 
-    .progress-track {
-      width: 100%;
-      height: 8px;
-      background: var(--bg-elevated);
-      border-radius: 999px;
-      overflow: hidden;
-      margin-top: 0.4rem;
-    }
+    .section-pane { display: none; }
+    .section-pane.active { display: block; }
 
-    .progress-fill {
-      height: 100%;
-      background: var(--accent);
-      width: 0%;
-      transition: width 0.3s ease;
-    }
-
-    /* Cards & Sections */
-    .card-grid {
+    .grid-2 {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 1rem;
     }
 
-    .card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-color);
-      border-radius: 0.75rem;
-      padding: 1.25rem;
+    .input-field {
+      width: 100%;
+      padding: 0.65rem 0.9rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-size: 0.86rem;
     }
 
-    .card-meta {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      color: var(--accent);
-      font-weight: 600;
-      margin-bottom: 0.35rem;
-    }
-
-    .card-title {
-      font-family: var(--font-display);
-      font-size: 1.05rem;
-      font-weight: 700;
-      margin-bottom: 0.45rem;
-    }
-
-    .flashcard {
-      min-height: 170px;
-      cursor: pointer;
+    /* Flashcards */
+    .flashcard-box {
+      min-height: 220px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      transition: transform 0.2s ease, border-color 0.2s ease;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      background: var(--bg-surface);
+      transition: border-color 0.2s ease, transform 0.2s ease;
     }
 
-    .flashcard:hover {
+    .flashcard-box:hover {
       border-color: var(--accent);
       transform: translateY(-2px);
     }
 
-    .flashcard .fc-back { display: none; color: var(--accent); font-weight: 600; }
-    .flashcard.flipped .fc-front { display: none; }
-    .flashcard.flipped .fc-back { display: block; }
-
+    /* Quiz */
     .quiz-opt {
+      display: block;
       width: 100%;
       text-align: left;
-      padding: 0.65rem 0.9rem;
-      border-radius: 0.5rem;
-      border: 1px solid var(--border-color);
-      background: var(--bg-canvas);
-      color: var(--text-primary);
+      padding: 0.7rem 0.95rem;
       margin-top: 0.45rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg-primary);
+      color: var(--text-primary);
       cursor: pointer;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
     }
 
     .quiz-opt.correct {
-      border-color: #16A34A;
-      background: rgba(22, 163, 74, 0.14);
+      border-color: var(--emerald);
+      background: rgba(5, 150, 105, 0.14);
       font-weight: 600;
     }
 
     .quiz-opt.wrong {
-      border-color: #DC2626;
-      background: rgba(220, 38, 38, 0.14);
+      border-color: var(--rose);
+      background: rgba(225, 29, 72, 0.14);
     }
 
-    /* ==========================================================================
-       GUIDED TOUR SPOTLIGHT OVERLAY (PASO A PASO)
-       ========================================================================== */
+    /* Chat Tutor IA */
+    .chat-box {
+      height: 410px;
+      overflow-y: auto;
+      padding: 1rem;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .chat-msg {
+      max-width: 84%;
+      padding: 0.85rem 1.05rem;
+      border-radius: 12px;
+      font-size: 0.87rem;
+      line-height: 1.65;
+      white-space: pre-line;
+    }
+
+    .chat-msg.user {
+      align-self: flex-end;
+      background: var(--accent);
+      color: #ffffff;
+    }
+
+    .chat-msg.assistant {
+      align-self: flex-start;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+    }
+
+    .chat-citations {
+      margin-top: 0.55rem;
+      padding-top: 0.45rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    /* Tour Guiado Spotlight */
+    .tour-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 9998;
+      pointer-events: none;
+    }
+
     .tour-spotlight {
       position: fixed;
-      z-index: 9990;
-      pointer-events: none;
-      border-radius: 0.75rem;
+      z-index: 9999;
+      border-radius: 12px;
+      box-shadow: 0 0 0 9999px rgba(15, 23, 42, 0.72);
       border: 2px solid #3B82F6;
-      box-shadow: 0 0 0 9999px rgba(9, 13, 22, 0.74);
-      transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
-      display: none;
-    }
-
-    .tour-pulse-badge {
-      position: absolute;
-      top: -12px;
-      right: -12px;
-      width: 24px;
-      height: 24px;
-      border-radius: 999px;
-      background: #2563EB;
-      color: #FFFFFF;
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.5);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
     }
 
     .tour-card {
       position: fixed;
-      z-index: 9995;
-      width: min(92vw, 430px);
+      z-index: 10000;
+      width: 370px;
+      max-width: calc(100vw - 24px);
       background: var(--bg-surface);
-      color: var(--text-primary);
-      border: 1px solid #3B82F6;
-      border-radius: 1rem;
-      padding: 1.35rem;
-      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
-      display: none;
-      transition: top 0.25s ease, left 0.25s ease;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.45);
+      transition: all 0.28s ease;
     }
-
-    .tour-dots {
-      display: flex;
-      gap: 0.35rem;
-      align-items: center;
-    }
-
-    .tour-dot {
-      height: 7px;
-      width: 7px;
-      border-radius: 999px;
-      background: var(--border-color);
-      border: none;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .tour-dot.active {
-      width: 22px;
-      background: var(--accent);
-    }
-
-    .hidden { display: none !important; }
   </style>
 </head>
 <body>
-  <!-- GUIDED TOUR OVERLAY SPOTLIGHT -->
-  <div id="tourSpotlight" class="tour-spotlight">
-    <div id="tourStepCounterBubble" class="tour-pulse-badge">1</div>
-  </div>
 
-  <div id="tourCard" class="tour-card" role="dialog" aria-modal="true" aria-label="Tour Guiado Hércules AI Editor">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
-      <span id="tourStepBadge" class="topic-badge">PASO 1 DE 7 · TOUR GUIADO</span>
-      <button class="btn" onclick="closeGuidedTour()" style="padding:0.2rem 0.55rem; font-size:0.72rem;">Omitir ✕</button>
-    </div>
-    <h3 id="tourStepTitle" style="font-family:var(--font-display); font-size:1.08rem; font-weight:700; margin-bottom:0.4rem;"></h3>
-    <p id="tourStepDesc" style="font-size:0.84rem; color:var(--text-secondary); margin-bottom:0.75rem;"></p>
-    <div id="tourStepTip" style="font-size:0.76rem; background:var(--bg-canvas); border:1px solid var(--border-color); padding:0.55rem 0.75rem; border-radius:0.5rem; color:var(--text-muted); margin-bottom:1rem;"></div>
-    <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border-color); padding-top:0.75rem;">
-      <div id="tourDots" class="tour-dots"></div>
-      <div style="display:flex; gap:0.4rem;">
-        <button id="tourPrevBtn" class="btn" onclick="prevTourStep()">← Anterior</button>
-        <button id="tourNextBtn" class="btn btn-primary" onclick="nextTourStep()">Siguiente →</button>
+  <!-- BARRA SUPERIOR -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-logo">H</div>
+      <div>
+        <div class="brand-title">Hércules AI Editor</div>
+        <div class="brand-sub">Convierte cualquier documento en una experiencia inteligente de aprendizaje</div>
       </div>
     </div>
-  </div>
 
-  <!-- HEADER -->
-  <header class="app-header">
-    <div class="brand-group">
-      <a href="#" class="brand-title" onclick="switchSection('resumen')">Hércules AI Editor</a>
-      <span class="brand-slogan">Convierte cualquier documento en una experiencia inteligente de aprendizaje.</span>
-    </div>
-
-    <div class="header-actions">
-      <button id="btnStartTourHeader" class="btn btn-tour" onclick="startGuidedTour(0)">
+    <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;" data-tour="export-bar">
+      <button class="btn btn-amber" onclick="startGuidedTour(0)" title="Iniciar Tour Guiado Paso a Paso">
         ✨ Tour Guiado
       </button>
-      <button id="btnApiKey" class="btn" onclick="promptGeminiApiKey()">
-        🔑 Configurar Gemini API
+      <button class="btn" onclick="openApiKeyModal()" title="Configurar clave de Gemini API en LocalStorage">
+        🔑 Gemini API Key
       </button>
-      <button class="btn" onclick="toggleDarkMode()">
-        🌓 Modo Oscuro
-      </button>
-      <button class="btn btn-primary" onclick="triggerFileSelector()">
-        📄 Cargar Nuevo PDF / DOCX
-      </button>
-      <input
-        type="file"
-        id="hiddenFileInput"
-        accept=".pdf,.docx,.txt,.md,.epub,.pptx"
-        class="hidden"
-        onchange="handleFileSelected(event)"
-      />
+      <button class="btn" onclick="exportDocumentHTML()">Exportar HTML</button>
+      <button class="btn" onclick="exportDocumentPDF()">Exportar PDF</button>
+      <button class="btn" onclick="exportDocumentWord()">Exportar Word</button>
+      <button class="btn" onclick="exportDocumentMarkdown()">Exportar MD</button>
+      <button class="btn" onclick="exportDocumentTXT()">Exportar TXT</button>
+      <button class="btn" onclick="toggleDarkMode()" id="themeBtn">🌙 Tema</button>
     </div>
   </header>
 
-  <!-- STATUS & EXPORT STRIP -->
-  <div class="status-strip">
-    <div style="display:flex; align-items:center; gap:0.85rem; flex-wrap:wrap;">
-      <span style="color:var(--emerald); font-weight:700;">● IndexedDB + PDF.js + Mammoth.js</span>
-      <span>Documentos en Biblioteca: <strong id="statTotalDocs">0</strong></span>
-      <span>Progreso Global: <strong id="statProgressPct" style="color:var(--accent);">0%</strong></span>
-      <span>Calificación: <strong id="statGrade10" style="color:var(--emerald);">0.0 / 10</strong></span>
-    </div>
-    <div id="exportToolbarTarget" style="display:flex; align-items:center; gap:0.4rem;">
-      <span style="color:var(--text-muted);">Exportar:</span>
-      <button class="btn btn-primary" style="padding:0.25rem 0.6rem; font-size:0.72rem;" onclick="exportToPdf()">PDF</button>
-      <button class="btn" style="padding:0.25rem 0.6rem; font-size:0.72rem;" onclick="exportToMarkdown()">Markdown</button>
-      <button class="btn" style="padding:0.25rem 0.6rem; font-size:0.72rem;" onclick="exportToTxt()">TXT</button>
-    </div>
-  </div>
-
-  <!-- MAIN WORKSPACE -->
   <div class="workspace">
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-      <div id="sidebarLibraryTarget">
-        <div class="sidebar-group-title">Tus Documentos (<span id="sidebarDocCount">0</span>)</div>
-        <div id="sidebarDocList" style="font-size:0.78rem; color:var(--text-muted);">
-          Sube tu primer archivo PDF o DOCX para generar su contenido.
+    <!-- MENÚ LATERAL -->
+    <aside class="sidebar" data-tour="sidebar-nav">
+      <div>
+        <div class="sidebar-label">Cargar Documento</div>
+        <label class="btn btn-primary" style="width:100%; justify-content:center; cursor:pointer;">
+          + Subir PDF / DOCX / TXT / EPUB / PPTX
+          <input type="file" id="fileInput" accept=".pdf,.docx,.txt,.md,.epub,.pptx" style="display:none;" onchange="handleFileUpload(event)" />
+        </label>
+      </div>
+
+      <div>
+        <div class="sidebar-label">Secciones de Aprendizaje</div>
+        <div id="navList" style="display:flex; flex-direction:column; gap:0.2rem;">
+          <button class="nav-item active" data-sec="dashboard" onclick="switchSection('dashboard')"><span>📊 Dashboard y Progreso</span></button>
+          <button class="nav-item" data-sec="resumen" onclick="switchSection('resumen')"><span>📝 Resumen Ejecutivo</span></button>
+          <button class="nav-item" data-sec="capitulos" onclick="switchSection('capitulos')"><span>📚 Capítulos del Documento</span></button>
+          <button class="nav-item" data-sec="curso" onclick="switchSection('curso')" data-tour="nav-curso"><span>🎓 Generador de Cursos</span></button>
+          <button class="nav-item" data-sec="conceptos" onclick="switchSection('conceptos')"><span>💡 Conceptos Clave</span></button>
+          <button class="nav-item" data-sec="mapa" onclick="switchSection('mapa')"><span>🕸️ Mapa Conceptual</span></button>
+          <button class="nav-item" data-sec="flashcards" onclick="switchSection('flashcards')" data-tour="nav-flashcards"><span>🃏 Flashcards Interactivas</span></button>
+          <button class="nav-item" data-sec="cuestionario" onclick="switchSection('cuestionario')" data-tour="nav-cuestionario"><span>✅ Cuestionario y Calificación</span></button>
+          <button class="nav-item" data-sec="actividades" onclick="switchSection('actividades')"><span>🛠️ Actividades Prácticas</span></button>
+          <button class="nav-item" data-sec="glosario" onclick="switchSection('glosario')"><span>📖 Glosario Dinámico</span></button>
+          <button class="nav-item" data-sec="tutor" onclick="switchSection('tutor')" data-tour="nav-chat"><span>🤖 Tutor IA Experto (20 turnos)</span></button>
+          <button class="nav-item" data-sec="comparador" onclick="switchSection('comparador')"><span>⚖️ Comparador de Documentos</span></button>
+          <button class="nav-item" data-sec="busqueda" onclick="switchSection('busqueda')"><span>🔍 Búsqueda Semántica</span></button>
         </div>
       </div>
 
-      <div id="sidebarContentGroup">
-        <div class="sidebar-group-title">Contenido del Documento</div>
-        <button class="nav-btn active" data-sec="resumen" onclick="switchSection('resumen')">
-          <span>1. Tema y Resumen Nuevo</span>
-        </button>
-        <button class="nav-btn" data-sec="capitulos" onclick="switchSection('capitulos')">
-          <span>2. Capítulos Nuevos</span>
-          <span class="nav-count" id="countChapters">0</span>
-        </button>
-        <button class="nav-btn" data-sec="conceptos" onclick="switchSection('conceptos')">
-          <span>3. Conceptos Clave</span>
-          <span class="nav-count" id="countConcepts">0</span>
-        </button>
-        <button class="nav-btn" data-sec="glosario" onclick="switchSection('glosario')">
-          <span>4. Glosario Nuevo</span>
-          <span class="nav-count" id="countGlossary">0</span>
-        </button>
-        <button class="nav-btn" data-sec="mapa" onclick="switchSection('mapa')">
-          <span>5. Mapa Conceptual</span>
-        </button>
+      <div>
+        <div class="sidebar-label">Biblioteca Persistente (IndexedDB)</div>
+        <div id="libraryList" style="display:flex; flex-direction:column; gap:0.4rem; max-height:220px; overflow-y:auto;"></div>
       </div>
 
-      <div id="sidebarPracticeGroup">
-        <div class="sidebar-group-title">Cursos, Práctica & Calificaciones</div>
-        <button id="navCursoBtn" class="nav-btn" data-sec="curso" onclick="switchSection('curso')">
-          <span>Generador de Cursos</span>
-          <span class="nav-count" id="countCourse">0</span>
-        </button>
-        <button class="nav-btn" data-sec="flashcards" onclick="switchSection('flashcards')">
-          <span>Flashcards Nuevas</span>
-          <span class="nav-count" id="countFlashcards">0</span>
-        </button>
-        <button class="nav-btn" data-sec="cuestionario" onclick="switchSection('cuestionario')">
-          <span>Cuestionario Nuevo</span>
-          <span class="nav-count" id="countQuizzes">0</span>
-        </button>
-        <button id="navCalificacionesBtn" class="nav-btn" data-sec="calificaciones" onclick="switchSection('calificaciones')">
-          <span>Progreso y Calificaciones</span>
-        </button>
-      </div>
-
-      <div id="sidebarToolsGroup">
-        <div class="sidebar-group-title">Tutor IA & Comparador</div>
-        <button id="navTutorBtn" class="nav-btn" data-sec="tutor" onclick="switchSection('tutor')">
-          <span>Tutor IA (Gemini API)</span>
-        </button>
-        <button class="nav-btn" data-sec="comparador" onclick="switchSection('comparador')">
-          <span>Comparador de Documentos</span>
-        </button>
+      <div>
+        <div class="sidebar-label">Historial de Análisis</div>
+        <div id="historyList" style="display:flex; flex-direction:column; gap:0.35rem; font-size:0.75rem; color:var(--text-secondary); max-height:150px; overflow-y:auto;"></div>
       </div>
     </aside>
 
-    <!-- MAIN CANVAS -->
-    <main class="main-canvas">
-      <!-- PANTALLA DE BIENVENIDA CON TUTORIAL GUIADO PASO A PASO -->
-      <div id="welcomeView" class="welcome-hero">
-        <span class="topic-badge">BIENVENIDO A HÉRCULES AI EDITOR · SIN CONTENIDO DE EJEMPLO ANTERIOR</span>
-        <h1 style="font-family:var(--font-display); font-size:clamp(1.6rem, 3vw, 2.25rem); margin-top:0.75rem; line-height:1.2;">
-          Carga tu primer archivo PDF o DOCX y recorre tu experiencia con el Tour Guiado Interactivo
-        </h1>
-        <p style="color:var(--text-secondary); font-size:0.92rem; margin-top:0.5rem;">
-          Al subir tu primer documento, Hércules AI Editor extraerá el texto real en el navegador, detectará su <strong>tema principal</strong>, creará capítulos, resumen, conceptos, flashcards, cuestionario y glosario nuevos, y activará un <strong>overlay paso a paso</strong> resaltando cada sección clave.
+    <!-- ÁREA PRINCIPAL -->
+    <main class="main-area">
+      <!-- PANTALLA DE BIENVENIDA -->
+      <div id="welcomeScreen" class="card" style="padding:2rem;">
+        <span class="badge">PLATAFORMA SAAS EDUCATIVA · 100% COMPATIBLE CON GITHUB PAGES</span>
+        <h1 style="font-size:2rem; margin:0.75rem 0 0.5rem;">Hércules AI Editor</h1>
+        <p style="color:var(--text-secondary); max-width:740px; margin-bottom:1.5rem;">
+          Convierte cualquier documento <strong>PDF, DOCX, TXT, EPUB o PPTX</strong> en un curso interactivo completo con capítulos propios, resumen ejecutivo, flashcards, cuestionarios calificables, mapa conceptual y un <strong>Tutor IA en modo Profesor Experto con memoria conversacional de 20 interacciones</strong>.
         </p>
 
-        <div class="onboarding-steps-grid">
-          <div class="onboarding-step-card">
-            <div class="onboarding-step-num">PASO 01 · INGESTA LOCAL</div>
-            <h3 style="font-family:var(--font-display); font-size:0.95rem; margin:0.25rem 0;">Sube tu PDF, DOCX o TXT</h3>
-            <p style="font-size:0.78rem; color:var(--text-muted);">Procesamiento inmediato con PDF.js y Mammoth.js compatible al 100% con GitHub Pages.</p>
-          </div>
-          <div class="onboarding-step-card">
-            <div class="onboarding-step-num">PASO 02 · MOTOR PROPIO</div>
-            <h3 style="font-family:var(--font-display); font-size:0.95rem; margin:0.25rem 0;">Detección de Tema</h3>
-            <p style="font-size:0.78rem; color:var(--text-muted);">Construye resumen ejecutivo, capítulos, conceptos clave, flashcards, quiz y glosario propios.</p>
-          </div>
-          <div class="onboarding-step-card">
-            <div class="onboarding-step-num">PASO 03 · TOUR CON OVERLAY</div>
-            <h3 style="font-family:var(--font-display); font-size:0.95rem; margin:0.25rem 0;">Recorrido Paso a Paso</h3>
-            <p style="font-size:0.78rem; color:var(--text-muted);">Un reflector interactivo resalta las 7 áreas clave de estudio sobre tu primer archivo cargado.</p>
-          </div>
-          <div class="onboarding-step-card">
-            <div class="onboarding-step-num">PASO 04 · EVALUACIÓN & IA</div>
-            <h3 style="font-family:var(--font-display); font-size:0.95rem; margin:0.25rem 0;">Cursos, Notas y Tutor IA</h3>
-            <p style="font-size:0.78rem; color:var(--text-muted);">Mide tu progreso, obtén calificaciones y consulta al Tutor IA con Gemini API.</p>
-          </div>
+        <div class="dropzone" id="dropzoneArea" onclick="document.getElementById('fileInput').click()">
+          <h3 style="font-size:1.15rem; margin-bottom:0.35rem;">Arrastra y suelta tu documento aquí o haz clic para seleccionarlo</h3>
+          <p style="font-size:0.84rem; color:var(--text-secondary);">
+            Procesamiento real en navegador con PDF.js, Mammoth.js, JSZip, IndexedDB y Gemini API. Al subir tu primer archivo se iniciará automáticamente el Tour Guiado Paso a Paso.
+          </p>
         </div>
 
-        <div
-          id="welcomeDropzone"
-          class="dropzone-box"
-          onclick="triggerFileSelector()"
-          ondragover="event.preventDefault(); this.classList.add('dragover');"
-          ondragleave="this.classList.remove('dragover');"
-          ondrop="handleFileDrop(event)"
-        >
-          <div style="font-size:2rem; margin-bottom:0.4rem;">📂</div>
-          <div style="font-family:var(--font-display); font-weight:700; font-size:1.05rem;">
-            Arrastra y suelta tu archivo PDF, DOCX o TXT aquí o haz clic para seleccionar
+        <div style="margin-top:1.5rem;">
+          <div class="sidebar-label" style="margin-bottom:0.65rem;">Vista previa del Tour Guiado (7 Pasos Interactivos)</div>
+          <div class="grid-2" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+            <div class="kpi-card"><strong>1. Tema Detectado</strong><p style="font-size:0.78rem; color:var(--text-secondary);">Identificación automática de la temática y tesis del archivo.</p></div>
+            <div class="kpi-card"><strong>2. Navegación Modular</strong><p style="font-size:0.78rem; color:var(--text-secondary);">Acceso a 13 módulos de estudio e IndexedDB.</p></div>
+            <div class="kpi-card"><strong>3. Curso Estructurado</strong><p style="font-size:0.78rem; color:var(--text-secondary);">Módulos paso a paso con barra de progreso.</p></div>
+            <div class="kpi-card"><strong>4. Flashcards Activas</strong><p style="font-size:0.78rem; color:var(--text-secondary);">Tarjetas de repetición espaciada extraídas del texto.</p></div>
+            <div class="kpi-card"><strong>5. Evaluación y Nota</strong><p style="font-size:0.78rem; color:var(--text-secondary);">Cuestionario con calificación automática sobre 10.</p></div>
+            <div class="kpi-card"><strong>6. Tutor IA con Memoria</strong><p style="font-size:0.78rem; color:var(--text-secondary);">Profesor experto con memoria de 20 turnos y preguntas de seguimiento.</p></div>
           </div>
-          <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.3rem;">
-            Al finalizar el análisis se abrirá automáticamente el Tour Guiado Paso a Paso con Overlay
-          </p>
-          <div id="uploadStatusText" style="margin-top:0.75rem; font-family:var(--font-mono); font-size:0.78rem; color:var(--accent);"></div>
         </div>
       </div>
 
-      <!-- CONTENEDOR DEL DOCUMENTO ACTIVO -->
-      <div id="documentWorkspace" class="hidden">
-        <!-- BANNER DEL DOCUMENTO (PASO 1 DEL TOUR) -->
-        <div id="docHeaderBanner" class="doc-banner">
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; margin-bottom:0.65rem;">
-            <span class="topic-badge" id="activeTopicBadge">TEMA PRINCIPAL DETECTADO: —</span>
-            <div style="display:flex; gap:0.45rem;">
-              <button class="btn btn-tour" onclick="startGuidedTour(0)">✨ Repetir Tour Guiado</button>
-              <button class="btn" onclick="triggerFileSelector()">+ Subir Otro Archivo</button>
-            </div>
-          </div>
-          <h1 id="activeDocTitle" style="font-family:var(--font-display); font-size:clamp(1.5rem, 2.6vw, 2.2rem); line-height:1.2;"></h1>
-          <p id="activeDocSubtitle" style="color:var(--text-secondary); font-size:0.9rem; margin-top:0.25rem;"></p>
-
-          <div style="margin-top:1rem; padding-top:0.9rem; border-top:1px solid var(--border-color); display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; align-items:center;">
+      <!-- CONTENEDOR DOCUMENTO ACTIVO -->
+      <div id="documentWorkspace" style="display:none;">
+        <!-- Cabecera del documento -->
+        <div class="card" data-tour="doc-header" style="background:linear-gradient(135deg, rgba(29,78,216,0.08), rgba(67,56,202,0.04));">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; flex-wrap:wrap;">
             <div>
-              <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:0.72rem;">
-                <span>PROGRESO DE APRENDIZAJE</span>
-                <strong id="bannerProgressText">0%</strong>
-              </div>
-              <div class="progress-track">
-                <div id="bannerProgressBar" class="progress-fill"></div>
-              </div>
+              <span class="badge" id="docTopicBadge">TEMA DETECTADO</span>
+              <h1 id="docTitleHeading" style="font-size:1.65rem; margin-top:0.4rem;">Título del Documento</h1>
+              <p id="docThesisText" style="color:var(--text-secondary); font-size:0.92rem; margin-top:0.35rem;"></p>
             </div>
-            <div style="font-family:var(--font-mono); font-size:0.78rem;">
-              CALIFICACIÓN ACTUAL: <strong id="bannerGradeText" style="color:var(--emerald);">0.0 / 10 (En Curso)</strong>
-            </div>
+            <button class="btn btn-amber" onclick="startGuidedTour(0)">✨ Ver Tour de esta Vista</button>
           </div>
         </div>
 
-        <!-- SECCIÓN 1: RESUMEN EJECUTIVO NUEVO -->
-        <section id="sec-resumen" class="doc-section">
-          <div class="card" style="margin-bottom:1rem; border-left:4px solid var(--accent);">
-            <div class="card-meta">TESIS CENTRAL DEL DOCUMENTO</div>
-            <p id="resumenThesis" style="font-family:var(--font-display); font-size:1.05rem; font-weight:600;"></p>
+        <!-- KPIs -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-label">Palabras Procesadas</div>
+            <div class="kpi-value" id="kpiWords">0</div>
           </div>
-          <div class="card" style="margin-bottom:1rem;">
-            <div class="card-meta">RESUMEN EJECUTIVO PROPIO</div>
-            <p id="resumenOverview" style="white-space:pre-line; font-size:0.92rem;"></p>
+          <div class="kpi-card">
+            <div class="kpi-label">Capítulos Creados</div>
+            <div class="kpi-value" id="kpiChapters">0</div>
           </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Progreso de Aprendizaje</div>
+            <div class="kpi-value" id="kpiProgress">0%</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Calificación Examen</div>
+            <div class="kpi-value" id="kpiGrade">0.0 / 10</div>
+          </div>
+        </div>
+
+        <!-- 1. DASHBOARD -->
+        <section id="sec-dashboard" class="section-pane active">
           <div class="card">
-            <div class="card-meta">HALLAZGOS CLAVE EXTRAÍDOS</div>
-            <ul id="resumenFindings" style="padding-left:1.2rem; font-size:0.9rem;"></ul>
+            <h2 style="margin-bottom:0.5rem;">📊 Panel de Estadísticas y Progreso</h2>
+            <p id="dashboardOverview" style="color:var(--text-secondary);"></p>
           </div>
+          <div class="grid-2" id="dashboardFindings"></div>
         </section>
 
-        <!-- SECCIÓN 2: CAPÍTULOS NUEVOS -->
-        <section id="sec-capitulos" class="doc-section hidden">
-          <div id="capitulosList" style="display:flex; flex-direction:column; gap:0.9rem;"></div>
-        </section>
-
-        <!-- SECCIÓN 3: CONCEPTOS CLAVE NUEVOS -->
-        <section id="sec-conceptos" class="doc-section hidden">
-          <div id="conceptosList" class="card-grid"></div>
-        </section>
-
-        <!-- SECCIÓN 4: GLOSARIO NUEVO -->
-        <section id="sec-glosario" class="doc-section hidden">
-          <input
-            type="search"
-            placeholder="Filtrar término del glosario..."
-            oninput="renderGlossary(this.value)"
-            style="width:100%; padding:0.65rem 0.9rem; border-radius:0.5rem; border:1px solid var(--border-color); background:var(--bg-surface); color:var(--text-primary); margin-bottom:1rem;"
-          />
-          <div id="glosarioList" class="card-grid"></div>
-        </section>
-
-        <!-- SECCIÓN 5: MAPA CONCEPTUAL INTERACTIVO -->
-        <section id="sec-mapa" class="doc-section hidden">
+        <!-- 2. RESUMEN -->
+        <section id="sec-resumen" class="section-pane">
           <div class="card">
-            <div class="card-meta">RED CONCEPTUAL JERÁRQUICA (SVG)</div>
-            <div id="conceptMapSvgContainer" style="width:100%; overflow-x:auto; padding:1rem 0;"></div>
+            <h2 style="margin-bottom:0.65rem;">📝 Resumen Ejecutivo</h2>
+            <p id="resumenOverview" style="margin-bottom:1rem;"></p>
+            <h3 style="font-size:1rem; margin-bottom:0.5rem;">Hallazgos y Puntos Clave</h3>
+            <ul id="resumenList" style="padding-left:1.25rem; color:var(--text-secondary);"></ul>
           </div>
         </section>
 
-        <!-- SECCIÓN 6: GENERADOR DE CURSOS -->
-        <section id="sec-curso" class="doc-section hidden">
-          <div id="cursoModulesList" style="display:flex; flex-direction:column; gap:1rem;"></div>
+        <!-- 3. CAPÍTULOS -->
+        <section id="sec-capitulos" class="section-pane">
+          <div id="chaptersContainer"></div>
         </section>
 
-        <!-- SECCIÓN 7: FLASHCARDS NUEVAS -->
-        <section id="sec-flashcards" class="doc-section hidden">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-            <span style="font-size:0.85rem; color:var(--text-secondary);">Haz clic en una tarjeta para voltearla o márcala como dominada:</span>
-            <button class="btn btn-primary" onclick="generateExtraFlashcards()">+ Generar Más Flashcards del Documento</button>
-          </div>
-          <div id="flashcardsGrid" class="card-grid"></div>
-        </section>
-
-        <!-- SECCIÓN 8: CUESTIONARIO NUEVO -->
-        <section id="sec-cuestionario" class="doc-section hidden">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-            <span id="quizScoreHeader" style="font-family:var(--font-mono); font-size:0.88rem; font-weight:700;">Aciertos: 0 / 0</span>
-            <button class="btn btn-primary" onclick="generateExtraQuizQuestions()">+ Generar Más Preguntas</button>
-          </div>
-          <div id="quizList" style="display:flex; flex-direction:column; gap:1rem;"></div>
-        </section>
-
-        <!-- SECCIÓN 9: PROGRESO Y CALIFICACIONES -->
-        <section id="sec-calificaciones" class="doc-section hidden">
-          <div class="card" style="margin-bottom:1rem;">
-            <div class="card-meta">BOLETÍN ACADÉMICO DE APRENDIZAJE</div>
-            <h3 class="card-title">Rendimiento en el Documento Activo</h3>
-            <p id="gradebookSummaryText" style="font-size:0.9rem; color:var(--text-secondary); margin-bottom:1rem;"></p>
-            <button class="btn btn-primary" onclick="exportToPdf()">Descargar Informe y Calificaciones en PDF</button>
-          </div>
-        </section>
-
-        <!-- SECCIÓN 10: TUTOR IA CON GEMINI API -->
-        <section id="sec-tutor" class="doc-section hidden">
+        <!-- 4. GENERADOR DE CURSOS -->
+        <section id="sec-curso" class="section-pane">
           <div class="card">
-            <div class="card-meta">TUTOR IA CON GEMINI API / MOTOR CONTEXTUAL</div>
-            <div id="chatMessagesBox" style="max-height:340px; overflow-y:auto; display:flex; flex-direction:column; gap:0.65rem; margin:0.85rem 0; padding:0.5rem; background:var(--bg-canvas); border-radius:0.5rem;"></div>
-            <div style="display:flex; gap:0.5rem;">
-              <input
-                type="text"
-                id="tutorQuestionInput"
-                placeholder="Pregunta sobre el tema principal, capítulos o conceptos del documento..."
-                onkeydown="if(event.key==='Enter') askTutorQuestion()"
-                style="flex:1; padding:0.65rem 0.9rem; border-radius:0.5rem; border:1px solid var(--border-color); background:var(--bg-surface); color:var(--text-primary);"
-              />
-              <button class="btn btn-primary" onclick="askTutorQuestion()">Enviar</button>
-            </div>
-          </div>
-        </section>
-
-        <!-- SECCIÓN 11: COMPARADOR DE DOCUMENTOS -->
-        <section id="sec-comparador" class="doc-section hidden">
-          <div class="card">
-            <div class="card-meta">COMPARADOR DE DOCUMENTOS EN BIBLIOTECA</div>
-            <p style="font-size:0.86rem; color:var(--text-secondary); margin-bottom:1rem;">
-              Selecciona dos documentos cargados en tu biblioteca IndexedDB para comparar sus temas principales, vocabulario y enfoque:
+            <h2>🎓 Curso Interactivo Generado</h2>
+            <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:1rem;">
+              Marca cada módulo como completado para incrementar tu progreso de aprendizaje.
             </p>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:1rem;">
-              <select id="cmpSelectA" style="padding:0.55rem; border-radius:0.45rem; border:1px solid var(--border-color); background:var(--bg-canvas); color:var(--text-primary);"></select>
-              <select id="cmpSelectB" style="padding:0.55rem; border-radius:0.45rem; border:1px solid var(--border-color); background:var(--bg-canvas); color:var(--text-primary);"></select>
+            <div id="courseContainer"></div>
+          </div>
+        </section>
+
+        <!-- 5. CONCEPTOS CLAVE -->
+        <section id="sec-conceptos" class="section-pane">
+          <div class="grid-2" id="conceptsContainer"></div>
+        </section>
+
+        <!-- 6. MAPA CONCEPTUAL -->
+        <section id="sec-mapa" class="section-pane">
+          <div class="card">
+            <h2 style="margin-bottom:0.75rem;">🕸️ Mapa Conceptual Interactivo</h2>
+            <div id="conceptMapHolder" style="width:100%; overflow-x:auto;"></div>
+          </div>
+        </section>
+
+        <!-- 7. FLASHCARDS -->
+        <section id="sec-flashcards" class="section-pane">
+          <div class="card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+              <h2>🃏 Flashcards Interactivas</h2>
+              <span class="badge" id="flashcardCounter">1 / 1</span>
             </div>
-            <button class="btn btn-primary" onclick="runComparison()">Comparar Documentos</button>
-            <div id="comparisonOutput" style="margin-top:1rem; font-size:0.88rem;"></div>
+            <div class="flashcard-box" onclick="flipCurrentFlashcard()">
+              <div class="badge" id="flashcardSideBadge" style="margin-bottom:0.75rem;">PREGUNTA (Haz clic para voltear)</div>
+              <h3 id="flashcardText" style="font-size:1.2rem; max-width:620px;"></h3>
+            </div>
+            <div style="display:flex; justify-content:space-between; margin-top:1rem;">
+              <button class="btn" onclick="prevFlashcard()">← Anterior</button>
+              <button class="btn btn-primary" onclick="flipCurrentFlashcard()">Voltear Tarjeta</button>
+              <button class="btn" onclick="nextFlashcard()">Siguiente →</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 8. CUESTIONARIO -->
+        <section id="sec-cuestionario" class="section-pane">
+          <div class="card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+              <h2>✅ Evaluación Automatizada y Calificación</h2>
+              <span class="badge" id="quizScoreBadge">Calificación: 0.0 / 10</span>
+            </div>
+            <div id="quizContainer"></div>
+          </div>
+        </section>
+
+        <!-- 9. ACTIVIDADES -->
+        <section id="sec-actividades" class="section-pane">
+          <div id="activitiesContainer"></div>
+        </section>
+
+        <!-- 10. GLOSARIO -->
+        <section id="sec-glosario" class="section-pane">
+          <div class="card">
+            <h2 style="margin-bottom:0.75rem;">📖 Glosario Dinámico del Documento</h2>
+            <input type="text" class="input-field" placeholder="Filtrar término del glosario..." oninput="filterGlossary(this.value)" style="margin-bottom:1rem;" />
+            <div class="grid-2" id="glossaryContainer"></div>
+          </div>
+        </section>
+
+        <!-- 11. TUTOR IA EN MODO PROFESOR EXPERTO CON MEMORIA DE 20 INTERACCIONES -->
+        <section id="sec-tutor" class="section-pane">
+          <div class="card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.85rem; flex-wrap:wrap; gap:0.5rem;">
+              <div>
+                <span class="badge">MODO PROFESOR EXPERTO · MEMORIA DE LAS ÚLTIMAS 20 INTERACCIONES</span>
+                <h2 style="margin-top:0.35rem;">🤖 Tutor IA Contextual con Memoria Conversacional</h2>
+                <p style="font-size:0.82rem; color:var(--text-secondary);">
+                  Recuerda tus últimas 20 interacciones en LocalStorage y comprende preguntas de seguimiento (ej. <em>«¿Qué es la ansiedad?»</em> seguido de <em>«¿Cómo se controla?»</em>).
+                </p>
+              </div>
+              <div style="display:flex; align-items:center; gap:0.5rem;">
+                <span class="badge" id="tutorMemoryBadge">Memoria: 0 / 20 turnos</span>
+                <button class="btn btn-danger" onclick="clearCurrentDocumentTutorMemory()" title="Borrar historial conversacional de este documento">
+                  Limpiar memoria
+                </button>
+              </div>
+            </div>
+
+            <div class="chat-box" id="tutorChatBox"></div>
+
+            <div id="tutorSuggestions" style="display:flex; gap:0.45rem; flex-wrap:wrap; margin-bottom:0.75rem;"></div>
+
+            <form onsubmit="event.preventDefault(); askExpertTutor();">
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="tutorInput" class="input-field" placeholder="Haz una pregunta o una pregunta de seguimiento (ej. ¿Cómo se controla?, Dame un ejemplo)..." />
+                <button type="submit" class="btn btn-primary" id="tutorSendBtn">Preguntar al Profesor</button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- 12. COMPARADOR -->
+        <section id="sec-comparador" class="section-pane">
+          <div class="card">
+            <h2 style="margin-bottom:0.75rem;">⚖️ Comparador de Documentos de tu Biblioteca</h2>
+            <div class="grid-2" style="margin-bottom:1rem;">
+              <div>
+                <label class="sidebar-label">Documento A</label>
+                <select id="compDocA" class="input-field" onchange="runDocumentComparison()"></select>
+              </div>
+              <div>
+                <label class="sidebar-label">Documento B</label>
+                <select id="compDocB" class="input-field" onchange="runDocumentComparison()"></select>
+              </div>
+            </div>
+            <div id="comparisonResult"></div>
+          </div>
+        </section>
+
+        <!-- 13. BÚSQUEDA SEMÁNTICA -->
+        <section id="sec-busqueda" class="section-pane">
+          <div class="card">
+            <h2 style="margin-bottom:0.75rem;">🔍 Búsqueda Semántica en el Documento</h2>
+            <input type="text" class="input-field" placeholder="Escribe una idea, concepto o pregunta..." oninput="runSemanticSearch(this.value)" style="margin-bottom:1rem;" />
+            <div id="semanticResults"></div>
           </div>
         </section>
       </div>
     </main>
   </div>
 
+  <!-- MODAL CLAVE API GEMINI (GUARDADA EN LOCALSTORAGE PARA GITHUB PAGES) -->
+  <div id="apiKeyModal" style="display:none; position:fixed; inset:0; background:rgba(15,23,42,0.72); z-index:9000; align-items:center; justify-content:center; padding:1rem;">
+    <div class="card" style="max-width:480px; width:100%;">
+      <h3 style="margin-bottom:0.5rem;">🔑 Configurar Gemini API Key (LocalStorage)</h3>
+      <p style="font-size:0.83rem; color:var(--text-secondary); margin-bottom:1rem;">
+        Para usar Gemini directamente desde GitHub Pages sin servidor, tu clave se almacena únicamente en el <code>LocalStorage</code> de tu navegador. Nunca se incluye en el código fuente.
+      </p>
+      <input type="password" id="geminiKeyInput" class="input-field" placeholder="AIzaSy..." style="margin-bottom:1rem;" />
+      <div style="display:flex; justify-content:flex-end; gap:0.5rem;">
+        <button class="btn" onclick="closeApiKeyModal()">Cancelar</button>
+        <button class="btn btn-primary" onclick="saveApiKey()">Guardar en LocalStorage</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- OVERLAY DEL TOUR GUIADO PASO A PASO -->
+  <div id="guidedTourContainer" style="display:none;">
+    <div class="tour-backdrop"></div>
+    <div id="tourSpotlight" class="tour-spotlight"></div>
+    <div id="tourCard" class="tour-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+        <span class="badge" id="tourStepBadge">PASO 1 DE 7</span>
+        <button class="btn" style="padding:0.2rem 0.5rem;" onclick="closeGuidedTour()">✕</button>
+      </div>
+      <h3 id="tourTitle" style="font-size:1.05rem; margin-bottom:0.4rem;"></h3>
+      <p id="tourDesc" style="font-size:0.83rem; color:var(--text-secondary); margin-bottom:0.75rem;"></p>
+      <div id="tourTip" style="font-size:0.76rem; padding:0.55rem 0.75rem; border-radius:8px; background:var(--accent-soft); color:var(--accent); margin-bottom:0.9rem;"></div>
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <button class="btn" id="tourPrevBtn" onclick="prevTourStep()">← Anterior</button>
+        <button class="btn btn-primary" id="tourNextBtn" onclick="nextTourStep()">Siguiente →</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // Configuraciones de PDF.js Worker
     if (window.pdfjsLib) {
       window.pdfjsLib.GlobalWorkerOptions.workerSrc =
         'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
     }
 
-    const DB_NAME = 'HerculesStandaloneGuidedDB_v1';
-    const TOUR_DONE_KEY = 'hercules_first_file_tour_completed_v1';
-    const GEMINI_KEY_STORAGE = 'hercules_gemini_api_key_local';
+    const DB_NAME = 'HerculesAIEditorSaaS_DB';
+    const DB_VERSION = 2;
+    const DOC_STORE = 'documents';
+    const HISTORY_STORE = 'history';
 
-    let db = null;
+    const STORAGE_GEMINI_KEY = 'hercules_gemini_api_key';
+    const STORAGE_TOUR_DONE = 'hercules_guided_tour_done_v2';
+    const STORAGE_TUTOR_MEMORY_PREFIX = 'hercules_ai_tutor_memory_v2_';
+    const MAX_TUTOR_MEMORY_INTERACTIONS = 20;
+
+    let dbInstance = null;
     let documentsLibrary = [];
-    let activeDoc = null;
-    let masteredCards = new Set();
-    let completedCourseUnits = new Set();
-    let quizAnswersMap = {};
+    let activeDocument = null;
+    let currentFlashcardIndex = 0;
+    let isFlashcardFlipped = false;
+    let quizUserAnswers = {};
+    let completedCourseSteps = {};
+    let currentTourStep = 0;
 
-    // =========================================================================
-    // DEFINICIÓN DEL TOUR GUIADO PASO A PASO CON OVERLAY SPOTLIGHT
-    // =========================================================================
     const GUIDED_TOUR_STEPS = [
       {
-        selector: '#docHeaderBanner',
-        section: 'resumen',
-        badge: 'PASO 1 DE 7 · TEMA Y PROGRESO',
-        title: 'Detección del Tema Principal y Resumen Propio',
-        desc: '¡Tu archivo ha sido analizado! Aquí ves el Tema Principal detectado automáticamente, tu barra de progreso de aprendizaje y tu calificación en tiempo real.',
-        tip: 'Consejo: Cada nuevo PDF o DOCX que cargues generará un entorno 100% único.'
+        selector: '[data-tour="doc-header"]',
+        section: 'dashboard',
+        title: '1. Tema Principal y Tesis Detectada',
+        description: 'Al subir tu archivo, Hércules AI Editor analiza automáticamente el texto completo para extraer el tema central, la tesis y las métricas reales.',
+        tip: 'Cada nuevo PDF o DOCX reemplaza el contexto y genera material 100% propio.'
       },
       {
-        selector: '#sidebarContentGroup',
-        section: 'capitulos',
-        badge: 'PASO 2 DE 7 · ESTRUCTURA DEL DOCUMENTO',
-        title: 'Capítulos, Conceptos Clave, Glosario y Mapa Conceptual',
-        desc: 'En este menú lateral navegas por los capítulos nuevos creados a partir de tu documento, los conceptos clave, el glosario dinámico y el mapa conceptual SVG.',
-        tip: 'Consejo: Todos los capítulos y definiciones provienen exclusivamente de tu archivo.'
+        selector: '[data-tour="sidebar-nav"]',
+        section: 'dashboard',
+        title: '2. Menú de 13 Módulos y Biblioteca IndexedDB',
+        description: 'Desde este panel lateral navegas por resúmenes, capítulos, curso interactivo, mapa conceptual, glosario y tu biblioteca persistente.',
+        tip: 'Tus documentos quedan guardados localmente en IndexedDB.'
       },
       {
-        selector: '#navCursoBtn',
+        selector: '[data-tour="nav-curso"]',
         section: 'curso',
-        badge: 'PASO 3 DE 7 · GENERADOR DE CURSOS',
-        title: 'Curso Interactivo Modular',
-        desc: 'Hércules AI Editor transforma los capítulos de tu documento en unidades de curso que puedes marcar como completadas conforme avanzas.',
-        tip: 'Consejo: Completar unidades incrementa automáticamente tu progreso global.'
+        title: '3. Generador Automático de Cursos',
+        description: 'Transformamos los capítulos del documento en módulos didácticos paso a paso con seguimiento de progreso.',
+        tip: 'Marca cada módulo completado para actualizar tu porcentaje de avance.'
       },
       {
-        selector: '#sidebarPracticeGroup',
+        selector: '[data-tour="nav-flashcards"]',
         section: 'flashcards',
-        badge: 'PASO 4 DE 7 · PRÁCTICA ACTIVA',
-        title: 'Flashcards Interactivas y Cuestionario Nuevo',
-        desc: 'Repasa con tarjetas interactivas 3D y evalúa tu dominio con preguntas de opción múltiple generadas a partir de las afirmaciones reales del texto.',
-        tip: 'Consejo: Usa el botón "+ Generar Más" para crear nuevas tandas de tarjetas o preguntas.'
+        title: '4. Flashcards Interactivas',
+        description: 'Estudia los conceptos fundamentales mediante tarjetas de pregunta y respuesta generadas desde el documento.',
+        tip: 'Haz clic sobre la tarjeta para voltearla.'
       },
       {
-        selector: '#navCalificacionesBtn',
-        section: 'calificaciones',
-        badge: 'PASO 5 DE 7 · CALIFICACIONES',
-        title: 'Boletín de Progreso y Calificaciones',
-        desc: 'Consulta tu nota numérica (sobre 10) calculada a partir de tus aciertos en el cuestionario, flashcards dominadas y unidades de curso completadas.',
-        tip: 'Consejo: Puedes exportar tu boletín e informe completo en formato PDF.'
+        selector: '[data-tour="nav-cuestionario"]',
+        section: 'cuestionario',
+        title: '5. Cuestionario con Calificación Automática',
+        description: 'Pon a prueba tu comprensión con preguntas de opción múltiple, retroalimentación inmediata y nota sobre 10.',
+        tip: 'Tu calificación se actualiza en tiempo real en el panel superior.'
       },
       {
-        selector: '#navTutorBtn',
+        selector: '[data-tour="nav-chat"]',
         section: 'tutor',
-        badge: 'PASO 6 DE 7 · TUTOR IA & COMPARADOR',
-        title: 'Tutor IA con Gemini API y Comparador',
-        desc: 'Haz preguntas directas sobre el documento activo. Si configuras tu clave de Gemini API en LocalStorage, el Tutor IA responderá usando gemini-2.5-flash.',
-        tip: 'Consejo: La clave API se guarda solo en tu navegador (LocalStorage) para mantener compatibilidad con GitHub Pages.'
+        title: '6. Tutor IA Experto con Memoria de 20 Interacciones',
+        description: 'El Tutor IA conserva las últimas 20 interacciones en LocalStorage, envía el contexto conversacional a Gemini y resuelve preguntas de seguimiento.',
+        tip: 'Prueba preguntar "¿Qué es...?" y luego "¿Cómo se controla?".'
       },
       {
-        selector: '#exportToolbarTarget',
-        section: 'resumen',
-        badge: 'PASO 7 DE 7 · EXPORTACIÓN DIRECTA',
-        title: 'Exportación a PDF, Markdown y TXT',
-        desc: 'Descarga en cualquier momento el análisis completo de tu documento en formato PDF binario (jsPDF), Markdown o texto plano.',
-        tip: '¡Listo! Puedes volver a abrir este Tour Guiado desde el botón "✨ Tour Guiado" en la barra superior.'
+        selector: '[data-tour="export-bar"]',
+        section: 'tutor',
+        title: '7. Exportación Multi-Formato y GitHub Pages',
+        description: 'Descarga tu estudio en PDF, Word, HTML, Markdown o TXT en cualquier momento.',
+        tip: 'Puedes volver a abrir este tour haciendo clic en "✨ Tour Guiado".'
       }
     ];
 
-    let currentTourIdx = 0;
-    let isTourOpen = false;
-
-    function startGuidedTour(stepIndex = 0) {
-      if (!activeDoc) {
-        triggerFileSelector();
-        return;
-      }
-      currentTourIdx = stepIndex;
-      isTourOpen = true;
-      renderTourStep();
+    /* =========================================================================
+       MEMORIA CONVERSACIONAL DEL TUTOR IA (ÚLTIMAS 20 INTERACCIONES EN LOCALSTORAGE)
+       ========================================================================= */
+    function getTutorMemoryKey(docId) {
+      return STORAGE_TUTOR_MEMORY_PREFIX + (docId || 'default');
     }
 
-    function closeGuidedTour() {
-      isTourOpen = false;
-      document.getElementById('tourSpotlight').style.display = 'none';
-      document.getElementById('tourCard').style.display = 'none';
+    function loadTutorConversationMemory(docId) {
       try {
-        localStorage.setItem(TOUR_DONE_KEY, 'true');
+        const raw = localStorage.getItem(getTutorMemoryKey(docId));
+        if (!raw) return [];
+        const parsed = JSON.parse(raw);
+        if (!Array.isArray(parsed)) return [];
+        return parsed
+          .filter((m) => m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string')
+          .slice(-MAX_TUTOR_MEMORY_INTERACTIONS);
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveTutorConversationMemory(docId, historyArray) {
+      try {
+        const trimmed = (historyArray || []).slice(-MAX_TUTOR_MEMORY_INTERACTIONS);
+        localStorage.setItem(getTutorMemoryKey(docId), JSON.stringify(trimmed));
+        updateTutorMemoryBadge(trimmed.length);
       } catch (e) {}
     }
 
+    function updateTutorMemoryBadge(count) {
+      const badge = document.getElementById('tutorMemoryBadge');
+      if (badge) {
+        badge.textContent = `Memoria: ${Math.min(MAX_TUTOR_MEMORY_INTERACTIONS, count)} / ${MAX_TUTOR_MEMORY_INTERACTIONS} turnos`;
+      }
+    }
+
+    function clearCurrentDocumentTutorMemory() {
+      if (!activeDocument) return;
+      try {
+        localStorage.removeItem(getTutorMemoryKey(activeDocument.id));
+      } catch (e) {}
+      initTutorChat(activeDocument.analysis);
+    }
+
+    /**
+     * Resuelve el sujeto o tema de conversación cuando el usuario hace una pregunta de seguimiento
+     * (ej. Usuario: "¿Qué es la ansiedad?" -> Usuario: "¿Cómo se controla?")
+     */
+    function resolveFollowUpSubject(question, conversationHistory, analysis) {
+      const q = (question || '').trim();
+      const isFollowUpPattern =
+        /^(?:[¿¡]?)(?:c[oó]mo|por qu[eé]|cu[aá]ndo|d[oónde]|qu[eé]|cu[aá]l|cu[aá]les|qui[eé]n)\s+(?:se|lo|la|los|las|le|les)\b/i.test(q) ||
+        /\b(?:se controla|se maneja|se supera|se aplica|se evita|se previene|se trata|se mide|se manifiesta|se relaciona|funciona|ocurre|sirve|afecta|causas|consecuencias|beneficios|ventajas|desventajas|ejemplos?|m[aá]s detalles|expl[ií]came m[aá]s|profundiza|y en la pr[aá]ctica)\b/i.test(q) ||
+        q.split(/\s+/).length <= 5;
+
+      const recentTurns = (conversationHistory || []).slice(-MAX_TUTOR_MEMORY_INTERACTIONS);
+      if (!isFollowUpPattern || recentTurns.length === 0) {
+        return { isFollowUp: false, resolvedSubject: '', expandedQuery: q };
+      }
+
+      const stopWords = new Set([
+        'como', 'cómo', 'que', 'qué', 'cual', 'cuál', 'cuales', 'cuáles', 'cuando', 'cuándo',
+        'donde', 'dónde', 'quien', 'quién', 'porque', 'por', 'para', 'con', 'sin', 'sobre',
+        'entre', 'hacia', 'hasta', 'desde', 'este', 'esta', 'estos', 'estas', 'ese', 'esa',
+        'esos', 'esas', 'aquel', 'aquella', 'algo', 'nada', 'todo', 'toda', 'todos', 'todas',
+        'puedo', 'puede', 'pueden', 'debe', 'deben', 'hacer', 'hace', 'hacen', 'tiene', 'tienen',
+        'controla', 'maneja', 'supera', 'aplica', 'funciona', 'ocurre', 'significa', 'consiste',
+        'explica', 'explicame', 'dime', 'dame', 'segun', 'según', 'documento', 'libro', 'texto'
+      ]);
+
+      const reversed = [...recentTurns].reverse();
+      for (const turn of reversed) {
+        const text = (turn.content || '').trim();
+        const lower = text.toLowerCase();
+
+        // 1. Verificar conceptos clave del documento mencionados en turnos previos
+        for (const kc of (analysis.keyConcepts || [])) {
+          if (kc.name && lower.includes(kc.name.toLowerCase())) {
+            return {
+              isFollowUp: true,
+              resolvedSubject: kc.name,
+              expandedQuery: `${q} (${kc.name})`
+            };
+          }
+        }
+
+        // 2. Verificar términos del glosario mencionados en turnos previos
+        for (const gl of (analysis.glossary || [])) {
+          if (gl.term && lower.includes(gl.term.toLowerCase())) {
+            return {
+              isFollowUp: true,
+              resolvedSubject: gl.term,
+              expandedQuery: `${q} (${gl.term})`
+            };
+          }
+        }
+
+        // 3. Extraer sustantivo/sujeto explícito de la pregunta previa del usuario (ej. "¿Qué es la ansiedad?")
+        if (turn.role === 'user') {
+          const explicitMatch = text.match(
+            /(?:qu[eé]\s+es|qu[eé]\s+son|habla\s+de|sobre|acerca\s+de|vencer|controlar|manejar|superar|entender|explica(?:r|me)?)\s+(?:el|la|los|las|un|una)?\s*([a-záéíóúñü\s]{3,35})/i
+          );
+          if (explicitMatch && explicitMatch[1]) {
+            const candidate = explicitMatch[1].replace(/[?¿!¡.,;:]/g, '').trim();
+            if (candidate.length >= 3 && !stopWords.has(candidate.toLowerCase())) {
+              return {
+                isFollowUp: true,
+                resolvedSubject: candidate,
+                expandedQuery: `${q} (${candidate})`
+              };
+            }
+          }
+
+          const meaningfulWords = lower
+            .replace(/[?¿!¡.,;:()"]/g, ' ')
+            .split(/\s+/)
+            .filter((w) => w.length >= 4 && !stopWords.has(w));
+
+          if (meaningfulWords.length > 0) {
+            const subject = meaningfulWords.slice(0, 2).join(' ');
+            return {
+              isFollowUp: true,
+              resolvedSubject: subject,
+              expandedQuery: `${q} (${subject})`
+            };
+          }
+        }
+      }
+
+      const fallbackTopic = analysis.detectedTopic || analysis.documentTitle;
+      return {
+        isFollowUp: true,
+        resolvedSubject: fallbackTopic,
+        expandedQuery: `${q} (${fallbackTopic})`
+      };
+    }
+
+    /* =========================================================================
+       INDEXEDDB INICIALIZACIÓN Y PERSISTENCIA
+       ========================================================================= */
+    function initIndexedDB() {
+      const savedTheme = localStorage.getItem('hercules_theme_dark');
+      if (savedTheme === 'true') document.body.classList.add('dark');
+
+      const req = indexedDB.open(DB_NAME, DB_VERSION);
+      req.onupgradeneeded = (e) => {
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains(DOC_STORE)) {
+          db.createObjectStore(DOC_STORE, { keyPath: 'id' });
+        }
+        if (!db.objectStoreNames.contains(HISTORY_STORE)) {
+          db.createObjectStore(HISTORY_STORE, { keyPath: 'id' });
+        }
+      };
+      req.onsuccess = (e) => {
+        dbInstance = e.target.result;
+        loadLibraryFromDB();
+        loadHistoryFromDB();
+      };
+    }
+
+    function saveDocumentToDB(record) {
+      if (!dbInstance) return;
+      const tx = dbInstance.transaction([DOC_STORE, HISTORY_STORE], 'readwrite');
+      tx.objectStore(DOC_STORE).put(record);
+      tx.objectStore(HISTORY_STORE).put({
+        id: 'hist-' + Date.now(),
+        title: record.analysis.documentTitle,
+        topic: record.analysis.detectedTopic,
+        date: new Date().toLocaleString()
+      });
+      tx.oncomplete = () => {
+        loadLibraryFromDB();
+        loadHistoryFromDB();
+      };
+    }
+
+    function loadLibraryFromDB() {
+      if (!dbInstance) return;
+      const tx = dbInstance.transaction(DOC_STORE, 'readonly');
+      const req = tx.objectStore(DOC_STORE).getAll();
+      req.onsuccess = () => {
+        documentsLibrary = (req.result || []).sort((a, b) => b.createdAt - a.createdAt);
+        renderLibrarySidebar();
+        populateComparisonSelectors();
+        if (documentsLibrary.length > 0 && !activeDocument) {
+          selectDocument(documentsLibrary[0].id);
+        }
+      };
+    }
+
+    function loadHistoryFromDB() {
+      if (!dbInstance) return;
+      const tx = dbInstance.transaction(HISTORY_STORE, 'readonly');
+      const req = tx.objectStore(HISTORY_STORE).getAll();
+      req.onsuccess = () => {
+        const list = document.getElementById('historyList');
+        const items = (req.result || []).slice(-8).reverse();
+        list.innerHTML = items.length === 0
+          ? '<div>Sin análisis previos</div>'
+          : items.map((h) => `<div style="padding:0.3rem 0; border-bottom:1px solid var(--border);"><strong>${escapeHtml(h.title)}</strong><br/><span style="font-size:0.68rem;">${escapeHtml(h.topic)} · ${escapeHtml(h.date)}</span></div>`).join('');
+      };
+    }
+
+    function renderLibrarySidebar() {
+      const container = document.getElementById('libraryList');
+      if (documentsLibrary.length === 0) {
+        container.innerHTML = '<div style="font-size:0.76rem; color:var(--text-muted);">Sube un archivo para inaugurar tu biblioteca.</div>';
+        return;
+      }
+      container.innerHTML = documentsLibrary.map((doc) => `
+        <button class="nav-item ${activeDocument && activeDocument.id === doc.id ? 'active' : ''}" onclick="selectDocument('${doc.id}')">
+          <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">📄 ${escapeHtml(doc.analysis.documentTitle)}</span>
+        </button>
+      `).join('');
+    }
+
+    /* =========================================================================
+       LECTURA REAL DE ARCHIVOS (PDF, DOCX, EPUB, PPTX, TXT)
+       ========================================================================= */
+    const dropzoneArea = document.getElementById('dropzoneArea');
+    if (dropzoneArea) {
+      dropzoneArea.addEventListener('dragover', (e) => { e.preventDefault(); });
+      dropzoneArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+          processUploadedFile(e.dataTransfer.files[0]);
+        }
+      });
+    }
+
+    function handleFileUpload(event) {
+      const file = event.target.files && event.target.files[0];
+      if (file) processUploadedFile(file);
+      event.target.value = '';
+    }
+
+    async function extractTextFromFile(file) {
+      const ext = file.name.split('.').pop().toLowerCase();
+      if (ext === 'pdf' && window.pdfjsLib) {
+        const buffer = await file.arrayBuffer();
+        const pdf = await window.pdfjsLib.getDocument({ data: buffer }).promise;
+        let pagesText = [];
+        for (let i = 1; i <= pdf.numPages; i++) {
+          const page = await pdf.getPage(i);
+          const content = await page.getTextContent();
+          pagesText.push(content.items.map((it) => it.str).join(' '));
+        }
+        return pagesText.join('\n\n');
+      }
+      if (ext === 'docx' && window.mammoth) {
+        const buffer = await file.arrayBuffer();
+        const res = await window.mammoth.extractRawText({ arrayBuffer: buffer });
+        return res.value || '';
+      }
+      if ((ext === 'epub' || ext === 'pptx') && window.JSZip) {
+        const buffer = await file.arrayBuffer();
+        const zip = await window.JSZip.loadAsync(buffer);
+        let texts = [];
+        for (const filename of Object.keys(zip.files)) {
+          if (/\.(xhtml|html|xml|txt)$/i.test(filename)) {
+            const raw = await zip.files[filename].async('string');
+            const clean = raw.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+            if (clean.length > 40) texts.push(clean);
+          }
+        }
+        return texts.join('\n\n');
+      }
+      return await file.text();
+    }
+
+    async function processUploadedFile(file) {
+      const rawText = await extractTextFromFile(file);
+      const cleaned = (rawText || '').replace(/\s+/g, ' ').trim();
+      if (cleaned.length < 30) {
+        alert('No se pudo extraer texto suficiente del archivo.');
+        return;
+      }
+
+      const isFirstDocument = documentsLibrary.length === 0;
+      const analysis = buildDynamicDocumentAnalysis(file.name, cleaned);
+      const record = {
+        id: 'doc-' + Date.now(),
+        fileName: file.name,
+        createdAt: Date.now(),
+        analysis
+      };
+
+      activeDocument = record;
+      quizUserAnswers = {};
+      completedCourseSteps = {};
+      saveDocumentToDB(record);
+      renderActiveDocument();
+
+      if (isFirstDocument || localStorage.getItem(STORAGE_TOUR_DONE) !== 'true') {
+        setTimeout(() => startGuidedTour(0), 350);
+      }
+    }
+
+    /* =========================================================================
+       MOTOR DOCUMENTAL DINÁMICO (GENERA CONTENIDO PROPIO POR DOCUMENTO)
+       ========================================================================= */
+    function buildDynamicDocumentAnalysis(fileName, rawText) {
+      const cleanTitle = fileName.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
+      const sentences = rawText
+        .split(/(?<=[.!?])\s+/)
+        .map((s) => s.trim())
+        .filter((s) => s.length > 35);
+
+      const words = rawText.toLowerCase().match(/[a-záéíóúñü]{5,}/g) || [];
+      const stop = new Set(['sobre', 'entre', 'cuando', 'donde', 'porque', 'aunque', 'desde', 'hasta', 'todos', 'todas', 'puede', 'pueden', 'mismo', 'misma', 'parte', 'forma', 'tiempo', 'mundo', 'hacer', 'tiene', 'tienen', 'según', 'durante']);
+      const freq = {};
+      words.forEach((w) => {
+        if (!stop.has(w)) freq[w] = (freq[w] || 0) + 1;
+      });
+      const topKeywords = Object.entries(freq)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 8)
+        .map((e) => e[0]);
+
+      const detectedTopic = topKeywords.slice(0, 3).map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(', ') || cleanTitle;
+      const thesis = sentences[0] || `Este documento desarrolla los fundamentos esenciales sobre ${detectedTopic}.`;
+      const overview = sentences.slice(0, 4).join(' ');
+
+      const chunkCount = Math.min(5, Math.max(3, Math.ceil(sentences.length / 8)));
+      const perChunk = Math.max(2, Math.ceil(sentences.length / chunkCount));
+      const chapters = [];
+
+      for (let i = 0; i < chunkCount; i++) {
+        const slice = sentences.slice(i * perChunk, (i + 1) * perChunk);
+        if (slice.length === 0) continue;
+        const kw = topKeywords[i % topKeywords.length] || 'Análisis';
+        chapters.push({
+          number: i + 1,
+          title: `Capítulo ${i + 1}: ${kw.charAt(0).toUpperCase() + kw.slice(1)} y Desarrollo`,
+          summary: slice.slice(0, 2).join(' '),
+          detailedContent: slice.join(' '),
+          keyTakeaways: slice.slice(0, 3)
+        });
+      }
+
+      const keyConcepts = topKeywords.slice(0, 6).map((kw, idx) => {
+        const matchingSentence = sentences.find((s) => s.toLowerCase().includes(kw)) || sentences[idx % sentences.length] || thesis;
+        const exampleSentence = sentences.find((s) => s !== matchingSentence && s.toLowerCase().includes(kw)) || sentences[(idx + 1) % sentences.length] || thesis;
+        return {
+          name: kw.charAt(0).toUpperCase() + kw.slice(1),
+          category: idx % 2 === 0 ? 'Concepto Nuclear' : 'Aplicación Práctica',
+          definition: matchingSentence,
+          practicalExample: exampleSentence
+        };
+      });
+
+      const flashcards = keyConcepts.map((c, idx) => ({
+        id: 'fc-' + idx,
+        front: `¿Cómo se define y aplica "${c.name}" según el documento "${cleanTitle}"?`,
+        back: `${c.definition} Ejemplo práctico en la obra: ${c.practicalExample}`
+      }));
+
+      const quiz = chapters.map((ch, idx) => {
+        const correct = ch.summary.slice(0, 140);
+        const distractor1 = chapters[(idx + 1) % chapters.length]?.summary.slice(0, 140) || 'Descartar la evidencia contextual y omitir los factores clave.';
+        const distractor2 = 'Sustituir el análisis integral por supuestos aislados sin respaldo en la obra.';
+        const options = [correct, distractor1, distractor2];
+        return {
+          id: 'q-' + idx,
+          question: `Según el ${ch.title}, ¿cuál es el planteamiento fundamental que sostiene el autor?`,
+          options,
+          correctIndex: 0,
+          explanation: `En ${ch.title} se establece expresamente: ${ch.summary}`
+        };
+      });
+
+      const glossary = keyConcepts.map((c) => ({
+        term: c.name,
+        category: c.category,
+        definition: c.definition,
+        contextUsage: c.practicalExample
+      }));
+
+      const activities = chapters.slice(0, 3).map((ch, idx) => ({
+        title: `Actividad Práctica ${idx + 1}: Caso Aplicado sobre ${ch.title}`,
+        objective: `Aplicar las herramientas expuestas en ${ch.title} a una situación real.`,
+        steps: [
+          `Identifica la idea rectora planteada en ${ch.title}.`,
+          `Relaciona esa idea con el concepto clave "${keyConcepts[idx % keyConcepts.length]?.name || detectedTopic}".`,
+          `Redacta un plan de acción práctico inspirado en: "${ch.summary.slice(0, 120)}..."`
+        ]
+      }));
+
+      return {
+        documentTitle: cleanTitle,
+        detectedTopic,
+        wordCount: rawText.split(/\s+/).length,
+        thesis,
+        overview,
+        keyFindings: sentences.slice(0, 5),
+        chapters,
+        keyConcepts,
+        flashcards,
+        quiz,
+        glossary,
+        activities
+      };
+    }
+
+    function selectDocument(docId) {
+      const found = documentsLibrary.find((d) => d.id === docId);
+      if (!found) return;
+      activeDocument = found;
+      quizUserAnswers = {};
+      completedCourseSteps = {};
+      renderLibrarySidebar();
+      renderActiveDocument();
+    }
+
+    function renderActiveDocument() {
+      if (!activeDocument) return;
+      const a = activeDocument.analysis;
+
+      document.getElementById('welcomeScreen').style.display = 'none';
+      document.getElementById('documentWorkspace').style.display = 'block';
+
+      document.getElementById('docTopicBadge').textContent = 'TEMA PRINCIPAL: ' + a.detectedTopic.toUpperCase();
+      document.getElementById('docTitleHeading').textContent = a.documentTitle;
+      document.getElementById('docThesisText').textContent = a.thesis;
+
+      document.getElementById('kpiWords').textContent = a.wordCount.toLocaleString();
+      document.getElementById('kpiChapters').textContent = a.chapters.length;
+      updateProgressKPI();
+
+      // Dashboard & Resumen
+      document.getElementById('dashboardOverview').textContent = a.overview;
+      document.getElementById('dashboardFindings').innerHTML = a.keyFindings.map((f, i) => `
+        <div class="card" style="margin-bottom:0;">
+          <span class="badge">HALLAZGO ${i + 1}</span>
+          <p style="margin-top:0.5rem; font-size:0.88rem;">${escapeHtml(f)}</p>
+        </div>
+      `).join('');
+
+      document.getElementById('resumenOverview').textContent = a.overview;
+      document.getElementById('resumenList').innerHTML = a.keyFindings.map((f) => `<li style="margin-bottom:0.45rem;">${escapeHtml(f)}</li>`).join('');
+
+      // Capítulos
+      document.getElementById('chaptersContainer').innerHTML = a.chapters.map((ch) => `
+        <div class="card">
+          <span class="badge">CAPÍTULO ${ch.number}</span>
+          <h3 style="margin:0.4rem 0;">${escapeHtml(ch.title)}</h3>
+          <p style="color:var(--text-secondary); font-size:0.88rem; margin-bottom:0.65rem;"><strong>Síntesis:</strong> ${escapeHtml(ch.summary)}</p>
+          <p style="font-size:0.86rem;">${escapeHtml(ch.detailedContent)}</p>
+        </div>
+      `).join('');
+
+      // Curso
+      document.getElementById('courseContainer').innerHTML = a.chapters.map((ch, idx) => `
+        <div class="card" style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem;">
+          <div>
+            <span class="badge">MÓDULO ${idx + 1}</span>
+            <h3 style="margin:0.35rem 0;">${escapeHtml(ch.title)}</h3>
+            <p style="font-size:0.86rem; color:var(--text-secondary);">${escapeHtml(ch.summary)}</p>
+          </div>
+          <button class="btn ${completedCourseSteps[idx] ? 'btn-primary' : ''}" onclick="toggleCourseStep(${idx})">
+            ${completedCourseSteps[idx] ? '✓ Completado' : 'Marcar Completado'}
+          </button>
+        </div>
+      `).join('');
+
+      // Conceptos Clave
+      document.getElementById('conceptsContainer').innerHTML = a.keyConcepts.map((c) => `
+        <div class="card" style="margin-bottom:0;">
+          <span class="badge">${escapeHtml(c.category)}</span>
+          <h3 style="margin:0.4rem 0;">${escapeHtml(c.name)}</h3>
+          <p style="font-size:0.86rem; color:var(--text-secondary); margin-bottom:0.5rem;">${escapeHtml(c.definition)}</p>
+          <p style="font-size:0.8rem; border-left:3px solid var(--accent); padding-left:0.6rem;"><strong>Ejemplo práctico:</strong> ${escapeHtml(c.practicalExample)}</p>
+        </div>
+      `).join('');
+
+      // Mapa Conceptual SVG
+      renderConceptMapSVG(a);
+
+      // Flashcards
+      currentFlashcardIndex = 0;
+      isFlashcardFlipped = false;
+      renderCurrentFlashcard();
+
+      // Cuestionario
+      renderQuizSection(a);
+
+      // Actividades
+      document.getElementById('activitiesContainer').innerHTML = a.activities.map((act) => `
+        <div class="card">
+          <h3>${escapeHtml(act.title)}</h3>
+          <p style="font-size:0.85rem; color:var(--text-secondary); margin:0.35rem 0 0.65rem;"><strong>Objetivo:</strong> ${escapeHtml(act.objective)}</p>
+          <ol style="padding-left:1.25rem; font-size:0.86rem;">
+            ${act.steps.map((st) => `<li style="margin-bottom:0.3rem;">${escapeHtml(st)}</li>`).join('')}
+          </ol>
+        </div>
+      `).join('');
+
+      // Glosario
+      document.getElementById('glossaryContainer').innerHTML = a.glossary.map((g) => `
+        <div class="card glossary-item" style="margin-bottom:0;">
+          <span class="badge">${escapeHtml(g.category)}</span>
+          <h3 style="margin:0.35rem 0;">${escapeHtml(g.term)}</h3>
+          <p style="font-size:0.85rem; color:var(--text-secondary);">${escapeHtml(g.definition)}</p>
+        </div>
+      `).join('');
+
+      // Inicializar Tutor IA cargando las últimas 20 interacciones desde LocalStorage
+      initTutorChat(a);
+    }
+
+    /* =========================================================================
+       TUTOR IA EN MODO PROFESOR EXPERTO CON MEMORIA DE 20 INTERACCIONES
+       ========================================================================= */
+    function initTutorChat(analysis) {
+      const box = document.getElementById('tutorChatBox');
+      const sugBox = document.getElementById('tutorSuggestions');
+      const savedHistory = loadTutorConversationMemory(activeDocument?.id);
+
+      const welcomeMessage = `¡Hola! Soy tu profesor y Tutor IA para "${analysis.documentTitle}". He estudiado todo el contenido sobre ${analysis.detectedTopic} y conservo en memoria nuestras últimas 20 interacciones para responder preguntas de seguimiento.\n\nPregúntame cualquier duda (por ejemplo, "¿Qué es ${analysis.keyConcepts[0]?.name || analysis.detectedTopic}?" y luego "¿Cómo se controla?") y te responderé con claridad y ejemplos prácticos.`;
+
+      let htmlMessages = `<div class="chat-msg assistant">${escapeHtml(welcomeMessage)}</div>`;
+      savedHistory.forEach((turn) => {
+        htmlMessages += `<div class="chat-msg ${turn.role}">${escapeHtml(turn.content)}</div>`;
+      });
+
+      box.innerHTML = htmlMessages;
+      box.scrollTop = box.scrollHeight;
+      updateTutorMemoryBadge(savedHistory.length);
+
+      const firstConcept = analysis.keyConcepts[0]?.name || analysis.detectedTopic;
+      const sampleQuestions = [
+        `¿Qué es ${firstConcept}?`,
+        `¿Cómo se controla o aplica en la práctica?`,
+        `Dame un ejemplo práctico de ${firstConcept}`
+      ];
+      sugBox.innerHTML = sampleQuestions.map((q) => `
+        <button class="btn" style="font-size:0.74rem;" onclick="askExpertTutor('${escapeHtml(q).replace(/'/g, "\\'")}')">${escapeHtml(q)}</button>
+      `).join('');
+    }
+
+    /**
+     * Paso 1 y 2: Buscar el contenido más relevante del documento + resolver sujeto de seguimiento
+     * y construir contexto con: Resumen, Capítulos relevantes, Conceptos relacionados y Glosario.
+     */
+    function buildRelevantTutorContext(question, analysis, conversationHistory) {
+      const followUp = resolveFollowUpSubject(question, conversationHistory, analysis);
+      const effectiveQuery = followUp.expandedQuery.toLowerCase().trim();
+      const tokens = effectiveQuery
+        .replace(/[?¿!¡.,;:()"]/g, ' ')
+        .split(/\s+/)
+        .filter((w) => w.length >= 3);
+
+      const scoreText = (text) => {
+        const haystack = (text || '').toLowerCase();
+        return tokens.reduce((acc, tok) => acc + (haystack.includes(tok) ? 3 : 0), 0);
+      };
+
+      const relevantChapters = [...(analysis.chapters || [])]
+        .map((ch) => ({
+          ch,
+          score: scoreText(`${ch.title} ${ch.summary} ${ch.detailedContent}`)
+        }))
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 3)
+        .map((item) => item.ch);
+
+      const relatedConcepts = [...(analysis.keyConcepts || [])]
+        .map((kc) => ({
+          kc,
+          score: scoreText(`${kc.name} ${kc.definition} ${kc.practicalExample}`)
+        }))
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 3)
+        .map((item) => item.kc);
+
+      const glossaryTerms = [...(analysis.glossary || [])]
+        .map((gl) => ({
+          gl,
+          score: scoreText(`${gl.term} ${gl.definition} ${gl.contextUsage}`)
+        }))
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 3)
+        .map((item) => item.gl);
+
+      const recentConversation = (conversationHistory || []).slice(-MAX_TUTOR_MEMORY_INTERACTIONS);
+
+      const contextText = [
+        `DOCUMENTO: "${analysis.documentTitle}"`,
+        `TEMA PRINCIPAL: ${analysis.detectedTopic}`,
+        followUp.isFollowUp && followUp.resolvedSubject
+          ? `TEMA EN CURSO RESUELTO DE LA CONVERSACIÓN ANTERIOR: "${followUp.resolvedSubject}" (la pregunta actual "${question}" hace referencia directa a este tema previamente mencionado)`
+          : '',
+        recentConversation.length > 0
+          ? `\nMEMORIA DE CONVERSACIÓN (ÚLTIMAS ${recentConversation.length} INTERACCIONES):\n` +
+            recentConversation.map((m, i) => `${i + 1}. ${m.role === 'user' ? 'Usuario' : 'Profesor IA'}: ${m.content}`).join('\n')
+          : '',
+        `\n1. RESUMEN DEL DOCUMENTO:`,
+        `- Tesis central: ${analysis.thesis}`,
+        `- Síntesis general: ${analysis.overview}`,
+        `\n2. CAPÍTULOS RELEVANTES PARA LA PREGUNTA:`,
+        ...relevantChapters.map((c) => `- ${c.title}: ${c.summary} Detalle: ${c.detailedContent}`),
+        `\n3. CONCEPTOS RELACIONADOS:`,
+        ...relatedConcepts.map((c) => `- ${c.name} (${c.category}): ${c.definition} Ejemplo práctico: ${c.practicalExample}`),
+        `\n4. GLOSARIO RELACIONADO:`,
+        ...glossaryTerms.map((g) => `- ${g.term}: ${g.definition}`)
+      ].filter(Boolean).join('\n');
+
+      const citedSections = [
+        ...relevantChapters.slice(0, 2).map((c) => c.title),
+        ...relatedConcepts.slice(0, 1).map((c) => `Concepto: ${c.name}`)
+      ];
+
+      return {
+        contextText,
+        relevantChapters,
+        relatedConcepts,
+        glossaryTerms,
+        citedSections,
+        isFollowUp: followUp.isFollowUp,
+        resolvedSubject: followUp.resolvedSubject
+      };
+    }
+
+    /**
+     * Paso 3 y 4: Enviar contexto + historial de 20 turnos a Gemini para que responda como profesor experto.
+     */
+    async function askExpertTutor(presetQuestion) {
+      if (!activeDocument) return;
+      const input = document.getElementById('tutorInput');
+      const box = document.getElementById('tutorChatBox');
+      const question = (presetQuestion || input.value || '').trim();
+      if (!question) return;
+
+      if (!presetQuestion) input.value = '';
+
+      const priorHistory = loadTutorConversationMemory(activeDocument.id);
+
+      // Mostrar mensaje del usuario
+      box.innerHTML += `<div class="chat-msg user">${escapeHtml(question)}</div>`;
+      box.scrollTop = box.scrollHeight;
+
+      const analysis = activeDocument.analysis;
+      const ctx = buildRelevantTutorContext(question, analysis, priorHistory);
+
+      let expertAnswer = '';
+      let cited = ctx.citedSections;
+
+      const systemInstruction = `Eres un profesor experto, empático y sumamente didáctico especializado en enseñar el contenido del documento "${analysis.documentTitle}".
+
+Tu objetivo es responder la pregunta del estudiante basándote en el contexto proporcionado del documento (Resumen, Capítulos relevantes, Conceptos relacionados y Glosario) y manteniendo la memoria conversacional de las últimas 20 interacciones.
+
+REGLAS PEDAGÓGICAS OBLIGATORIAS:
+1. MEMORIA CONVERSACIONAL Y PREGUNTAS DE SEGUIMIENTO:
+   - Recibes el historial reciente de la conversación (hasta las últimas 20 interacciones).
+   - Si el usuario hace una pregunta breve o con pronombres implícitos (por ejemplo: "¿Cómo se controla?", "¿Por qué ocurre?", "Dame un ejemplo"), interpreta que se refiere al sujeto o concepto tratado en las interacciones inmediatamente anteriores (como "${ctx.resolvedSubject || analysis.detectedTopic}").
+2. Responde de forma clara, educativa y conversacional, sintetizando las ideas con tus propias palabras como un profesor experto que explica a su alumno.
+3. Inicia respondiendo directamente la inquietud del usuario (por ejemplo: "Según el documento, ...").
+4. Explica los conceptos difíciles de manera sencilla y comprensible.
+5. Incluye ejemplos prácticos o cómo llevar esas herramientas a la vida real según el documento.
+6. PROHIBIDO devolver fragmentos crudos copiados literalmente sin explicación.
+7. PROHIBIDO devolver listas de capítulos o índices completos del documento, salvo que el usuario lo pida explícitamente.`;
+
+      // 1. Intentar ruta servidor si está disponible
+      try {
+        const res = await fetch('/api/tutor/ask', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            question,
+            conversationHistory: priorHistory.slice(-MAX_TUTOR_MEMORY_INTERACTIONS),
+            structuredContext: {
+              documentTitle: analysis.documentTitle,
+              mainTopic: analysis.detectedTopic,
+              resolvedFollowUpSubject: ctx.resolvedSubject || undefined,
+              summary: {
+                thesisStatement: analysis.thesis,
+                overview: analysis.overview,
+                keyFindings: analysis.keyFindings
+              },
+              relevantChapters: ctx.relevantChapters,
+              relatedConcepts: ctx.relatedConcepts,
+              glossaryTerms: ctx.glossaryTerms
+            }
+          })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.answer) {
+            expertAnswer = data.answer;
+            if (Array.isArray(data.citedSections) && data.citedSections.length > 0) {
+              cited = data.citedSections;
+            }
+          }
+        }
+      } catch (e) {}
+
+      // 2. Si se ejecuta en GitHub Pages estático y el usuario configuró su clave en LocalStorage
+      if (!expertAnswer) {
+        const userApiKey = localStorage.getItem(STORAGE_GEMINI_KEY);
+        if (userApiKey && userApiKey.trim().length > 10) {
+          try {
+            const multiTurnContents = priorHistory.slice(-MAX_TUTOR_MEMORY_INTERACTIONS).map((turn) => ({
+              role: turn.role === 'assistant' ? 'model' : 'user',
+              parts: [{ text: turn.content }]
+            }));
+
+            multiTurnContents.push({
+              role: 'user',
+              parts: [{
+                text: `${ctx.contextText}\n\nPREGUNTA ACTUAL DEL ESTUDIANTE:\n"${question}"\n\nResponde como profesor experto de forma clara, educativa y conversacional, manteniendo la continuidad con la conversación anterior:`
+              }]
+            });
+
+            const geminiRes = await fetch(
+              `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(userApiKey.trim())}`,
+              {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  systemInstruction: { parts: [{ text: systemInstruction }] },
+                  contents: multiTurnContents,
+                  generationConfig: { temperature: 0.35 }
+                })
+              }
+            );
+            if (geminiRes.ok) {
+              const geminiJson = await geminiRes.json();
+              const textResp = geminiJson?.candidates?.[0]?.content?.parts?.[0]?.text;
+              if (textResp) expertAnswer = textResp.trim();
+            }
+          } catch (e) {}
+        }
+      }
+
+      // 3. Síntesis pedagógica conversacional de respaldo con resolución de seguimiento
+      if (!expertAnswer) {
+        expertAnswer = synthesizeProfessorResponse(question, analysis, ctx);
+      }
+
+      const updatedHistory = [
+        ...priorHistory,
+        { role: 'user', content: question },
+        { role: 'assistant', content: expertAnswer }
+      ].slice(-MAX_TUTOR_MEMORY_INTERACTIONS);
+      saveTutorConversationMemory(activeDocument.id, updatedHistory);
+
+      const citationsHtml = cited.map((c) => `<span class="badge">${escapeHtml(c)}</span>`).join('');
+      box.innerHTML += `
+        <div class="chat-msg assistant">
+          ${escapeHtml(expertAnswer)}
+          <div class="chat-citations">${citationsHtml}</div>
+        </div>
+      `;
+      box.scrollTop = box.scrollHeight;
+
+      // Actualizar sugerencias de seguimiento contextuales
+      const followUpConcept = ctx.resolvedSubject || ctx.relatedConcepts[0]?.name || analysis.detectedTopic;
+      const sugBox = document.getElementById('tutorSuggestions');
+      if (sugBox) {
+        const nextSuggestions = [
+          `¿Cómo se controla o maneja ${followUpConcept.toLowerCase()}?`,
+          `Dame un ejemplo práctico de ${followUpConcept.toLowerCase()}`,
+          `¿Qué herramientas recomienda el documento sobre esto?`
+        ];
+        sugBox.innerHTML = nextSuggestions.map((q) => `
+          <button class="btn" style="font-size:0.74rem;" onclick="askExpertTutor('${escapeHtml(q).replace(/'/g, "\\'")}')">${escapeHtml(q)}</button>
+        `).join('');
+      }
+    }
+
+    function synthesizeProfessorResponse(question, analysis, ctx) {
+      const topChapter = ctx.relevantChapters[0] || analysis.chapters[0];
+      const topConcept = ctx.relatedConcepts[0] || analysis.keyConcepts[0];
+      const topGlossary = ctx.glossaryTerms[0] || analysis.glossary[0];
+
+      const cleanSentence = (t) => {
+        const s = (t || '').replace(/\s+/g, ' ').trim();
+        return s.endsWith('.') ? s : s + '.';
+      };
+
+      const thesisCore = cleanSentence(analysis.thesis);
+      const chapterCore = topChapter ? cleanSentence(topChapter.summary) : '';
+
+      const introParagraph =
+        ctx.isFollowUp && ctx.resolvedSubject
+          ? `Continuando con **${ctx.resolvedSubject.toLowerCase()}**, según el documento su manejo y comprensión parte de reconocer que ${thesisCore.charAt(0).toLowerCase() + thesisCore.slice(1)} El texto destaca que ${chapterCore.charAt(0).toLowerCase() + chapterCore.slice(1)}`
+          : `Según el documento, abordar esta cuestión implica comprender que ${thesisCore.charAt(0).toLowerCase() + thesisCore.slice(1)} En particular, la obra destaca como factor fundamental que ${chapterCore.charAt(0).toLowerCase() + chapterCore.slice(1)}`;
+
+      let explanationParagraph = '';
+      if (topConcept) {
+        explanationParagraph = `Para entenderlo de forma sencilla, el autor profundiza en **${topConcept.name.toLowerCase()}**, explicando que ${cleanSentence(topConcept.definition).charAt(0).toLowerCase() + cleanSentence(topConcept.definition).slice(1)}`;
+        if (topGlossary && topGlossary.term.toLowerCase() !== topConcept.name.toLowerCase()) {
+          explanationParagraph += ` Esto se articula directamente con *${topGlossary.term.toLowerCase()}*, entendido como ${cleanSentence(topGlossary.definition).charAt(0).toLowerCase() + cleanSentence(topGlossary.definition).slice(1)}`;
+        }
+      }
+
+      const practicalParagraph = topConcept && topConcept.practicalExample
+        ? `Un ejemplo práctico que ilustra cómo aplicarlo es el siguiente: ${cleanSentence(topConcept.practicalExample)}`
+        : '';
+
+      return [introParagraph, explanationParagraph, practicalParagraph].filter(Boolean).join('\n\n');
+    }
+
+    /* =========================================================================
+       TOUR GUIADO PASO A PASO CON OVERLAY SPOTLIGHT
+       ========================================================================= */
+    function startGuidedTour(stepIndex = 0) {
+      if (!activeDocument && documentsLibrary.length > 0) {
+        selectDocument(documentsLibrary[0].id);
+      }
+      if (!activeDocument) {
+        alert('Primero sube un archivo PDF, DOCX o TXT para iniciar el Tour Guiado sobre tu documento.');
+        return;
+      }
+      currentTourStep = stepIndex;
+      document.getElementById('guidedTourContainer').style.display = 'block';
+      renderTourStep();
+    }
+
+    function renderTourStep() {
+      const step = GUIDED_TOUR_STEPS[currentTourStep];
+      if (!step) return;
+
+      if (step.section) switchSection(step.section);
+
+      setTimeout(() => {
+        const target = document.querySelector(step.selector);
+        const spotlight = document.getElementById('tourSpotlight');
+        const card = document.getElementById('tourCard');
+
+        document.getElementById('tourStepBadge').textContent = `PASO ${currentTourStep + 1} DE ${GUIDED_TOUR_STEPS.length}`;
+        document.getElementById('tourTitle').textContent = step.title;
+        document.getElementById('tourDesc').textContent = step.description;
+        document.getElementById('tourTip').textContent = '💡 ' + step.tip;
+
+        document.getElementById('tourPrevBtn').disabled = currentTourStep === 0;
+        document.getElementById('tourNextBtn').textContent =
+          currentTourStep === GUIDED_TOUR_STEPS.length - 1 ? 'Finalizar Tour ✓' : 'Siguiente →';
+
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          const rect = target.getBoundingClientRect();
+          const pad = 8;
+          spotlight.style.top = Math.max(4, rect.top - pad) + 'px';
+          spotlight.style.left = Math.max(4, rect.left - pad) + 'px';
+          spotlight.style.width = (rect.width + pad * 2) + 'px';
+          spotlight.style.height = (rect.height + pad * 2) + 'px';
+
+          const cardTop = rect.bottom + 18 + 250 < window.innerHeight
+            ? rect.bottom + 18
+            : Math.max(16, rect.top - 260);
+          const cardLeft = Math.min(window.innerWidth - 390, Math.max(16, rect.left));
+          card.style.top = cardTop + 'px';
+          card.style.left = cardLeft + 'px';
+        }
+      }, 120);
+    }
+
     function nextTourStep() {
-      if (currentTourIdx < GUIDED_TOUR_STEPS.length - 1) {
-        currentTourIdx += 1;
+      if (currentTourStep < GUIDED_TOUR_STEPS.length - 1) {
+        currentTourStep++;
         renderTourStep();
       } else {
         closeGuidedTour();
@@ -1026,709 +1697,274 @@ contenedor.appendChild(card);
     }
 
     function prevTourStep() {
-      if (currentTourIdx > 0) {
-        currentTourIdx -= 1;
+      if (currentTourStep > 0) {
+        currentTourStep--;
         renderTourStep();
       }
     }
 
-    function renderTourStep() {
-      if (!isTourOpen || !activeDoc) return;
-      const step = GUIDED_TOUR_STEPS[currentTourIdx];
-      if (step.section) {
-        switchSection(step.section);
-      }
-
-      setTimeout(() => {
-        if (!isTourOpen) return;
-        const targetEl = document.querySelector(step.selector);
-        const spotlight = document.getElementById('tourSpotlight');
-        const card = document.getElementById('tourCard');
-        if (!targetEl || !spotlight || !card) return;
-
-        targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-        setTimeout(() => {
-          if (!isTourOpen) return;
-          const r = targetEl.getBoundingClientRect();
-          spotlight.style.display = 'block';
-          spotlight.style.top = Math.max(6, r.top - 6) + 'px';
-          spotlight.style.left = Math.max(6, r.left - 6) + 'px';
-          spotlight.style.width = Math.min(window.innerWidth - 12, r.width + 12) + 'px';
-          spotlight.style.height = (r.height + 12) + 'px';
-
-          document.getElementById('tourStepCounterBubble').textContent = String(currentTourIdx + 1);
-          document.getElementById('tourStepBadge').textContent = step.badge;
-          document.getElementById('tourStepTitle').textContent = step.title;
-          document.getElementById('tourStepDesc').textContent = step.desc;
-          document.getElementById('tourStepTip').textContent = step.tip;
-
-          document.getElementById('tourPrevBtn').style.display = currentTourIdx > 0 ? 'inline-flex' : 'none';
-          document.getElementById('tourNextBtn').textContent =
-            currentTourIdx === GUIDED_TOUR_STEPS.length - 1 ? 'Finalizar Tour ✓' : 'Siguiente →';
-
-          const dotsBox = document.getElementById('tourDots');
-          dotsBox.innerHTML = GUIDED_TOUR_STEPS.map((_, idx) =>
-            '<button class="tour-dot ' + (idx === currentTourIdx ? 'active' : '') + '" onclick="startGuidedTour(' + idx + ')"></button>'
-          ).join('');
-
-          card.style.display = 'block';
-          const cardW = Math.min(window.innerWidth * 0.92, 430);
-          const cardH = 265;
-          let top = r.bottom + 16;
-          let left = Math.max(12, Math.min(r.left, window.innerWidth - cardW - 12));
-
-          if (r.left < 290 && r.width < 310 && window.innerWidth > 860) {
-            left = Math.min(r.right + 18, window.innerWidth - cardW - 16);
-            top = Math.max(16, Math.min(r.top, window.innerHeight - cardH - 16));
-          } else if (top + cardH > window.innerHeight - 12) {
-            top = Math.max(12, r.top - cardH - 16);
-          }
-
-          card.style.top = top + 'px';
-          card.style.left = left + 'px';
-        }, 200);
-      }, 60);
+    function closeGuidedTour() {
+      document.getElementById('guidedTourContainer').style.display = 'none';
+      localStorage.setItem(STORAGE_TOUR_DONE, 'true');
     }
 
-    window.addEventListener('resize', () => {
-      if (isTourOpen) renderTourStep();
-    });
+    /* =========================================================================
+       INTERACCIONES DE SECCIONES (FLASHCARDS, QUIZ, MAPA, COMPARADOR, BÚSQUEDA)
+       ========================================================================= */
+    function switchSection(sectionId) {
+      document.querySelectorAll('.section-pane').forEach((el) => el.classList.remove('active'));
+      const target = document.getElementById('sec-' + sectionId);
+      if (target) target.classList.add('active');
 
-    // =========================================================================
-    // INDEXEDDB & MOTOR DOCUMENTAL DINÁMICO
-    // =========================================================================
-    function initIndexedDB() {
-      const req = indexedDB.open(DB_NAME, 1);
-      req.onupgradeneeded = (e) => {
-        const database = e.target.result;
-        if (!database.objectStoreNames.contains('docs')) {
-          database.createObjectStore('docs', { keyPath: 'id' });
-        }
-      };
-      req.onsuccess = (e) => {
-        db = e.target.result;
-        loadAllDocsFromDB();
-      };
-    }
-
-    function loadAllDocsFromDB() {
-      if (!db) return;
-      const tx = db.transaction('docs', 'readonly');
-      const req = tx.objectStore('docs').getAll();
-      req.onsuccess = () => {
-        documentsLibrary = (req.result || []).sort((a, b) => b.createdAt - a.createdAt);
-        updateLibrarySidebar();
-        if (documentsLibrary.length > 0 && !activeDoc) {
-          selectDocument(documentsLibrary[0].id, false);
-        }
-      };
-    }
-
-    function saveDocToDB(docRecord, isFirstEverUpload) {
-      if (!db) return;
-      const tx = db.transaction('docs', 'readwrite');
-      tx.objectStore('docs').put(docRecord);
-      tx.oncomplete = () => {
-        documentsLibrary = [docRecord, ...documentsLibrary.filter((d) => d.id !== docRecord.id)];
-        updateLibrarySidebar();
-        selectDocument(docRecord.id, isFirstEverUpload);
-      };
-    }
-
-    function triggerFileSelector() {
-      document.getElementById('hiddenFileInput').click();
-    }
-
-    function handleFileDrop(e) {
-      e.preventDefault();
-      e.currentTarget.classList.remove('dragover');
-      const file = e.dataTransfer.files && e.dataTransfer.files[0];
-      if (file) processUploadedFile(file);
-    }
-
-    function handleFileSelected(e) {
-      const file = e.target.files && e.target.files[0];
-      if (file) processUploadedFile(file);
-    }
-
-    async function processUploadedFile(file) {
-      const statusEl = document.getElementById('uploadStatusText');
-      if (statusEl) statusEl.textContent = 'Extrayendo texto real de "' + file.name + '"...';
-
-      try {
-        const buffer = await file.arrayBuffer();
-        const lower = file.name.toLowerCase();
-        let extractedText = '';
-
-        if (lower.endsWith('.pdf') && window.pdfjsLib) {
-          const pdf = await window.pdfjsLib.getDocument({ data: new Uint8Array(buffer) }).promise;
-          const pages = [];
-          for (let i = 1; i <= Math.min(pdf.numPages, 80); i++) {
-            const page = await pdf.getPage(i);
-            const content = await page.getTextContent();
-            pages.push(content.items.map((it) => it.str).join(' '));
-          }
-          extractedText = pages.join('\n\n');
-        } else if (lower.endsWith('.docx') && window.mammoth) {
-          const result = await window.mammoth.extractRawText({ arrayBuffer: buffer });
-          extractedText = result.value;
-        } else {
-          extractedText = new TextDecoder('utf-8').decode(buffer);
-        }
-
-        if (!extractedText || extractedText.trim().length < 15) {
-          throw new Error('No se pudo extraer texto suficiente del archivo seleccionado.');
-        }
-
-        if (statusEl) statusEl.textContent = 'Detectando tema principal y creando capítulos, resumen, flashcards y cuestionario propios...';
-
-        const isFirstUpload = documentsLibrary.length === 0;
-        const analysis = buildDynamicDocumentAnalysis(extractedText, file.name);
-        const record = {
-          id: 'doc-' + Date.now(),
-          fileName: file.name,
-          createdAt: Date.now(),
-          analysis
-        };
-
-        saveDocToDB(record, isFirstUpload);
-        if (statusEl) statusEl.textContent = '';
-      } catch (err) {
-        if (statusEl) statusEl.textContent = 'Error: ' + err.message;
-      }
-    }
-
-    function buildDynamicDocumentAnalysis(rawText, fileName) {
-      const cleanTitle = fileName.replace(/\.[^/.]+$/, '').replace(/[_-]+/g, ' ').trim();
-      const paragraphs = rawText
-        .split(/\n+/)
-        .map((p) => p.trim())
-        .filter((p) => p.length > 35);
-
-      const words = rawText.split(/\s+/).filter(Boolean);
-      const stopWords = new Set(['para', 'como', 'este', 'esta', 'estos', 'entre', 'sobre', 'desde', 'hasta', 'donde', 'cuando', 'porque', 'todos', 'todas', 'puede', 'pueden', 'tiene', 'tienen']);
-      const freq = {};
-      words.forEach((w) => {
-        const clean = w.toLowerCase().replace(/[^a-záéíóúñü]/gi, '');
-        if (clean.length > 4 && !stopWords.has(clean)) {
-          freq[clean] = (freq[clean] || 0) + 1;
-        }
+      document.querySelectorAll('#navList .nav-item').forEach((btn) => {
+        btn.classList.toggle('active', btn.getAttribute('data-sec') === sectionId);
       });
-
-      const topKeywords = Object.entries(freq)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 12)
-        .map((e) => e[0].charAt(0).toUpperCase() + e[0].slice(1));
-
-      const detectedMainTopic = topKeywords.slice(0, 3).join(' · ') || cleanTitle;
-
-      const chapters = (paragraphs.length > 0 ? paragraphs.slice(0, 6) : [rawText.slice(0, 400)]).map((p, idx) => ({
-        number: idx + 1,
-        title: 'Capítulo ' + (idx + 1) + ': ' + (topKeywords[idx] || 'Análisis de Sección') + ' en ' + cleanTitle,
-        summary: p.slice(0, 210) + (p.length > 210 ? '...' : ''),
-        content: p
-      }));
-
-      const keyConcepts = topKeywords.slice(0, 6).map((kw, idx) => {
-        const matchingPara = paragraphs.find((p) => p.toLowerCase().includes(kw.toLowerCase())) || paragraphs[idx % paragraphs.length] || rawText.slice(0, 220);
-        return {
-          name: kw,
-          category: detectedMainTopic,
-          definition: matchingPara.slice(0, 220),
-          example: 'Contexto aplicado dentro de ' + cleanTitle
-        };
-      });
-
-      const flashcards = chapters.map((ch, idx) => ({
-        id: 'fc-' + idx,
-        category: detectedMainTopic,
-        front: '¿Cuál es el planteamiento central del ' + ch.title + '?',
-        back: ch.summary,
-        hint: 'Clave: ' + (topKeywords[idx] || cleanTitle)
-      }));
-
-      const quizzes = chapters.slice(0, 5).map((ch, idx) => {
-        const otherSummary = chapters[(idx + 1) % chapters.length]?.summary || 'Hipótesis secundaria no respaldada por el texto.';
-        return {
-          question: 'Según "' + cleanTitle + '", ¿qué establece "' + ch.title + '"?',
-          options: [
-            ch.summary.slice(0, 150),
-            otherSummary.slice(0, 140),
-            'Postulado descartado en la introducción del documento.',
-            'Ninguna de las afirmaciones anteriores figura en el archivo.'
-          ],
-          correctIndex: 0,
-          explanation: 'Respaldado directamente en el Capítulo ' + ch.number + ' del documento cargado.'
-        };
-      });
-
-      const glossary = topKeywords.map((kw, idx) => ({
-        term: kw,
-        category: 'Término del Documento',
-        definition: (paragraphs[idx % Math.max(1, paragraphs.length)] || rawText).slice(0, 190)
-      }));
-
-      return {
-        documentTitle: cleanTitle,
-        detectedMainTopic,
-        subtitle: 'Análisis documental propio (' + words.length.toLocaleString('es-ES') + ' palabras · ' + chapters.length + ' capítulos)',
-        wordCount: words.length,
-        thesis: paragraphs[0] || ('Síntesis estructural de ' + cleanTitle),
-        overview: paragraphs.slice(0, 3).join('\n\n') || rawText.slice(0, 600),
-        findings: chapters.slice(0, 4).map((c) => c.summary),
-        chapters,
-        keyConcepts,
-        flashcards,
-        quizzes,
-        glossary
-      };
     }
 
-    function selectDocument(docId, triggerTourIfFirst) {
-      const found = documentsLibrary.find((d) => d.id === docId);
-      if (!found) return;
-      activeDoc = found;
-      masteredCards = new Set();
-      completedCourseUnits = new Set();
-      quizAnswersMap = {};
-
-      document.getElementById('welcomeView').classList.add('hidden');
-      document.getElementById('documentWorkspace').classList.remove('hidden');
-
+    function toggleCourseStep(idx) {
+      completedCourseSteps[idx] = !completedCourseSteps[idx];
       renderActiveDocument();
-      switchSection('resumen');
-
-      const alreadySawTour = localStorage.getItem(TOUR_DONE_KEY) === 'true';
-      if (triggerTourIfFirst || !alreadySawTour) {
-        setTimeout(() => startGuidedTour(0), 350);
-      }
+      switchSection('curso');
     }
 
-    function renderActiveDocument() {
-      if (!activeDoc) return;
-      const a = activeDoc.analysis;
-
-      document.getElementById('activeTopicBadge').textContent = 'TEMA DETECTADO: ' + a.detectedMainTopic;
-      document.getElementById('activeDocTitle').textContent = a.documentTitle;
-      document.getElementById('activeDocSubtitle').textContent = a.subtitle;
-
-      document.getElementById('countChapters').textContent = String(a.chapters.length);
-      document.getElementById('countConcepts').textContent = String(a.keyConcepts.length);
-      document.getElementById('countGlossary').textContent = String(a.glossary.length);
-      document.getElementById('countCourse').textContent = String(a.chapters.length);
-      document.getElementById('countFlashcards').textContent = String(a.flashcards.length);
-      document.getElementById('countQuizzes').textContent = String(a.quizzes.length);
-
-      document.getElementById('resumenThesis').textContent = a.thesis;
-      document.getElementById('resumenOverview').textContent = a.overview;
-      document.getElementById('resumenFindings').innerHTML = a.findings
-        .map((f) => '<li style="margin-bottom:0.4rem;">' + f + '</li>')
-        .join('');
-
-      // Capítulos
-      document.getElementById('capitulosList').innerHTML = a.chapters
-        .map(
-          (ch) =>
-            '<div class="card">' +
-            '<div class="card-meta">CAPÍTULO 0' + ch.number + '</div>' +
-            '<h3 class="card-title">' + ch.title + '</h3>' +
-            '<p style="font-size:0.88rem; color:var(--text-secondary); margin-bottom:0.6rem;"><strong>Síntesis:</strong> ' + ch.summary + '</p>' +
-            '<p style="font-size:0.86rem;">' + ch.content + '</p>' +
-            '</div>'
-        )
-        .join('');
-
-      // Conceptos
-      document.getElementById('conceptosList').innerHTML = a.keyConcepts
-        .map(
-          (c) =>
-            '<div class="card">' +
-            '<div class="card-meta">' + c.category + '</div>' +
-            '<h3 class="card-title">' + c.name + '</h3>' +
-            '<p style="font-size:0.86rem; margin-bottom:0.5rem;">' + c.definition + '</p>' +
-            '<div style="font-size:0.78rem; color:var(--text-muted);"><strong>Contexto:</strong> ' + c.example + '</div>' +
-            '</div>'
-        )
-        .join('');
-
-      renderGlossary('');
-      renderConceptMapSVG();
-      renderCourseModules();
-      renderFlashcards();
-      renderQuizzes();
-      updateAcademicProgressAndGrade();
-
-      // Inicializar Tutor IA
-      document.getElementById('chatMessagesBox').innerHTML =
-        '<div style="padding:0.65rem 0.85rem; background:var(--bg-surface); border-radius:0.5rem; border:1px solid var(--border-color); font-size:0.85rem;">' +
-        '<strong>Tutor IA:</strong> He analizado <em>"' + a.documentTitle + '"</em> (Tema principal: <strong>' + a.detectedMainTopic + '</strong>). Pregúntame sobre cualquier capítulo, concepto o pide un resumen.' +
-        '</div>';
+    function updateProgressKPI() {
+      if (!activeDocument) return;
+      const total = activeDocument.analysis.chapters.length || 1;
+      const done = Object.values(completedCourseSteps).filter(Boolean).length;
+      const pct = Math.round((done / total) * 100);
+      document.getElementById('kpiProgress').textContent = pct + '%';
     }
 
-    function renderGlossary(filterText) {
-      if (!activeDoc) return;
-      const q = (filterText || '').toLowerCase().trim();
-      const list = activeDoc.analysis.glossary.filter(
-        (g) => !q || g.term.toLowerCase().includes(q) || g.definition.toLowerCase().includes(q)
-      );
-      document.getElementById('glosarioList').innerHTML = list
-        .map(
-          (g) =>
-            '<div class="card">' +
-            '<div class="card-meta">' + g.category + '</div>' +
-            '<h3 class="card-title">' + g.term + '</h3>' +
-            '<p style="font-size:0.85rem;">' + g.definition + '</p>' +
-            '</div>'
-        )
-        .join('');
+    function renderCurrentFlashcard() {
+      if (!activeDocument) return;
+      const cards = activeDocument.analysis.flashcards || [];
+      if (cards.length === 0) return;
+      const card = cards[currentFlashcardIndex % cards.length];
+      document.getElementById('flashcardCounter').textContent = `${currentFlashcardIndex + 1} / ${cards.length}`;
+      document.getElementById('flashcardSideBadge').textContent = isFlashcardFlipped
+        ? 'RESPUESTA EXPLICATIVA'
+        : 'PREGUNTA (Haz clic para voltear)';
+      document.getElementById('flashcardText').textContent = isFlashcardFlipped ? card.back : card.front;
     }
 
-    function renderConceptMapSVG() {
-      if (!activeDoc) return;
-      const a = activeDoc.analysis;
-      const concepts = a.keyConcepts.slice(0, 6);
-      const centerX = 380;
-      const centerY = 180;
-      let linesSvg = '';
-      let nodesSvg = '';
-
-      concepts.forEach((c, idx) => {
-        const angle = (idx / Math.max(1, concepts.length)) * Math.PI * 2;
-        const x = Math.round(centerX + Math.cos(angle) * 230);
-        const y = Math.round(centerY + Math.sin(angle) * 125);
-        linesSvg += `<line x1="${centerX}" y1="${centerY}" x2="${x}" y2="${y}" stroke="#3B82F6" stroke-width="2" stroke-dasharray="4 2" />`;
-        nodesSvg += `
-          <g transform="translate(${x - 75}, ${y - 22})">
-            <rect width="150" height="44" rx="8" fill="#1E293B" stroke="#3B82F6" stroke-width="1.5" />
-            <text x="75" y="26" fill="#F8FAFC" font-size="11" font-family="Plus Jakarta Sans" font-weight="600" text-anchor="middle">${c.name.slice(0, 18)}</text>
-          </g>`;
-      });
-
-      const rootSvg = `
-        <g transform="translate(${centerX - 95}, ${centerY - 26})">
-          <rect width="190" height="52" rx="10" fill="#1D4ED8" />
-          <text x="95" y="30" fill="#FFFFFF" font-size="12" font-family="Plus Jakarta Sans" font-weight="700" text-anchor="middle">${a.detectedMainTopic.slice(0, 22)}</text>
-        </g>`;
-
-      document.getElementById('conceptMapSvgContainer').innerHTML =
-        `<svg viewBox="0 0 760 360" style="width:100%; height:auto; max-height:380px;">${linesSvg}${nodesSvg}${rootSvg}</svg>`;
+    function flipCurrentFlashcard() {
+      isFlashcardFlipped = !isFlashcardFlipped;
+      renderCurrentFlashcard();
     }
 
-    function renderCourseModules() {
-      if (!activeDoc) return;
-      const a = activeDoc.analysis;
-      document.getElementById('cursoModulesList').innerHTML = a.chapters
-        .map((ch, idx) => {
-          const done = completedCourseUnits.has(idx);
-          return (
-            '<div class="card" style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; flex-wrap:wrap;">' +
-            '<div style="flex:1; min-width:240px;">' +
-            '<div class="card-meta">UNIDAD DE CURSO 0' + ch.number + '</div>' +
-            '<h3 class="card-title">' + ch.title + '</h3>' +
-            '<p style="font-size:0.86rem; color:var(--text-secondary);">' + ch.content + '</p>' +
-            '</div>' +
-            '<button class="btn ' + (done ? 'btn-primary' : '') + '" onclick="toggleCourseUnit(' + idx + ')">' +
-            (done ? '✓ Unidad Completada' : 'Marcar Completada') +
-            '</button>' +
-            '</div>'
-          );
-        })
-        .join('');
+    function nextFlashcard() {
+      if (!activeDocument) return;
+      currentFlashcardIndex = (currentFlashcardIndex + 1) % activeDocument.analysis.flashcards.length;
+      isFlashcardFlipped = false;
+      renderCurrentFlashcard();
     }
 
-    function toggleCourseUnit(idx) {
-      if (completedCourseUnits.has(idx)) completedCourseUnits.delete(idx);
-      else completedCourseUnits.add(idx);
-      renderCourseModules();
-      updateAcademicProgressAndGrade();
+    function prevFlashcard() {
+      if (!activeDocument) return;
+      const len = activeDocument.analysis.flashcards.length;
+      currentFlashcardIndex = (currentFlashcardIndex - 1 + len) % len;
+      isFlashcardFlipped = false;
+      renderCurrentFlashcard();
     }
 
-    function renderFlashcards() {
-      if (!activeDoc) return;
-      const cards = activeDoc.analysis.flashcards;
-      document.getElementById('flashcardsGrid').innerHTML = cards
-        .map((fc, idx) => {
-          const isMastered = masteredCards.has(idx);
-          return (
-            '<div class="card flashcard" onclick="this.classList.toggle(\'flipped\')">' +
-            '<div>' +
-            '<div class="card-meta">FLASHCARD 0' + (idx + 1) + ' · ' + fc.category + '</div>' +
-            '<div class="fc-front"><h3 class="card-title">' + fc.front + '</h3></div>' +
-            '<div class="fc-back"><p>' + fc.back + '</p></div>' +
-            '</div>' +
-            '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.85rem; padding-top:0.55rem; border-top:1px solid var(--border-color);">' +
-            '<span style="font-family:var(--font-mono); font-size:0.7rem; color:var(--text-muted);">' + fc.hint + '</span>' +
-            '<button class="btn ' + (isMastered ? 'btn-primary' : '') + '" style="padding:0.2rem 0.55rem; font-size:0.7rem;" onclick="event.stopPropagation(); toggleMasteredCard(' + idx + ')">' +
-            (isMastered ? '★ Dominada' : 'Marcar Dominada') +
-            '</button>' +
-            '</div>' +
-            '</div>'
-          );
-        })
-        .join('');
-    }
-
-    function toggleMasteredCard(idx) {
-      if (masteredCards.has(idx)) masteredCards.delete(idx);
-      else masteredCards.add(idx);
-      renderFlashcards();
-      updateAcademicProgressAndGrade();
-    }
-
-    function generateExtraFlashcards() {
-      if (!activeDoc) return;
-      const a = activeDoc.analysis;
-      const nextNum = a.flashcards.length + 1;
-      a.flashcards.push({
-        id: 'fc-extra-' + Date.now(),
-        category: a.detectedMainTopic,
-        front: '¿Qué síntesis transversal ofrece el documento sobre "' + a.detectedMainTopic + '" (Tarjeta #' + nextNum + ')?',
-        back: a.thesis,
-        hint: 'Tesis central'
-      });
-      document.getElementById('countFlashcards').textContent = String(a.flashcards.length);
-      renderFlashcards();
-      updateAcademicProgressAndGrade();
-    }
-
-    function renderQuizzes() {
-      if (!activeDoc) return;
-      const quizzes = activeDoc.analysis.quizzes;
-      document.getElementById('quizList').innerHTML = quizzes
-        .map((q, qIdx) => {
-          const selected = quizAnswersMap[qIdx];
-          const optionsHtml = q.options
-            .map((opt, oIdx) => {
+    function renderQuizSection(analysis) {
+      const container = document.getElementById('quizContainer');
+      container.innerHTML = analysis.quiz.map((q, qIdx) => {
+        const answered = quizUserAnswers[qIdx];
+        return `
+          <div class="card" style="margin-bottom:0.85rem;">
+            <div class="badge">PREGUNTA ${qIdx + 1}</div>
+            <h4 style="margin:0.45rem 0;">${escapeHtml(q.question)}</h4>
+            ${q.options.map((opt, oIdx) => {
               let cls = 'quiz-opt';
-              if (typeof selected === 'number') {
+              if (answered !== undefined) {
                 if (oIdx === q.correctIndex) cls += ' correct';
-                else if (oIdx === selected) cls += ' wrong';
+                else if (oIdx === answered) cls += ' wrong';
               }
-              return `<button class="${cls}" onclick="answerQuiz(${qIdx}, ${oIdx})">${String.fromCharCode(65 + oIdx)}. ${opt}</button>`;
-            })
-            .join('');
-
-          const expHtml =
-            typeof selected === 'number'
-              ? `<div style="margin-top:0.65rem; font-size:0.82rem; color:var(--accent);"><strong>Explicación:</strong> ${q.explanation}</div>`
-              : '';
-
-          return (
-            '<div class="card">' +
-            '<div class="card-meta">PREGUNTA 0' + (qIdx + 1) + '</div>' +
-            '<h3 class="card-title">' + q.question + '</h3>' +
-            optionsHtml +
-            expHtml +
-            '</div>'
-          );
-        })
-        .join('');
+              return `<button class="${cls}" onclick="answerQuiz(${qIdx}, ${oIdx})">${escapeHtml(opt)}</button>`;
+            }).join('')}
+            ${answered !== undefined ? `<p style="font-size:0.8rem; color:var(--text-secondary); margin-top:0.6rem;"><strong>Retroalimentación:</strong> ${escapeHtml(q.explanation)}</p>` : ''}
+          </div>
+        `;
+      }).join('');
     }
 
     function answerQuiz(qIdx, oIdx) {
-      quizAnswersMap[qIdx] = oIdx;
-      renderQuizzes();
-      updateAcademicProgressAndGrade();
-    }
-
-    function generateExtraQuizQuestions() {
-      if (!activeDoc) return;
-      const a = activeDoc.analysis;
-      a.quizzes.push({
-        question: '¿Cuál es la tesis central identificada en "' + a.documentTitle + '"?',
-        options: [
-          a.thesis.slice(0, 150),
-          'Un argumento secundario ausente en los capítulos principales.',
-          'Una hipótesis refutada por el autor.',
-          'Ninguna de las anteriores.'
-        ],
-        correctIndex: 0,
-        explanation: 'Corresponde a la tesis central extraída del resumen ejecutivo del documento.'
+      if (!activeDocument) return;
+      quizUserAnswers[qIdx] = oIdx;
+      const quiz = activeDocument.analysis.quiz;
+      let correctCount = 0;
+      quiz.forEach((q, i) => {
+        if (quizUserAnswers[i] === q.correctIndex) correctCount++;
       });
-      document.getElementById('countQuizzes').textContent = String(a.quizzes.length);
-      renderQuizzes();
-      updateAcademicProgressAndGrade();
+      const grade = ((correctCount / Math.max(1, quiz.length)) * 10).toFixed(1);
+      document.getElementById('kpiGrade').textContent = `${grade} / 10`;
+      document.getElementById('quizScoreBadge').textContent = `Calificación: ${grade} / 10`;
+      renderQuizSection(activeDocument.analysis);
     }
 
-    function updateAcademicProgressAndGrade() {
-      if (!activeDoc) return;
-      const a = activeDoc.analysis;
-      const totalQ = Math.max(1, a.quizzes.length);
-      let correctQ = 0;
-      a.quizzes.forEach((q, idx) => {
-        if (quizAnswersMap[idx] === q.correctIndex) correctQ += 1;
+    function filterGlossary(query) {
+      const q = (query || '').toLowerCase().trim();
+      document.querySelectorAll('.glossary-item').forEach((el) => {
+        el.style.display = el.textContent.toLowerCase().includes(q) ? 'block' : 'none';
       });
-      const quizPct = Math.round((correctQ / totalQ) * 100);
-      const fcPct = Math.round((masteredCards.size / Math.max(1, a.flashcards.length)) * 100);
-      const coursePct = Math.round((completedCourseUnits.size / Math.max(1, a.chapters.length)) * 100);
-
-      const overallPct = Math.round(quizPct * 0.4 + fcPct * 0.3 + coursePct * 0.3);
-      const grade10 = ((quizPct * 0.6 + fcPct * 0.2 + coursePct * 0.2) / 10).toFixed(1);
-
-      document.getElementById('statProgressPct').textContent = overallPct + '%';
-      document.getElementById('statGrade10').textContent = grade10 + ' / 10';
-      document.getElementById('bannerProgressText').textContent = overallPct + '%';
-      document.getElementById('bannerProgressBar').style.width = overallPct + '%';
-      document.getElementById('bannerGradeText').textContent = grade10 + ' / 10';
-      document.getElementById('quizScoreHeader').textContent = 'Aciertos: ' + correctQ + ' / ' + a.quizzes.length + ' (' + quizPct + '%)';
-
-      document.getElementById('gradebookSummaryText').innerHTML =
-        `Documento: <strong>${a.documentTitle}</strong> · Tema: <strong>${a.detectedMainTopic}</strong><br>` +
-        `Unidades de Curso Completadas: <strong>${completedCourseUnits.size}/${a.chapters.length} (${coursePct}%)</strong> · ` +
-        `Flashcards Dominadas: <strong>${masteredCards.size}/${a.flashcards.length} (${fcPct}%)</strong> · ` +
-        `Cuestionario: <strong>${correctQ}/${a.quizzes.length} (${quizPct}%)</strong> · ` +
-        `Calificación Final: <strong>${grade10} / 10</strong>`;
     }
 
-    function updateLibrarySidebar() {
-      document.getElementById('statTotalDocs').textContent = String(documentsLibrary.length);
-      document.getElementById('sidebarDocCount').textContent = String(documentsLibrary.length);
-      const box = document.getElementById('sidebarDocList');
-      if (documentsLibrary.length === 0) {
-        box.innerHTML = 'Sube tu primer archivo PDF o DOCX para generar su contenido.';
+    function renderConceptMapSVG(analysis) {
+      const holder = document.getElementById('conceptMapHolder');
+      const concepts = analysis.keyConcepts.slice(0, 6);
+      const centerTitle = analysis.detectedTopic.slice(0, 28);
+      let nodesSvg = `<rect x="310" y="155" width="220" height="52" rx="12" fill="#1D4ED8" /><text x="420" y="186" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">${escapeHtml(centerTitle)}</text>`;
+      let linesSvg = '';
+
+      const positions = [
+        [80, 40], [560, 40], [40, 160], [600, 160], [80, 275], [560, 275]
+      ];
+      concepts.forEach((c, i) => {
+        const [x, y] = positions[i];
+        linesSvg += `<line x1="420" y1="181" x2="${x + 90}" y2="${y + 24}" stroke="#3B82F6" stroke-width="2" stroke-dasharray="4 4" />`;
+        nodesSvg += `<rect x="${x}" y="${y}" width="180" height="48" rx="10" fill="#1E293B" stroke="#3B82F6" stroke-width="1.5" /><text x="${x + 90}" y="${y + 29}" text-anchor="middle" fill="#F8FAFC" font-size="12" font-weight="600">${escapeHtml(c.name.slice(0, 22))}</text>`;
+      });
+
+      holder.innerHTML = `<svg viewBox="0 0 840 350" style="width:100%; height:auto; background:var(--bg-primary); border-radius:12px;">${linesSvg}${nodesSvg}</svg>`;
+    }
+
+    function populateComparisonSelectors() {
+      const selA = document.getElementById('compDocA');
+      const selB = document.getElementById('compDocB');
+      if (!selA || !selB) return;
+      const opts = documentsLibrary.map((d) => `<option value="${d.id}">${escapeHtml(d.analysis.documentTitle)}</option>`).join('');
+      selA.innerHTML = opts;
+      selB.innerHTML = opts;
+      if (documentsLibrary.length > 1) selB.selectedIndex = 1;
+      runDocumentComparison();
+    }
+
+    function runDocumentComparison() {
+      const box = document.getElementById('comparisonResult');
+      if (documentsLibrary.length < 1) {
+        box.innerHTML = '<p style="font-size:0.85rem; color:var(--text-secondary);">Sube al menos un documento para comparar.</p>';
         return;
       }
-      box.innerHTML = documentsLibrary
-        .map(
-          (d) =>
-            `<button class="nav-btn ${activeDoc && activeDoc.id === d.id ? 'active' : ''}" onclick="selectDocument('${d.id}', false)">
-              <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${d.analysis.documentTitle}</span>
-            </button>`
-        )
-        .join('');
+      const idA = document.getElementById('compDocA').value;
+      const idB = document.getElementById('compDocB').value;
+      const docA = documentsLibrary.find((d) => d.id === idA) || documentsLibrary[0];
+      const docB = documentsLibrary.find((d) => d.id === idB) || documentsLibrary[0];
 
-      const optionsHtml = documentsLibrary
-        .map((d) => `<option value="${d.id}">${d.analysis.documentTitle}</option>`)
-        .join('');
-      document.getElementById('cmpSelectA').innerHTML = optionsHtml;
-      document.getElementById('cmpSelectB').innerHTML = optionsHtml;
+      box.innerHTML = `
+        <div class="grid-2">
+          <div class="card" style="margin-bottom:0;">
+            <span class="badge">DOCUMENTO A</span>
+            <h3 style="margin:0.4rem 0;">${escapeHtml(docA.analysis.documentTitle)}</h3>
+            <p style="font-size:0.84rem;"><strong>Tema:</strong> ${escapeHtml(docA.analysis.detectedTopic)}</p>
+            <p style="font-size:0.84rem; color:var(--text-secondary); margin-top:0.35rem;">${escapeHtml(docA.analysis.thesis)}</p>
+          </div>
+          <div class="card" style="margin-bottom:0;">
+            <span class="badge">DOCUMENTO B</span>
+            <h3 style="margin:0.4rem 0;">${escapeHtml(docB.analysis.documentTitle)}</h3>
+            <p style="font-size:0.84rem;"><strong>Tema:</strong> ${escapeHtml(docB.analysis.detectedTopic)}</p>
+            <p style="font-size:0.84rem; color:var(--text-secondary); margin-top:0.35rem;">${escapeHtml(docB.analysis.thesis)}</p>
+          </div>
+        </div>
+      `;
     }
 
-    function switchSection(secId) {
-      document.querySelectorAll('.doc-section').forEach((el) => el.classList.add('hidden'));
-      const target = document.getElementById('sec-' + secId);
-      if (target) target.classList.remove('hidden');
-
-      document.querySelectorAll('.sidebar .nav-btn[data-sec]').forEach((btn) => {
-        btn.classList.toggle('active', btn.getAttribute('data-sec') === secId);
+    function runSemanticSearch(query) {
+      const container = document.getElementById('semanticResults');
+      if (!activeDocument || !query || query.trim().length < 2) {
+        container.innerHTML = '<p style="font-size:0.84rem; color:var(--text-secondary);">Ingresa al menos 2 caracteres para buscar en capítulos, conceptos y glosario.</p>';
+        return;
+      }
+      const q = query.toLowerCase().trim();
+      const matches = [];
+      activeDocument.analysis.chapters.forEach((ch) => {
+        if ((ch.title + ' ' + ch.detailedContent).toLowerCase().includes(q)) {
+          matches.push({ type: 'Capítulo', title: ch.title, text: ch.summary });
+        }
       });
+      activeDocument.analysis.keyConcepts.forEach((c) => {
+        if ((c.name + ' ' + c.definition).toLowerCase().includes(q)) {
+          matches.push({ type: 'Concepto Clave', title: c.name, text: c.definition });
+        }
+      });
+      container.innerHTML = matches.length === 0
+        ? '<p style="font-size:0.84rem; color:var(--text-secondary);">No se encontraron coincidencias semánticas.</p>'
+        : matches.map((m) => `<div class="card"><span class="badge">${escapeHtml(m.type)}</span><h4 style="margin:0.35rem 0;">${escapeHtml(m.title)}</h4><p style="font-size:0.85rem; color:var(--text-secondary);">${escapeHtml(m.text)}</p></div>`).join('');
     }
 
-    async function askTutorQuestion() {
-      if (!activeDoc) return;
-      const input = document.getElementById('tutorQuestionInput');
-      const box = document.getElementById('chatMessagesBox');
-      const q = input.value.trim();
-      if (!q) return;
-      input.value = '';
-
-      box.innerHTML += `<div style="align-self:flex-end; background:var(--accent); color:#FFF; padding:0.55rem 0.85rem; border-radius:0.5rem; font-size:0.84rem;"><strong>Tú:</strong> ${q}</div>`;
-
-      const apiKey = localStorage.getItem(GEMINI_KEY_STORAGE) || '';
-      const a = activeDoc.analysis;
-      let answer = '';
-
-      if (apiKey.length > 10) {
-        try {
-          const resp = await fetch(
-            'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + encodeURIComponent(apiKey),
-            {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                contents: [
-                  {
-                    role: 'user',
-                    parts: [
-                      {
-                        text: `Responde en español basándote en el documento "${a.documentTitle}" (Tema: ${a.detectedMainTopic}). Resumen: ${a.overview}. Pregunta: ${q}`
-                      }
-                    ]
-                  }
-                ]
-              })
-            }
-          );
-          const data = await resp.json();
-          answer = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-        } catch (e) {}
-      }
-
-      if (!answer) {
-        const lower = q.toLowerCase();
-        const ch = a.chapters.find((c) => c.title.toLowerCase().includes(lower) || c.summary.toLowerCase().includes(lower));
-        const kc = a.keyConcepts.find((c) => c.name.toLowerCase().includes(lower));
-        if (kc) answer = `${kc.name}: ${kc.definition}`;
-        else if (ch) answer = `${ch.title}: ${ch.summary}`;
-        else answer = `Según "${a.documentTitle}" (Tema principal: ${a.detectedMainTopic}): ${a.thesis}`;
-      }
-
-      box.innerHTML += `<div style="background:var(--bg-surface); border:1px solid var(--border-color); padding:0.65rem 0.85rem; border-radius:0.5rem; font-size:0.84rem;"><strong>Tutor IA:</strong> ${answer}</div>`;
-      box.scrollTop = box.scrollHeight;
+    /* =========================================================================
+       CONFIGURACIÓN DE CLAVE API Y EXPORTACIÓN MULTI-FORMATO
+       ========================================================================= */
+    function openApiKeyModal() {
+      document.getElementById('geminiKeyInput').value = localStorage.getItem(STORAGE_GEMINI_KEY) || '';
+      document.getElementById('apiKeyModal').style.display = 'flex';
     }
 
-    function runComparison() {
-      const idA = document.getElementById('cmpSelectA').value;
-      const idB = document.getElementById('cmpSelectB').value;
-      const docA = documentsLibrary.find((d) => d.id === idA);
-      const docB = documentsLibrary.find((d) => d.id === idB);
-      if (!docA || !docB) return;
-
-      document.getElementById('comparisonOutput').innerHTML = `
-        <div class="card-grid">
-          <div class="card">
-            <div class="card-meta">DOCUMENTO A</div>
-            <h4 class="card-title">${docA.analysis.documentTitle}</h4>
-            <p style="font-size:0.82rem;"><strong>Tema:</strong> ${docA.analysis.detectedMainTopic}</p>
-            <p style="font-size:0.82rem; margin-top:0.4rem;">${docA.analysis.thesis}</p>
-          </div>
-          <div class="card">
-            <div class="card-meta">DOCUMENTO B</div>
-            <h4 class="card-title">${docB.analysis.documentTitle}</h4>
-            <p style="font-size:0.82rem;"><strong>Tema:</strong> ${docB.analysis.detectedMainTopic}</p>
-            <p style="font-size:0.82rem; margin-top:0.4rem;">${docB.analysis.thesis}</p>
-          </div>
-        </div>`;
+    function closeApiKeyModal() {
+      document.getElementById('apiKeyModal').style.display = 'none';
     }
 
-    function promptGeminiApiKey() {
-      const current = localStorage.getItem(GEMINI_KEY_STORAGE) || '';
-      const entered = window.prompt('Ingresa tu clave de Gemini API (Se guarda únicamente en tu LocalStorage):', current);
-      if (entered !== null) {
-        localStorage.setItem(GEMINI_KEY_STORAGE, entered.trim());
-      }
+    function saveApiKey() {
+      const val = document.getElementById('geminiKeyInput').value.trim();
+      localStorage.setItem(STORAGE_GEMINI_KEY, val);
+      closeApiKeyModal();
     }
 
     function toggleDarkMode() {
       document.body.classList.toggle('dark');
+      localStorage.setItem('hercules_theme_dark', document.body.classList.contains('dark') ? 'true' : 'false');
     }
 
-    function exportToPdf() {
-      if (!activeDoc || !window.jspdf) return;
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function exportDocumentPDF() {
+      if (!activeDocument || !window.jspdf) return;
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
-      const a = activeDoc.analysis;
+      const a = activeDocument.analysis;
       doc.setFontSize(16);
-      doc.text(a.documentTitle, 15, 20);
-      doc.setFontSize(10);
-      doc.text('Tema Principal: ' + a.detectedMainTopic, 15, 28);
-      const lines = doc.splitTextToSize('Tesis: ' + a.thesis + '\n\nResumen:\n' + a.overview, 180);
-      doc.text(lines, 15, 38);
-      doc.save(a.documentTitle + '_Hercules_AI.pdf');
+      doc.text(a.documentTitle, 14, 20);
+      doc.setFontSize(11);
+      doc.text('Tema: ' + a.detectedTopic, 14, 30);
+      const splitThesis = doc.splitTextToSize('Tesis: ' + a.thesis, 180);
+      doc.text(splitThesis, 14, 40);
+      const splitOverview = doc.splitTextToSize(a.overview, 180);
+      doc.text(splitOverview, 14, 62);
+      doc.save(a.documentTitle + '-HerculesAI.pdf');
     }
 
-    function exportToMarkdown() {
-      if (!activeDoc) return;
-      const a = activeDoc.analysis;
-      const md = `# ${a.documentTitle}\n**Tema Principal:** ${a.detectedMainTopic}\n\n## Resumen Ejecutivo\n${a.thesis}\n\n${a.overview}`;
+    function exportDocumentHTML() {
+      if (!activeDocument) return;
+      const a = activeDocument.analysis;
+      const html = `<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>${escapeHtml(a.documentTitle)}</title></head><body style="font-family:sans-serif;max-width:860px;margin:2rem auto;line-height:1.6;"><h1>${escapeHtml(a.documentTitle)}</h1><p><strong>Tema:</strong> ${escapeHtml(a.detectedTopic)}</p><p>${escapeHtml(a.overview)}</p></body></html>`;
+      downloadBlob(html, a.documentTitle + '.html', 'text/html');
+    }
+
+    function exportDocumentWord() {
+      if (!activeDocument) return;
+      const a = activeDocument.analysis;
+      const content = `<html><head><meta charset="utf-8"></head><body><h1>${escapeHtml(a.documentTitle)}</h1><h2>${escapeHtml(a.detectedTopic)}</h2><p>${escapeHtml(a.thesis)}</p><p>${escapeHtml(a.overview)}</p></body></html>`;
+      downloadBlob(content, a.documentTitle + '.doc', 'application/msword');
+    }
+
+    function exportDocumentMarkdown() {
+      if (!activeDocument) return;
+      const a = activeDocument.analysis;
+      const md = `# ${a.documentTitle}\n\n**Tema:** ${a.detectedTopic}\n\n## Resumen\n${a.overview}\n\n## Capítulos\n` +
+        a.chapters.map((c) => `### ${c.title}\n${c.summary}`).join('\n\n');
       downloadBlob(md, a.documentTitle + '.md', 'text/markdown');
     }
 
-    function exportToTxt() {
-      if (!activeDoc) return;
-      const a = activeDoc.analysis;
-      const txt = `${a.documentTitle}\nTema Principal: ${a.detectedMainTopic}\n\n${a.thesis}\n\n${a.overview}`;
+    function exportDocumentTXT() {
+      if (!activeDocument) return;
+      const a = activeDocument.analysis;
+      const txt = `${a.documentTitle}\nTema: ${a.detectedTopic}\n\n${a.thesis}\n\n${a.overview}`;
       downloadBlob(txt, a.documentTitle + '.txt', 'text/plain');
     }
 
